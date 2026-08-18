@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const LINKS = [
@@ -12,28 +12,46 @@ const LINKS = [
 /** Scroll distance over which the bar ramps from clear to fully opaque. */
 const DARKEN_OVER = 140
 
+/** Tint opacity for a given scroll progress (0–1). */
+const tintFor = (progress: number) => 0.06 + 0.82 * progress
+
 export default function Nav() {
-  const [progress, setProgress] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
+  const tintRef = useRef<HTMLDivElement>(null)
+  const progressRef = useRef(0)
 
   // The bar darkens continuously with scroll rather than snapping at a
   // threshold — a white tint alone lightens against bright photography, so
   // content behind it bled through and the links became hard to read.
+  //
+  // The opacity is written straight to the node instead of going through
+  // state: driving it with setState re-rendered the whole nav subtree on
+  // every scroll frame, which is the last place to be doing React work.
   useEffect(() => {
     let frame = 0
+    const apply = () => {
+      progressRef.current = Math.min(window.scrollY / DARKEN_OVER, 1)
+      const node = tintRef.current
+      if (node) node.style.opacity = String(tintFor(progressRef.current))
+    }
     const onScroll = () => {
       cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() =>
-        setProgress(Math.min(window.scrollY / DARKEN_OVER, 1)),
-      )
+      frame = requestAnimationFrame(apply)
     }
-    onScroll()
+    apply()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
+
+  // The open menu forces the bar fully opaque; closing restores the scroll
+  // position's own tint.
+  useEffect(() => {
+    const node = tintRef.current
+    if (node) node.style.opacity = String(menuOpen ? 0.88 : tintFor(progressRef.current))
+  }, [menuOpen])
 
   // Lock the page behind the mobile overlay, and let Escape dismiss it.
   useEffect(() => {
@@ -60,9 +78,10 @@ export default function Nav() {
           {/* Opacity ramps with scroll position, so the bar gains weight
               exactly as much as it needs to stay legible. */}
           <div
+            ref={tintRef}
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-timber-bark"
-            style={{ opacity: 0.06 + 0.82 * (menuOpen ? 1 : progress) }}
+            style={{ opacity: 0.06 }}
           />
 
           <div className="relative flex h-full items-center justify-between px-6 md:px-10">

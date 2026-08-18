@@ -28,6 +28,9 @@ export default function Hero() {
           src={HERO_IMAGE}
           alt=""
           aria-hidden="true"
+          decoding="async"
+          // Lowercase so React 18 passes it through; the camelCase prop is React 19+.
+          {...{ fetchpriority: 'high' }}
           className="hero-kenburns absolute inset-0 h-full w-full object-cover object-center"
           onError={() => setPhotoFailed(true)}
         />

@@ -170,7 +170,12 @@ function Card({
           <img
             src={src}
             alt={item?.alt || ''}
-            loading={index < 4 ? 'eager' : 'lazy'}
+            // Only the centre card is eager — it is the page's LCP element.
+            // The visible slats still fetch immediately (lazy only defers
+            // off-screen images), but at a lower priority than the big one.
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            {...(index === 0 ? { fetchpriority: 'high' } : {})}
             draggable={false}
             style={{
               width: '100%',

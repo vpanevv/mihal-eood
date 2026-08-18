@@ -2,3 +2,9 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# Full-resolution masters kept locally. Nothing at runtime loads these — the
+# pages serve the .jpg exports beside them — and they are ~9 MB. Delete these
+# two lines if you want them versioned.
+public/images/*.png
+!public/images/hero.png
