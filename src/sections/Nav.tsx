@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const LINKS = [
   { label: 'Продукти', href: '/products', route: true },
-  { label: 'Доставка', href: '/#delivery', route: false },
+  { label: 'Доставка', href: '/delivery', route: true },
   { label: 'Галерия', href: '/gallery', route: true },
   { label: 'За нас', href: '/about-us', route: true },
   { label: 'Контакти', href: '/contacts', route: true },

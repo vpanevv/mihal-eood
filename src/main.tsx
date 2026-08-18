@@ -10,6 +10,7 @@ import './index.css'
 // needs — is split out and fetched when its route is opened.
 const About = lazy(() => import('./pages/About.tsx'))
 const Products = lazy(() => import('./pages/Products.tsx'))
+const Delivery = lazy(() => import('./pages/Delivery.tsx'))
 const Gallery = lazy(() => import('./pages/Gallery.tsx'))
 const Contact = lazy(() => import('./pages/Contact.tsx'))
 
@@ -27,6 +28,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<App />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/delivery" element={<Delivery />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contacts" element={<Contact />} />
         </Routes>
