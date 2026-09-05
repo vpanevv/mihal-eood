@@ -8,7 +8,7 @@ const RECIPIENT = 'mihaleood@gmail.com'
 // address dropped the pin on the road rather than on the business, so the map
 // is driven by coordinates and the address is kept only as the label.
 const MAP_COORDS = '41.886306,23.481056'
-const MAP_LABEL = 'гр. Разлог, ул. Христо Ботев 71'
+const MAP_LABEL = 'гр. Разлог, ул. Христо Ботев, срещу бензиностанция „Лукойл“'
 
 /**
  * Set this to a form-backend URL (Formspree, Web3Forms, or your own handler)
