@@ -86,12 +86,12 @@ export default function Footer() {
           </h2>
           <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-cream/85">
             <div className="flex flex-wrap items-baseline gap-x-3">
-              <dt>Понеделник – Събота</dt>
+              <dt>Понеделник – Петък</dt>
               <dd className="text-white">08.00 – 17.00 ч.</dd>
             </div>
             <div className="flex flex-wrap items-baseline gap-x-3">
-              <dt>Неделя</dt>
-              <dd className="text-timber-cream/55">Почивен ден</dd>
+              <dt>Събота – Неделя</dt>
+              <dd className="text-timber-cream/55">Почивни дни</dd>
             </div>
           </dl>
         </section>
