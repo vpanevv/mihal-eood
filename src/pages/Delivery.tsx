@@ -46,7 +46,7 @@ const CAPABILITIES = [
 
 export default function Delivery() {
   useEffect(() => {
-    document.title = 'Доставка — МИХАЛ ЕООД'
+    document.title = 'Услуги — МИХАЛ ЕООД'
   }, [])
 
   return (
@@ -58,7 +58,7 @@ export default function Delivery() {
       </div>
 
       <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
-        <h1 className="sr-only">Доставка</h1>
+        <h1 className="sr-only">Услуги</h1>
 
         <p
           className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-white [text-shadow:0_2px_24px_rgba(18,12,4,0.7)] md:text-5xl"

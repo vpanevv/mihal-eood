@@ -4,7 +4,11 @@ import Footer from '../sections/Footer'
 import TintedBackdrop from '../components/TintedBackdrop'
 
 const RECIPIENT = 'mihaleood@gmail.com'
-const MAP_ADDRESS = 'Разлог, ул. Христо Ботев 71, България'
+// The exact yard entrance (41°53'10.7"N 23°28'51.8"E). Searching the street
+// address dropped the pin on the road rather than on the business, so the map
+// is driven by coordinates and the address is kept only as the label.
+const MAP_COORDS = '41.886306,23.481056'
+const MAP_LABEL = 'гр. Разлог, ул. Христо Ботев 71'
 
 /**
  * Set this to a form-backend URL (Formspree, Web3Forms, or your own handler)
@@ -312,7 +316,7 @@ export default function Contact() {
                 Намерете ни
               </h2>
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_ADDRESS)}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${MAP_COORDS}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group/link relative font-sans text-[0.85rem] font-light text-timber-cream/85 transition-colors hover:text-white"
@@ -322,8 +326,8 @@ export default function Contact() {
               </a>
             </div>
             <iframe
-              title="Карта — гр. Разлог, ул. Христо Ботев 71"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(MAP_ADDRESS)}&hl=bg&output=embed`}
+              title={`Карта — ${MAP_LABEL}`}
+              src={`https://www.google.com/maps?q=${MAP_COORDS}&hl=bg&z=17&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="h-[320px] w-full border-0 md:h-[420px]"
