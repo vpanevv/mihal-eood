@@ -46,7 +46,7 @@ function Underline() {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="liquid-glass-panel relative z-10">
+    <footer id="contact" className="liquid-glass-panel white-wash relative z-10">
       {/* Hairline that catches the eye coming off the page above */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-timber-sap/40 to-transparent" />
 

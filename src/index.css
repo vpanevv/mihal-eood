@@ -55,6 +55,47 @@
       0 12px 38px -10px rgba(10, 6, 2, 0.6);
   }
 
+  /* Light twin of .liquid-glass for the nav: identical material — same blur,
+     same specular top edge, same rim — with the tint inverted to white. The
+     dark variant stays for the product dialog, which carries white text. */
+  .liquid-glass-light {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 0 rgba(26, 18, 7, 0.06),
+      0 14px 40px -12px rgba(10, 6, 2, 0.5);
+  }
+
+  /* Full-screen mobile menu in the same light material. Warmed towards cream
+     rather than pure white so it belongs to the timber palette. */
+  .liquid-glass-panel-light {
+    background-color: rgba(247, 241, 232, 0.94);
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.15) 100%
+    );
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+  }
+
+  /* A soft fall of white laid over the brown, so the palette lifts instead of
+     sitting flat. Kept off the areas that carry body copy. */
+  .white-wash {
+    background:
+      radial-gradient(80% 55% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 70%),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 0%, transparent 38%),
+      linear-gradient(to top, rgba(255, 255, 255, 0.05) 0%, transparent 22%);
+  }
+
   /* Same material, opaque enough to read a full menu against. */
   .liquid-glass-panel {
     background-color: rgba(26, 18, 7, 0.72);

@@ -13,7 +13,7 @@ const PHOTOS = [
  */
 export default function Showcase() {
   return (
-    <section aria-label="Галерия" className="bg-timber-bark px-4 py-16 md:px-8 md:py-24">
+    <section aria-label="Галерия" className="white-wash relative bg-timber-bark px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto grid max-w-[1200px] gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
         {PHOTOS.map(({ src, alt }) => (
           <figure

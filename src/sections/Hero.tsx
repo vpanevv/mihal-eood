@@ -39,6 +39,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[#3b2510] opacity-30 mix-blend-multiply" />
       <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/50 via-timber-bark/15 to-timber-bark/70" />
       <div className="hero-scrim absolute inset-0" />
+      <div className="white-wash absolute inset-0" />
       <div className="hero-vignette absolute inset-0" />
       <div className="hero-grain absolute inset-0 opacity-[0.14] mix-blend-overlay" />
 
