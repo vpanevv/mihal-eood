@@ -13,8 +13,7 @@ const WORDS = (() => {
   }))
 })()
 
-// hero.jpg is a q82 export of the original hero.png (2.1 MB → 362 KB).
-const HERO_IMAGE = '/images/hero.jpg'
+const HERO_IMAGE = '/images/new-hero.jpg'
 
 export default function Hero() {
   // If the photo is missing the gradient fallback shows through instead of a broken image.
