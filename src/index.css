@@ -195,6 +195,19 @@
     }
   }
 
+  /* Technical drawings arrive on a bright amber that glows against the brown.
+     Desaturating and darkening in place pulls it toward the sap gold already
+     in the palette, so it stays a distinct technical layer without shouting.
+     The band colour matches the filtered result, so any letterboxing blends. */
+  .profile-band {
+    background-color: #c79a45;
+    border-top: 1px solid rgba(26, 18, 7, 0.25);
+  }
+
+  .profile-band img {
+    filter: saturate(0.66) brightness(0.9);
+  }
+
   /* The carousel scrolls horizontally; its scrollbar would sit across the cards. */
   .no-scrollbar {
     scrollbar-width: none;

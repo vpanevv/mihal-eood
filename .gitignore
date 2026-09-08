@@ -4,7 +4,10 @@ dist
 *.local
 
 # Full-resolution masters kept locally. Nothing at runtime loads these — the
-# pages serve the .jpg exports beside them — and they are ~9 MB. Delete these
-# two lines if you want them versioned.
-public/images/*.png
-!public/images/hero.png
+# pages serve the .jpg exports beside them — and they are ~9 MB. Listed by
+# name rather than as *.png: a blanket glob silently swallowed the profile
+# drawings, which the product cards do load.
+public/images/1.png
+public/images/2.png
+public/images/3.png
+public/images/about-us.png
