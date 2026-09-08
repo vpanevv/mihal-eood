@@ -416,14 +416,89 @@ export default function CoverflowCarousel(props: Props) {
   // A tap on an off-centre slat brings it in; a tap on the card already at
   // centre opens it full size. Reading pos directly keeps the active index
   // current without holding it in React state.
+  // A drag that moved more than a few pixels must not also register as a tap,
+  // or a swipe ending on a card would open the lightbox behind it.
+  const draggedRef = useRef(false)
+
   const handleCardTap = useCallback(
     (index: number) => {
+      if (draggedRef.current) return
       const active = ((Math.round(pos.get()) % count) + count) % count
       if (index === active && onActivate) onActivate(index)
       else goTo(index)
     },
     [pos, count, onActivate, goTo],
   )
+
+  // ---- Swipe -------------------------------------------------------------
+  // One slot of travel is the distance the centre card moves as it steps out:
+  // half the active card, the gap, then half a slat.
+  const slotPx = sizing.activeWidth / 2 + scaledGap + sizing.restWidth / 2
+  const dragRef = useRef({ active: false, startX: 0, startPos: 0, lastX: 0, lastT: 0, velocity: 0 })
+
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      // Take over from any in-flight animation rather than fighting it.
+      if (rafRef.current != null) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+        lastTRef.current = null
+      }
+      targetRef.current = pos.get()
+      draggedRef.current = false
+      dragRef.current = {
+        active: true,
+        startX: e.clientX,
+        startPos: pos.get(),
+        lastX: e.clientX,
+        lastT: performance.now(),
+        velocity: 0,
+      }
+      ;(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId)
+    },
+    [pos],
+  )
+
+  const onPointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      const d = dragRef.current
+      if (!d.active) return
+      const dx = e.clientX - d.startX
+      if (Math.abs(dx) > 4) draggedRef.current = true
+
+      const now = performance.now()
+      const dt = now - d.lastT
+      if (dt > 0) {
+        // px/ms, smoothed a little so a jittery finish does not throw the flick.
+        const instant = (e.clientX - d.lastX) / dt
+        d.velocity = d.velocity * 0.7 + instant * 0.3
+        d.lastX = e.clientX
+        d.lastT = now
+      }
+
+      // Dragging left moves the carousel forward, so the offset is inverted.
+      pos.set(d.startPos - dx / slotPx)
+    },
+    [pos, slotPx],
+  )
+
+  const endDrag = useCallback(() => {
+    const d = dragRef.current
+    if (!d.active) return
+    d.active = false
+
+    const current = pos.get()
+    // A quick flick carries to the next slot even if the finger barely moved.
+    const flick = Math.abs(d.velocity) > 0.35 ? (d.velocity < 0 ? 1 : -1) : 0
+    targetRef.current = flick ? Math.round(current) + flick : Math.round(current)
+    ensureRunning()
+
+    // Let the click that follows pointerup through before re-enabling taps.
+    setTimeout(() => {
+      draggedRef.current = false
+    }, 0)
+  }, [pos, ensureRunning])
 
   useEffect(() => {
     return () => {
@@ -486,6 +561,10 @@ export default function CoverflowCarousel(props: Props) {
       role="region"
       aria-roledescription="карусел"
       aria-label="Галерия"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
       onMouseEnter={() => {
         isHoveredRef.current = true
       }}
