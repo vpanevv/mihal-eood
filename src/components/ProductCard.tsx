@@ -12,10 +12,16 @@ export default function ProductCard({ product, onOpen, delay }: Props) {
       type="button"
       onClick={() => onOpen(product)}
       style={{ animationDelay: `${delay}s` }}
-      className="fade-up group relative flex w-full flex-col overflow-hidden rounded-3xl text-left [isolation:isolate] focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap focus-visible:ring-offset-4 focus-visible:ring-offset-timber-bark"
+      className="fade-up group relative flex h-full w-full flex-col overflow-hidden rounded-3xl text-left [isolation:isolate] focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap focus-visible:ring-offset-4 focus-visible:ring-offset-timber-bark"
     >
       {/* Photograph, with the label overlaid as before */}
-      <div className="relative aspect-[16/10] w-full sm:aspect-[3/4]">
+      <div
+        className={
+          product.drawing
+            ? 'relative aspect-[16/10] w-full sm:aspect-[3/4]'
+            : 'relative w-full grow aspect-[16/10] sm:aspect-[3/4]'
+        }
+      >
         <img
           src={product.image}
           alt=""
@@ -51,18 +57,21 @@ export default function ProductCard({ product, onOpen, delay }: Props) {
         </div>
       </div>
 
-      {/* Milled profile. The source drawings are a bright amber that fights the
-          timber palette, so they are muted in place rather than re-exported —
-          keeps the files untouched and the amount tunable. */}
-      <div className="profile-band relative aspect-[19/10] w-full shrink-0">
-        <img
-          src={product.drawing}
-          alt={`Профил на ${product.name}`}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-        />
-      </div>
+      {/* Milled profile, where one applies. The source drawings are a bright
+          amber that fights the timber palette, so they are muted in place
+          rather than re-exported — keeps the files untouched and the amount
+          tunable. */}
+      {product.drawing && (
+        <div className="profile-band relative aspect-[19/10] w-full shrink-0">
+          <img
+            src={product.drawing}
+            alt={`Профил на ${product.name}`}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
 
       {/* Rim light, so the cards read as objects rather than cropped photos */}
       <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-white/35" />
