@@ -29,6 +29,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'suh-darven-material',
     name: 'Сух дървен материал',
+    drawing: '/images/drawing-2.png',
     image: '/images/suho-durvo.jpg',
     groups: [
       {
