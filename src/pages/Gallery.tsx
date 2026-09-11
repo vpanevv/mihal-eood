@@ -43,7 +43,7 @@ export default function Gallery() {
                 type="button"
                 onClick={() => setZoomed(i)}
                 aria-label={`Отвори ${img.alt}`}
-                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-bark/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:mb-4"
+                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-[1.5px] ring-timber-bark transition-shadow duration-500 hover:ring-timber-ember focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:mb-4"
               >
                 <img
                   src={img.srcUrl}

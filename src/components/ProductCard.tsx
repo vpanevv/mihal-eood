@@ -74,7 +74,7 @@ export default function ProductCard({ product, onOpen, delay }: Props) {
       )}
 
       {/* Rim light, so the cards read as objects rather than cropped photos */}
-      <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-white/35" />
+      <div className="pointer-events-none absolute inset-0 rounded-3xl ring-[1.5px] ring-inset ring-timber-bark transition-colors duration-500 group-hover:ring-timber-ember" />
     </button>
   )
 }

@@ -79,7 +79,7 @@ export default function CardCarousel({ cards, label }: Props) {
           <article
             key={card.image}
             aria-label={`${i + 1} от ${cards.length}`}
-            className="relative w-[82vw] shrink-0 snap-center overflow-hidden rounded-3xl [isolation:isolate] md:w-full"
+            className="relative w-[82vw] shrink-0 snap-center overflow-hidden rounded-3xl ring-[1.5px] ring-timber-bark [isolation:isolate] md:w-full"
           >
             <img
               src={card.image}

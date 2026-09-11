@@ -36,7 +36,7 @@ const headingClass =
 
 /** Underline wipes in on hover, matching the nav links. */
 const linkClass =
-  'group/link relative inline-block text-timber-bark/75 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
+  'group/link relative inline-block text-timber-bark/90 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
 
 function Underline() {
   return (
@@ -56,7 +56,7 @@ export default function Footer() {
             <PinIcon />
             Адрес
           </h2>
-          <address className="mt-4 space-y-1 font-sans text-[0.95rem] font-light not-italic leading-[1.75] text-timber-bark/75">
+          <address className="mt-4 space-y-1 font-sans text-[0.95rem] font-medium not-italic leading-[1.75] text-timber-bark/90">
             <p>гр. Разлог</p>
             <p>ул. Христо Ботев, срещу бензиностанция „Лукойл“</p>
           </address>
@@ -67,7 +67,7 @@ export default function Footer() {
             <PhoneIcon />
             Контакти
           </h2>
-          <div className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] font-light leading-[1.75]">
+          <div className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] font-medium leading-[1.75]">
             <a href="tel:+359888726194" className={linkClass}>
               0888 726 194
               <Underline />
@@ -84,14 +84,14 @@ export default function Footer() {
             <ClockIcon />
             Работно време
           </h2>
-          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-bark/75">
+          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-medium leading-[1.75] text-timber-bark/90">
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Понеделник – Петък</dt>
               <dd className="text-timber-bark">08.00 – 17.00 ч.</dd>
             </div>
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Събота – Неделя</dt>
-              <dd className="text-timber-bark/60">Почивни дни</dd>
+              <dd className="text-timber-bark/70">Почивни дни</dd>
             </div>
           </dl>
         </section>
@@ -105,7 +105,7 @@ export default function Footer() {
           >
             Михал<span className="ml-2 text-[#7d5228]">ЕООД</span>
           </Link>
-          <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-bark/55">
+          <p className="font-sans text-[0.68rem] font-medium uppercase tracking-[0.18em] text-timber-bark/70">
             © {new Date().getFullYear()} — Всички права запазени
           </p>
         </div>

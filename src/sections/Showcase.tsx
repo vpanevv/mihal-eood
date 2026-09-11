@@ -41,7 +41,7 @@ export default function Showcase() {
           <div key={src} className={i === 0 ? '' : 'mt-16 md:mt-24'}>
             {/* The sources are portrait but the trucks sit across the middle of
                 the frame, so a landscape crop keeps the subject and drops the sky. */}
-            <figure className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10 md:aspect-[16/9]">
+            <figure className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-timber-bark/5 ring-[1.5px] ring-timber-bark md:aspect-[16/9]">
               <img
                 src={src}
                 alt={alt}
@@ -68,7 +68,7 @@ export default function Showcase() {
           {PHOTOS.map(({ src, alt }) => (
             <figure
               key={src}
-              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10"
+              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-timber-bark/5 ring-[1.5px] ring-timber-bark"
             >
               <img
                 src={src}
