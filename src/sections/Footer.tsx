@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const ICON = 'h-4 w-4 shrink-0 text-timber-ember'
+const ICON = 'h-4 w-4 shrink-0 text-[#7d5228]'
 
 function PinIcon() {
   return (
@@ -32,7 +32,7 @@ function ClockIcon() {
 }
 
 const headingClass =
-  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-ember'
+  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#7d5228]'
 
 /** Underline wipes in on hover, matching the nav links. */
 const linkClass =
@@ -46,7 +46,7 @@ function Underline() {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="liquid-glass-panel white-wash relative z-10">
+    <footer id="contact" className="footer-panel relative z-10">
       {/* Hairline that catches the eye coming off the page above */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-timber-ember/30 to-transparent" />
 
@@ -103,7 +103,7 @@ export default function Footer() {
             to="/"
             className="font-display text-xs font-medium uppercase tracking-[0.32em] text-timber-bark transition-opacity hover:opacity-70"
           >
-            Михал<span className="ml-2 text-timber-ember">ЕООД</span>
+            Михал<span className="ml-2 text-[#7d5228]">ЕООД</span>
           </Link>
           <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-bark/55">
             © {new Date().getFullYear()} — Всички права запазени
