@@ -27,6 +27,8 @@ export default {
           // sap is the on-dark accent, and carries most of the new warmth.
           sap: '#e0a24f',
           cream: '#f7f0e4',
+          // The single ground colour: the tone the mobile menu already used.
+          paper: '#f7f1e8',
         },
       },
     },

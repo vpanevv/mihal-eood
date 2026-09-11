@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../sections/Nav'
 import Footer from '../sections/Footer'
-import TintedBackdrop from '../components/TintedBackdrop'
 import CardCarousel, { type Card } from '../components/CardCarousel'
 
 const CARDS: Card[] = [
@@ -37,13 +36,6 @@ export default function About() {
     <>
       <Nav />
 
-      {/* Backdrop is fixed so the cards move over a still photograph.
-          Kept at z-0 with the content lifted above it — a negative z-index
-          drops it behind the root stacking context and it stops painting
-          once the page scrolls. */}
-      <div className="fixed inset-0 z-0 overflow-hidden bg-timber-bark">
-        <TintedBackdrop src="/images/about-us.jpg" strength="copy" />
-      </div>
 
       <main className="relative z-10 min-h-svh pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         {/* The visible headline is gone, but the page still needs one heading. */}

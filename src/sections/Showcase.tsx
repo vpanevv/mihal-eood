@@ -35,13 +35,13 @@ const PHOTOS = [
  */
 export default function Showcase() {
   return (
-    <section aria-label="Галерия" className="white-wash relative bg-timber-bark px-4 py-16 md:px-8 md:py-24">
+    <section aria-label="Галерия" className="white-wash relative bg-timber-paper px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-[1200px]">
         {FEATURES.map(({ src, alt, headline }, i) => (
           <div key={src} className={i === 0 ? '' : 'mt-16 md:mt-24'}>
             {/* The sources are portrait but the trucks sit across the middle of
                 the frame, so a landscape crop keeps the subject and drops the sky. */}
-            <figure className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-white/5 ring-1 ring-inset ring-white/10 md:aspect-[16/9]">
+            <figure className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10 md:aspect-[16/9]">
               <img
                 src={src}
                 alt={alt}
@@ -53,9 +53,9 @@ export default function Showcase() {
               />
             </figure>
 
-            <h2 className="mt-9 text-center font-display text-3xl font-bold uppercase leading-[1.05] tracking-[0.01em] text-white md:mt-12 md:text-5xl">
+            <h2 className="mt-9 text-center font-display text-3xl font-bold uppercase leading-[1.05] tracking-[0.01em] text-timber-bark md:mt-12 md:text-5xl">
               {headline.map(({ text, accent }, line) => (
-                <span key={text} className={accent ? 'text-timber-sap' : undefined}>
+                <span key={text} className={accent ? 'text-timber-ember' : undefined}>
                   {line > 0 && <br />}
                   {text}
                 </span>
@@ -68,7 +68,7 @@ export default function Showcase() {
           {PHOTOS.map(({ src, alt }) => (
             <figure
               key={src}
-              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-white/5 ring-1 ring-inset ring-white/10"
+              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10"
             >
               <img
                 src={src}

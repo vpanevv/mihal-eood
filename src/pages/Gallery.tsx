@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../sections/Nav'
 import Footer from '../sections/Footer'
-import TintedBackdrop from '../components/TintedBackdrop'
 import Lightbox from '../components/Lightbox'
 import { GALLERY_IMAGES } from '../data/gallery'
 
@@ -25,15 +24,12 @@ export default function Gallery() {
     <>
       <Nav />
 
-      <div className="fixed inset-0 z-0 overflow-hidden bg-timber-bark">
-        <TintedBackdrop src="/images/services.jpg" strength="dark" />
-      </div>
 
       <main className="relative z-10 px-4 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         <div className="mx-auto max-w-[1400px]">
           <h1 className="sr-only">Галерия</h1>
 
-          <p className="fade-up mb-8 text-center font-sans text-[0.66rem] uppercase tracking-[0.22em] text-timber-cream/80 [text-shadow:0_1px_10px_rgba(28,19,9,0.9)] md:mb-12">
+          <p className="fade-up mb-8 text-center font-sans text-[0.66rem] uppercase tracking-[0.22em] text-timber-bark/60 md:mb-12">
             Натиснете снимка, за да я видите в по-голям размер
           </p>
 
@@ -47,7 +43,7 @@ export default function Gallery() {
                 type="button"
                 onClick={() => setZoomed(i)}
                 aria-label={`Отвори ${img.alt}`}
-                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-white/5 ring-1 ring-inset ring-white/10 transition-shadow duration-500 hover:ring-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:mb-4"
+                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-inset ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-bark/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:mb-4"
               >
                 <img
                   src={img.srcUrl}

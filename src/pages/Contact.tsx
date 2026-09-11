@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Nav from '../sections/Nav'
 import Footer from '../sections/Footer'
-import TintedBackdrop from '../components/TintedBackdrop'
 
 const RECIPIENT = 'mihaleood@gmail.com'
 // The exact yard entrance (41°53'10.7"N 23°28'51.8"E). Searching the street
@@ -46,9 +45,9 @@ function validate(values: Fields): Errors {
 }
 
 const fieldClass =
-  'w-full rounded-xl border bg-white/5 px-4 py-3 font-sans text-[0.95rem] font-light text-timber-cream placeholder:text-timber-cream/35 transition-colors focus:outline-none focus:ring-2 focus:ring-timber-sap/60'
+  'w-full rounded-xl border bg-timber-bark/[0.04] px-4 py-3 font-sans text-[0.95rem] font-light text-timber-bark placeholder:text-timber-bark/40 transition-colors focus:outline-none focus:ring-2 focus:ring-timber-ember/60'
 const labelClass =
-  'block font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-sap'
+  'block font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-ember'
 
 export default function Contact() {
   const [values, setValues] = useState<Fields>(EMPTY)
@@ -114,15 +113,12 @@ export default function Contact() {
   }
 
   const borderFor = (key: keyof Fields) =>
-    errors[key] ? 'border-red-400/70' : 'border-white/15 focus:border-timber-sap'
+    errors[key] ? 'border-red-500/70' : 'border-timber-bark/20 focus:border-timber-ember'
 
   return (
     <>
       <Nav />
 
-      <div className="fixed inset-0 z-0 overflow-hidden bg-timber-bark">
-        <TintedBackdrop src="/images/services.jpg" strength="dark" />
-      </div>
 
       <main className="relative z-10 px-4 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         <div className="mx-auto max-w-3xl">
@@ -133,18 +129,18 @@ export default function Contact() {
             onSubmit={onSubmit}
             className="liquid-glass-panel fade-up rounded-3xl px-6 py-10 md:px-12 md:py-14"
           >
-            <p className="font-sans text-[0.68rem] uppercase tracking-[0.24em] text-timber-sap">
+            <p className="font-sans text-[0.68rem] uppercase tracking-[0.24em] text-timber-ember">
               Пишете ни
             </p>
-            <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-[0.95] text-white md:text-5xl">
+            <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-[0.95] text-timber-bark md:text-5xl">
               Свържете се с нас
             </h2>
-            <div className="mt-6 h-px w-full bg-gradient-to-r from-timber-sap/50 via-timber-sap/15 to-transparent" />
+            <div className="mt-6 h-px w-full bg-gradient-to-r from-timber-ember/40 via-timber-ember/12 to-transparent" />
 
             {sent && (
               <p
                 role="status"
-                className="mt-8 rounded-xl border border-timber-sap/40 bg-timber-sap/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-cream"
+                className="mt-8 rounded-xl border border-timber-ember/35 bg-timber-ember/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-bark"
               >
                 {FORM_ENDPOINT
                   ? 'Благодарим! Съобщението е изпратено.'
@@ -156,7 +152,7 @@ export default function Contact() {
             {failed && (
               <p
                 role="alert"
-                className="mt-8 rounded-xl border border-red-400/50 bg-red-400/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-cream"
+                className="mt-8 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-bark"
               >
                 {failed}
               </p>
@@ -182,7 +178,7 @@ export default function Contact() {
                   className={`mt-3 ${fieldClass} ${borderFor('name')}`}
                 />
                 {errors.name && (
-                  <p id="name-error" className="mt-2 font-sans text-[0.8rem] text-red-300">
+                  <p id="name-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
                     {errors.name}
                   </p>
                 )}
@@ -207,7 +203,7 @@ export default function Contact() {
                   className={`mt-3 ${fieldClass} ${borderFor('email')}`}
                 />
                 {errors.email && (
-                  <p id="email-error" className="mt-2 font-sans text-[0.8rem] text-red-300">
+                  <p id="email-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
                     {errors.email}
                   </p>
                 )}
@@ -231,7 +227,7 @@ export default function Contact() {
                   className={`mt-3 ${fieldClass} ${borderFor('subject')}`}
                 />
                 {errors.subject && (
-                  <p id="subject-error" className="mt-2 font-sans text-[0.8rem] text-red-300">
+                  <p id="subject-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
                     {errors.subject}
                   </p>
                 )}
@@ -255,7 +251,7 @@ export default function Contact() {
                   className={`mt-3 resize-y ${fieldClass} ${borderFor('message')}`}
                 />
                 {errors.message && (
-                  <p id="message-error" className="mt-2 font-sans text-[0.8rem] text-red-300">
+                  <p id="message-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
                     {errors.message}
                   </p>
                 )}
@@ -276,14 +272,14 @@ export default function Contact() {
                     aria-invalid={!!errors.human}
                     aria-describedby={errors.human ? 'human-error' : undefined}
                     data-error={!!errors.human}
-                    className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-white/25 bg-white/5 text-timber-sap accent-timber-sap focus:outline-none focus:ring-2 focus:ring-timber-sap/60"
+                    className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-timber-bark/25 bg-timber-bark/[0.04] text-timber-sap accent-timber-ember focus:outline-none focus:ring-2 focus:ring-timber-ember/60"
                   />
-                  <span className="font-sans text-[0.9rem] font-light leading-snug text-timber-cream/85">
+                  <span className="font-sans text-[0.9rem] font-light leading-snug text-timber-bark/75">
                     Не съм робот <span aria-hidden="true">*</span>
                   </span>
                 </label>
                 {errors.human && (
-                  <p id="human-error" className="mt-2 font-sans text-[0.8rem] text-red-300">
+                  <p id="human-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
                     {errors.human}
                   </p>
                 )}
@@ -300,7 +296,7 @@ export default function Contact() {
               </button>
             </div>
 
-            <p className="mt-6 font-sans text-[0.78rem] font-light text-timber-cream/70">
+            <p className="mt-6 font-sans text-[0.78rem] font-light text-timber-bark/60">
               Полетата, отбелязани със <span aria-hidden="true">*</span>, са задължителни.
             </p>
           </form>
@@ -312,14 +308,14 @@ export default function Contact() {
             style={{ animationDelay: '0.15s' }}
           >
             <div className="flex flex-wrap items-baseline justify-between gap-3 px-6 py-6 md:px-10">
-              <h2 className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-timber-sap">
+              <h2 className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-timber-ember">
                 Намерете ни
               </h2>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${MAP_COORDS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link relative font-sans text-[0.85rem] font-light text-timber-cream/85 transition-colors hover:text-white"
+                className="group/link relative font-sans text-[0.85rem] font-light text-timber-bark/75 transition-colors hover:text-white"
               >
                 Отвори в Google Maps
                 <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-sap transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />

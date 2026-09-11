@@ -117,7 +117,7 @@ export default function CardCarousel({ cards, label }: Props) {
               aria-label={`Карта ${i + 1}`}
               onClick={() => goTo(i)}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === active ? 'w-8 bg-timber-sap' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                i === active ? 'w-8 bg-timber-ember' : 'w-1.5 bg-timber-bark/25 hover:bg-timber-bark/50'
               }`}
             />
           ))}
@@ -129,7 +129,7 @@ export default function CardCarousel({ cards, label }: Props) {
             onClick={() => goTo(Math.max(active - 1, 0))}
             disabled={active === 0}
             aria-label="Предишна карта"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark disabled:pointer-events-none disabled:opacity-30"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-timber-bark/25 text-timber-bark transition-colors hover:border-timber-bark hover:bg-timber-bark hover:text-timber-paper disabled:pointer-events-none disabled:opacity-30"
           >
             ←
           </button>
@@ -138,7 +138,7 @@ export default function CardCarousel({ cards, label }: Props) {
             onClick={() => goTo(Math.min(active + 1, cards.length - 1))}
             disabled={active === cards.length - 1}
             aria-label="Следваща карта"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark disabled:pointer-events-none disabled:opacity-30"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-timber-bark/25 text-timber-bark transition-colors hover:border-timber-bark hover:bg-timber-bark hover:text-timber-paper disabled:pointer-events-none disabled:opacity-30"
           >
             →
           </button>

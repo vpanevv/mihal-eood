@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const ICON = 'h-4 w-4 shrink-0 text-timber-sap'
+const ICON = 'h-4 w-4 shrink-0 text-timber-ember'
 
 function PinIcon() {
   return (
@@ -32,15 +32,15 @@ function ClockIcon() {
 }
 
 const headingClass =
-  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-sap'
+  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-ember'
 
 /** Underline wipes in on hover, matching the nav links. */
 const linkClass =
-  'group/link relative inline-block text-timber-cream/85 transition-colors hover:text-white focus-visible:text-white'
+  'group/link relative inline-block text-timber-bark/75 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
 
 function Underline() {
   return (
-    <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-sap transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />
+    <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-ember transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />
   )
 }
 
@@ -48,7 +48,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="liquid-glass-panel white-wash relative z-10">
       {/* Hairline that catches the eye coming off the page above */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-timber-sap/40 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-timber-ember/30 to-transparent" />
 
       <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-14 sm:grid-cols-2 md:px-10 md:py-16 lg:grid-cols-3 lg:gap-8">
         <section>
@@ -56,7 +56,7 @@ export default function Footer() {
             <PinIcon />
             Адрес
           </h2>
-          <address className="mt-4 space-y-1 font-sans text-[0.95rem] font-light not-italic leading-[1.75] text-timber-cream/85">
+          <address className="mt-4 space-y-1 font-sans text-[0.95rem] font-light not-italic leading-[1.75] text-timber-bark/75">
             <p>гр. Разлог</p>
             <p>ул. Христо Ботев, срещу бензиностанция „Лукойл“</p>
           </address>
@@ -84,28 +84,28 @@ export default function Footer() {
             <ClockIcon />
             Работно време
           </h2>
-          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-cream/85">
+          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-bark/75">
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Понеделник – Петък</dt>
-              <dd className="text-white">08.00 – 17.00 ч.</dd>
+              <dd className="text-timber-bark">08.00 – 17.00 ч.</dd>
             </div>
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Събота – Неделя</dt>
-              <dd className="text-timber-cream/70">Почивни дни</dd>
+              <dd className="text-timber-bark/60">Почивни дни</dd>
             </div>
           </dl>
         </section>
       </div>
 
-      <div className="border-t border-white/10">
+      <div className="border-t border-timber-bark/10">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row md:px-10">
           <Link
             to="/"
-            className="font-display text-xs font-medium uppercase tracking-[0.32em] text-white transition-opacity hover:opacity-70"
+            className="font-display text-xs font-medium uppercase tracking-[0.32em] text-timber-bark transition-opacity hover:opacity-70"
           >
-            Михал<span className="ml-2 text-timber-sap">ЕООД</span>
+            Михал<span className="ml-2 text-timber-ember">ЕООД</span>
           </Link>
-          <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-cream/65">
+          <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-bark/55">
             © {new Date().getFullYear()} — Всички права запазени
           </p>
         </div>

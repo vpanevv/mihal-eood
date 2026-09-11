@@ -11,7 +11,7 @@
   }
 
   body {
-    @apply bg-timber-bark text-timber-cream;
+    @apply bg-timber-paper text-timber-bark;
   }
 }
 
@@ -69,9 +69,8 @@
     -webkit-backdrop-filter: blur(18px) saturate(150%);
     box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-      inset 0 -1px 0 0 rgba(26, 18, 7, 0.06),
-      0 14px 40px -12px rgba(20, 13, 5, 0.4);
+      inset 0 0 0 1px rgba(64, 45, 24, 0.12),
+      0 14px 40px -14px rgba(64, 45, 24, 0.45);
   }
 
   /* Full-screen mobile menu in the same light material. Warmed towards cream
@@ -89,23 +88,19 @@
 
   /* A soft fall of white laid over the brown, so the palette lifts instead of
      sitting flat. Kept off the areas that carry body copy. */
+  /* On paper a white wash does nothing, so this warms rather than lightens. */
   .white-wash {
     background:
-      radial-gradient(80% 55% at 50% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 70%),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 0%, transparent 38%),
-      linear-gradient(to top, rgba(255, 255, 255, 0.05) 0%, transparent 22%);
+      radial-gradient(85% 60% at 50% 0%, rgba(224, 162, 79, 0.1) 0%, transparent 72%),
+      linear-gradient(to bottom, rgba(64, 45, 24, 0.03) 0%, transparent 40%);
   }
 
   /* Same material, opaque enough to read a full menu against. */
   .liquid-glass-panel {
-    background-color: rgba(64, 45, 24, 0.62);
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.13) 0%,
-      rgba(255, 255, 255, 0.03) 100%
-    );
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: #fdfaf4;
+    box-shadow:
+      inset 0 0 0 1px rgba(64, 45, 24, 0.1),
+      0 10px 30px -18px rgba(64, 45, 24, 0.5);
   }
 
   /* CTA button — adapted from Uiverse.io by gharsh11032000, recoloured white.
@@ -117,8 +112,8 @@
     padding: 13px 24px;
     font-size: 13px;
     line-height: 1;
-    color: #fff;
-    border: 2px solid #fff;
+    color: theme('colors.timber.bark');
+    border: 2px solid theme('colors.timber.bark');
     border-radius: 34px;
     background-color: transparent;
     font-weight: 600;
@@ -136,7 +131,7 @@
     border-radius: inherit;
     scale: 0;
     z-index: 0;
-    background-color: #fff;
+    background-color: theme('colors.timber.bark');
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
@@ -156,12 +151,12 @@
   .cta-button:hover,
   .cta-button:focus-visible {
     scale: 1.06;
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 24px rgba(64, 45, 24, 0.25);
   }
 
   .cta-button:hover > span,
   .cta-button:focus-visible > span {
-    color: theme('colors.timber.bark');
+    color: theme('colors.timber.paper');
   }
 
   .cta-button:active {

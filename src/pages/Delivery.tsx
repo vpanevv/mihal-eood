@@ -2,9 +2,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../sections/Nav'
 import Footer from '../sections/Footer'
-import TintedBackdrop from '../components/TintedBackdrop'
 
-const ICON = 'h-9 w-9 text-timber-sap md:h-10 md:w-10'
+const ICON = 'h-9 w-9 text-timber-ember md:h-10 md:w-10'
 
 function WarehouseIcon() {
   return (
@@ -53,15 +52,12 @@ export default function Delivery() {
     <>
       <Nav />
 
-      <div className="fixed inset-0 z-0 overflow-hidden bg-timber-bark">
-        <TintedBackdrop src="/images/hero.jpg" strength="copy" />
-      </div>
 
       <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
         <h1 className="sr-only">Услуги</h1>
 
         <p
-          className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-white [text-shadow:0_2px_24px_rgba(18,12,4,0.7)] md:text-5xl"
+          className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-timber-bark md:text-5xl"
           style={{ animationDelay: '0.15s' }}
         >
           Разполагаме с:
@@ -75,7 +71,7 @@ export default function Delivery() {
               style={{ animationDelay: `${0.3 + i * 0.1}s` }}
             >
               <Icon />
-              <h2 className="font-display text-lg font-bold uppercase leading-tight tracking-[0.06em] text-white md:text-xl">
+              <h2 className="font-display text-lg font-bold uppercase leading-tight tracking-[0.06em] text-timber-bark md:text-xl">
                 {label}
               </h2>
             </div>
