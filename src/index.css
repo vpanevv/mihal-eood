@@ -52,7 +52,7 @@
       inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
       inset 0 0 0 1px rgba(255, 255, 255, 0.14),
       inset 0 -1px 0 0 rgba(255, 255, 255, 0.07),
-      0 12px 38px -10px rgba(10, 6, 2, 0.6);
+      0 12px 38px -10px rgba(20, 13, 5, 0.45);
   }
 
   /* Light twin of .liquid-glass for the nav: identical material — same blur,
@@ -71,7 +71,7 @@
       inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
       inset 0 0 0 1px rgba(255, 255, 255, 0.5),
       inset 0 -1px 0 0 rgba(26, 18, 7, 0.06),
-      0 14px 40px -12px rgba(10, 6, 2, 0.5);
+      0 14px 40px -12px rgba(20, 13, 5, 0.4);
   }
 
   /* Full-screen mobile menu in the same light material. Warmed towards cream
@@ -91,14 +91,14 @@
      sitting flat. Kept off the areas that carry body copy. */
   .white-wash {
     background:
-      radial-gradient(80% 55% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 70%),
+      radial-gradient(80% 55% at 50% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 70%),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 0%, transparent 38%),
       linear-gradient(to top, rgba(255, 255, 255, 0.05) 0%, transparent 22%);
   }
 
   /* Same material, opaque enough to read a full menu against. */
   .liquid-glass-panel {
-    background-color: rgba(26, 18, 7, 0.72);
+    background-color: rgba(64, 45, 24, 0.62);
     background-image: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0.13) 0%,
@@ -229,8 +229,8 @@
     background: linear-gradient(
       to bottom,
       transparent 18%,
-      rgba(20, 13, 5, 0.42) 46%,
-      rgba(20, 13, 5, 0.42) 58%,
+      rgba(40, 28, 14, 0.46) 46%,
+      rgba(40, 28, 14, 0.46) 58%,
       transparent 86%
     );
   }
@@ -239,15 +239,15 @@
     background: radial-gradient(
       120% 85% at 50% 45%,
       transparent 35%,
-      rgba(20, 13, 5, 0.55) 100%
+      rgba(40, 28, 14, 0.40) 100%
     );
   }
 
   /* Stand-in so the hero still reads before the photo is dropped in. */
   .hero-fallback {
     background:
-      radial-gradient(90% 70% at 65% 35%, #a8763f 0%, transparent 60%),
-      linear-gradient(160deg, #4a3418 0%, #241708 55%, #120c04 100%);
+      radial-gradient(90% 70% at 65% 35%, #c08f4d 0%, transparent 60%),
+      linear-gradient(160deg, #6b4c22 0%, #46311a 55%, #2e2011 100%);
   }
 }
 

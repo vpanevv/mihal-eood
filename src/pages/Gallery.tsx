@@ -33,7 +33,7 @@ export default function Gallery() {
         <div className="mx-auto max-w-[1400px]">
           <h1 className="sr-only">Галерия</h1>
 
-          <p className="fade-up mb-8 text-center font-sans text-[0.66rem] uppercase tracking-[0.22em] text-timber-cream/45 md:mb-12">
+          <p className="fade-up mb-8 text-center font-sans text-[0.66rem] uppercase tracking-[0.22em] text-timber-cream/80 [text-shadow:0_1px_10px_rgba(28,19,9,0.9)] md:mb-12">
             Натиснете снимка, за да я видите в по-голям размер
           </p>
 

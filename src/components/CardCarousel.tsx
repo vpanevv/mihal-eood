@@ -87,10 +87,12 @@ export default function CardCarousel({ cards, label }: Props) {
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
-            {/* Light enough to read the photograph through, with a scrim behind
-                the copy doing the contrast work instead of a flat page-wide tint. */}
-            <div className="absolute inset-0 bg-[#3b2510] opacity-20 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-timber-bark/45" />
+            {/* This is the one card that carries paragraphs rather than a short
+                label, so it holds more tint than the rest of the site — even at
+                50% it reads brighter than before, because the brown itself is
+                now a warm coffee rather than near black. */}
+            <div className="absolute inset-0 bg-[#4a3116] opacity-15 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-timber-bark/50" />
             <div className="hero-scrim absolute inset-0" />
             <div className="hero-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
 

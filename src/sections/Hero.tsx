@@ -36,8 +36,8 @@ export default function Hero() {
       )}
 
       {/* Tint: a warm multiply, then a vertical fall-off so the type stays legible */}
-      <div className="absolute inset-0 bg-[#3b2510] opacity-30 mix-blend-multiply" />
-      <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/50 via-timber-bark/15 to-timber-bark/70" />
+      <div className="absolute inset-0 bg-[#4a3116] opacity-20 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/40 via-timber-bark/10 to-timber-bark/60" />
       <div className="hero-scrim absolute inset-0" />
       <div className="white-wash absolute inset-0" />
       <div className="hero-vignette absolute inset-0" />

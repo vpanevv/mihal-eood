@@ -300,7 +300,7 @@ export default function Contact() {
               </button>
             </div>
 
-            <p className="mt-6 font-sans text-[0.78rem] font-light text-timber-cream/50">
+            <p className="mt-6 font-sans text-[0.78rem] font-light text-timber-cream/70">
               Полетата, отбелязани със <span aria-hidden="true">*</span>, са задължителни.
             </p>
           </form>

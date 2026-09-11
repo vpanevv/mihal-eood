@@ -91,7 +91,7 @@ export default function Footer() {
             </div>
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Събота – Неделя</dt>
-              <dd className="text-timber-cream/55">Почивни дни</dd>
+              <dd className="text-timber-cream/70">Почивни дни</dd>
             </div>
           </dl>
         </section>
@@ -105,7 +105,7 @@ export default function Footer() {
           >
             Михал<span className="ml-2 text-timber-sap">ЕООД</span>
           </Link>
-          <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-cream/45">
+          <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-timber-cream/65">
             © {new Date().getFullYear()} — Всички права запазени
           </p>
         </div>
