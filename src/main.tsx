@@ -6,8 +6,7 @@ import ScrollToTop from './components/ScrollToTop.tsx'
 import './index.css'
 
 // The landing page is what most visitors see first, so it stays in the main
-// bundle. Everything else — including framer-motion, which only the gallery
-// needs — is split out and fetched when its route is opened.
+// bundle. Every other route is split out and fetched when it is opened.
 const About = lazy(() => import('./pages/About.tsx'))
 const Products = lazy(() => import('./pages/Products.tsx'))
 const Delivery = lazy(() => import('./pages/Delivery.tsx'))
