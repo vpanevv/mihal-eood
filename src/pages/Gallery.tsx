@@ -79,8 +79,14 @@ export default function Gallery() {
       <Footer />
 
       <Lightbox
-        image={zoomed === null ? null : GALLERY_IMAGES[zoomed]}
+        images={GALLERY_IMAGES}
+        index={zoomed}
         onClose={() => setZoomed(null)}
+        onStep={(step) =>
+          setZoomed((i) =>
+            i === null ? i : (i + step + GALLERY_IMAGES.length) % GALLERY_IMAGES.length,
+          )
+        }
       />
     </>
   )
