@@ -13,7 +13,10 @@ const WORDS = (() => {
   }))
 })()
 
-const HERO_IMAGE = '/images/new-hero.jpg'
+// The original yard photograph. hero.jpg is the q82 export of hero.png —
+// pixel-identical at 1774x887, 362 KB against 2.1 MB. This is the landing
+// page's LCP image, so it serves the export.
+const HERO_IMAGE = '/images/hero.jpg'
 
 export default function Hero() {
   // If the photo is missing the gradient fallback shows through instead of a broken image.

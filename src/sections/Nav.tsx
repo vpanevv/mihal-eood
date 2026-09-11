@@ -92,7 +92,7 @@ export default function Nav() {
             Михал<span className="ml-2 text-timber-ember">ЕООД</span>
           </Link>
 
-          <nav aria-label="Основна навигация" className="hidden md:block">
+          <nav aria-label="Основна навигация" className="hidden lg:block">
             <ul className="flex items-center gap-11">
               {LINKS.map(({ label, href, route }) => {
                 const className =
@@ -126,7 +126,7 @@ export default function Nav() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? 'Затвори менюто' : 'Отвори менюто'}
-            className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[7px] md:hidden"
+            className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[7px] lg:hidden"
           >
             <span
               className={`block h-px w-7 bg-timber-bark transition-transform duration-300 ${
@@ -147,7 +147,7 @@ export default function Nav() {
       <div
         id="mobile-menu"
         hidden={!menuOpen}
-        className="liquid-glass-panel-light fixed inset-0 z-40 md:hidden"
+        className="liquid-glass-panel-light fixed inset-0 z-40 lg:hidden"
       >
         <nav aria-label="Мобилна навигация" className="flex h-full items-center px-8">
           <ul className="w-full space-y-2">
