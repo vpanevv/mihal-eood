@@ -11,7 +11,15 @@
   }
 
   body {
-    @apply bg-timber-paper text-timber-bark;
+    @apply text-timber-bark;
+    /* Fixed, so the wash reads as one ground across the whole page rather
+       than restarting per section. */
+    background-color: theme('colors.timber.paper');
+    background-image:
+      radial-gradient(110% 70% at 50% 0%, #fdfbf6 0%, transparent 62%),
+      radial-gradient(80% 50% at 100% 100%, rgba(224, 162, 79, 0.14) 0%, transparent 70%),
+      linear-gradient(180deg, #faf6ef 0%, #f4ece0 55%, #efe4d4 100%);
+    background-attachment: fixed;
   }
 }
 
@@ -55,32 +63,30 @@
       0 12px 38px -10px rgba(20, 13, 5, 0.45);
   }
 
-  /* Light twin of .liquid-glass for the nav: identical material — same blur,
-     same specular top edge, same rim — with the tint inverted to white. The
-     dark variant stays for the product dialog, which carries white text. */
+  /* The nav is the one dark element: it has to hold against both the paper
+     pages and the hero photograph, and a pale bar disappeared on both. */
   .liquid-glass-light {
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.34) 0%,
-      rgba(255, 255, 255, 0.1) 45%,
-      rgba(255, 255, 255, 0.2) 100%
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.03) 45%,
+      rgba(255, 255, 255, 0.07) 100%
     );
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
-      inset 0 0 0 1px rgba(64, 45, 24, 0.12),
-      0 14px 40px -14px rgba(64, 45, 24, 0.45);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 16px 40px -14px rgba(64, 45, 24, 0.55);
   }
 
-  /* Full-screen mobile menu in the same light material. Warmed towards cream
-     rather than pure white so it belongs to the timber palette. */
+  /* Mobile menu follows the bar into the dark. */
   .liquid-glass-panel-light {
-    background-color: rgba(247, 241, 232, 0.94);
+    background-color: rgba(52, 37, 20, 0.96);
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0.15) 100%
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%
     );
     backdrop-filter: blur(16px) saturate(150%);
     -webkit-backdrop-filter: blur(16px) saturate(150%);
@@ -161,6 +167,26 @@
 
   .cta-button:active {
     scale: 1;
+  }
+
+  /* The hero's button sits on a photograph, not on paper, so it inverts. */
+  .cta-button.cta-button--light {
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .cta-button.cta-button--light::before {
+    background-color: #fff;
+  }
+
+  .cta-button.cta-button--light:hover > span,
+  .cta-button.cta-button--light:focus-visible > span {
+    color: theme('colors.timber.bark');
+  }
+
+  .cta-button.cta-button--light:hover,
+  .cta-button.cta-button--light:focus-visible {
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
   }
 
   /* Compact variant for secondary actions such as the back link. */

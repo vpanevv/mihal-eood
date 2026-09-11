@@ -13,7 +13,7 @@ const LINKS = [
 const DARKEN_OVER = 140
 
 /** Tint opacity for a given scroll progress (0–1). */
-const tintFor = (progress: number) => 0.78 + 0.17 * progress
+const tintFor = (progress: number) => 0.8 + 0.14 * progress
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -80,26 +80,26 @@ export default function Nav() {
           <div
             ref={tintRef}
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-white"
-            style={{ opacity: 0.78 }}
+            className="pointer-events-none absolute inset-0 bg-timber-bark"
+            style={{ opacity: 0.8 }}
           />
 
           <div className="relative flex h-full items-center justify-between px-6 md:px-10">
           <Link
             to="/"
-            className="font-display text-sm font-medium uppercase tracking-[0.32em] text-timber-bark transition-opacity hover:opacity-60 md:text-base"
+            className="font-display text-sm font-medium uppercase tracking-[0.32em] text-white transition-opacity hover:opacity-70 md:text-base"
           >
-            Михал<span className="ml-2 text-timber-ember">ЕООД</span>
+            Михал<span className="ml-2 text-timber-sap">ЕООД</span>
           </Link>
 
           <nav aria-label="Основна навигация" className="hidden md:block">
             <ul className="flex items-center gap-11">
               {LINKS.map(({ label, href, route }) => {
                 const className =
-                  'group relative block font-serif text-xl tracking-[0.02em] text-timber-bark/80 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
+                  'group relative block font-serif text-xl tracking-[0.02em] text-white/80 transition-colors hover:text-white focus-visible:text-white'
                 // Underline wipes in from the left, out to the right
                 const underline = (
-                  <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-timber-ember transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100" />
+                  <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-timber-sap transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100" />
                 )
                 return (
                   <li key={href}>
@@ -129,12 +129,12 @@ export default function Nav() {
             className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[7px] md:hidden"
           >
             <span
-              className={`block h-px w-7 bg-timber-bark transition-transform duration-300 ${
+              className={`block h-px w-7 bg-white transition-transform duration-300 ${
                 menuOpen ? 'translate-y-[4px] rotate-45' : ''
               }`}
             />
             <span
-              className={`block h-px w-7 bg-timber-bark transition-transform duration-300 ${
+              className={`block h-px w-7 bg-white transition-transform duration-300 ${
                 menuOpen ? '-translate-y-[4px] -rotate-45' : ''
               }`}
             />
@@ -157,7 +157,7 @@ export default function Nav() {
                   <Link
                     to={href}
                     onClick={() => setMenuOpen(false)}
-                    className="block py-3 font-serif text-4xl text-timber-bark"
+                    className="block py-3 font-serif text-4xl text-white"
                   >
                     {label}
                   </Link>
@@ -165,7 +165,7 @@ export default function Nav() {
                   <a
                     href={href}
                     onClick={() => setMenuOpen(false)}
-                    className="block py-3 font-serif text-4xl text-timber-bark"
+                    className="block py-3 font-serif text-4xl text-white"
                   >
                     {label}
                   </a>

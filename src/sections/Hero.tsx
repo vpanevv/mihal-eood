@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const HEADLINE = 'МИХАЛ ЕООД'
@@ -12,13 +13,39 @@ const WORDS = (() => {
   }))
 })()
 
+const HERO_IMAGE = '/images/new-hero.jpg'
+
 export default function Hero() {
+  // If the photo is missing the gradient fallback shows through instead of a broken image.
+  const [photoFailed, setPhotoFailed] = useState(false)
+
   return (
-    <section className="white-wash relative h-svh min-h-[560px] w-full overflow-hidden bg-timber-paper">
+    <section className="hero-fallback relative h-svh min-h-[560px] w-full overflow-hidden">
+      {/* Photograph */}
+      {!photoFailed && (
+        <img
+          src={HERO_IMAGE}
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          // Lowercase so React 18 passes it through; the camelCase prop is React 19+.
+          {...{ fetchpriority: 'high' }}
+          className="hero-kenburns absolute inset-0 h-full w-full object-cover object-center"
+          onError={() => setPhotoFailed(true)}
+        />
+      )}
+
+      {/* Tint: a warm multiply, then a vertical fall-off so the type stays legible */}
+      <div className="absolute inset-0 bg-[#4a3116] opacity-20 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/40 via-timber-bark/10 to-timber-bark/60" />
+      <div className="hero-scrim absolute inset-0" />
+      <div className="hero-vignette absolute inset-0" />
+      <div className="hero-grain absolute inset-0 opacity-[0.14] mix-blend-overlay" />
+
       {/* Headline + CTA */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
         {/* Wraps to two lines on phones, so it can be sized far larger there than the one-line desktop setting */}
-        <h1 className="text-center font-display text-[clamp(3rem,16vw,6rem)] font-bold uppercase leading-[0.86] tracking-[0.005em] text-timber-bark md:text-[min(10.5vw,12rem)]">
+        <h1 className="text-center font-display text-[clamp(3rem,16vw,6rem)] font-bold uppercase leading-[0.86] tracking-[0.005em] text-white [text-shadow:0_2px_40px_rgba(18,12,4,0.55)] md:text-[min(10.5vw,12rem)]">
           <span className="sr-only">{HEADLINE}</span>
           {WORDS.map(({ word, glyphs }) => (
             <span key={word} aria-hidden="true" className="mx-[0.14em] inline-block whitespace-nowrap">
@@ -36,10 +63,11 @@ export default function Hero() {
           ))}
         </h1>
 
-        {/* CTA */}
+        {/* CTA — the light variant, since this one sits on a photograph rather
+            than on paper like every other button on the site. */}
         <Link
           to="/products"
-          className="cta-button fade-up mt-10 font-sans uppercase tracking-[0.14em] md:mt-12 md:tracking-[0.18em]"
+          className="cta-button cta-button--light fade-up mt-10 font-sans uppercase tracking-[0.14em] md:mt-12 md:tracking-[0.18em]"
           style={{ animationDelay: '1.5s' }}
         >
           <span>Разгледай нашите продукти</span>
@@ -48,7 +76,7 @@ export default function Hero() {
 
       {/* Hairline rule that hands the eye off to whatever section comes next */}
       <div
-        className="fade-up absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-timber-ember/35 to-transparent"
+        className="fade-up absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-timber-sap/45 to-transparent"
         style={{ animationDelay: '1.6s' }}
       />
     </section>

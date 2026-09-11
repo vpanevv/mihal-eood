@@ -35,7 +35,7 @@ const PHOTOS = [
  */
 export default function Showcase() {
   return (
-    <section aria-label="Галерия" className="white-wash relative bg-timber-paper px-4 py-16 md:px-8 md:py-24">
+    <section aria-label="Галерия" className="white-wash relative px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-[1200px]">
         {FEATURES.map(({ src, alt, headline }, i) => (
           <div key={src} className={i === 0 ? '' : 'mt-16 md:mt-24'}>
