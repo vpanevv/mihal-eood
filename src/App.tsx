@@ -15,7 +15,7 @@ export default function App() {
   return (
     <>
       <Nav />
-      <main id="top" className="bg-timber-bark">
+      <main id="top">
         <Hero />
         <Showcase />
       </main>

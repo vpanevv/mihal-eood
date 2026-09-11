@@ -63,33 +63,38 @@
       0 12px 38px -10px rgba(20, 13, 5, 0.45);
   }
 
-  /* The nav is the one dark element: it has to hold against both the paper
-     pages and the hero photograph, and a pale bar disappeared on both. */
+  /* Cream glass. On the paper pages there is little behind it to blur, so the
+     glassiness has to come from the edges: a bright specular line along the
+     top, a lit rim, an inner bottom bounce and a soft lift off the page. The
+     blur and saturation still do the work over the hero photograph. */
   .liquid-glass-light {
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.14) 0%,
-      rgba(255, 255, 255, 0.03) 45%,
-      rgba(255, 255, 255, 0.07) 100%
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.18) 42%,
+      rgba(255, 253, 250, 0.42) 100%
     );
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 16px 40px -14px rgba(64, 45, 24, 0.55);
+      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.95),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+      inset 0 -1.5px 2px -1px rgba(255, 255, 255, 0.75),
+      inset 0 -1px 0 0 rgba(64, 45, 24, 0.07),
+      0 2px 6px -2px rgba(64, 45, 24, 0.12),
+      0 18px 45px -18px rgba(64, 45, 24, 0.42);
   }
 
-  /* Mobile menu follows the bar into the dark. */
+  /* Mobile menu in the same cream glass. */
   .liquid-glass-panel-light {
-    background-color: rgba(52, 37, 20, 0.96);
+    background-color: rgba(249, 244, 236, 0.9);
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 100%
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.3) 100%
     );
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(26px) saturate(180%);
+    -webkit-backdrop-filter: blur(26px) saturate(180%);
   }
 
   /* A soft fall of white laid over the brown, so the palette lifts instead of
