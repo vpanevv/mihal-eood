@@ -66,12 +66,23 @@ export default function Hero() {
           ))}
         </h1>
 
+        {/* Supporting line. Lands after the headline's glyph sweep and before
+            the button, so the three read in order. Breaks between the two
+            sentences on phones rather than mid-phrase. */}
+        <p
+          className="fade-up mt-6 text-center font-display text-[clamp(1rem,4.6vw,1.35rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-8 md:text-[1.7rem] md:tracking-[0.16em]"
+          style={{ animationDelay: '1.2s' }}
+        >
+          <span className="block sm:inline">Дърво с характер.</span>{' '}
+          <span className="block sm:inline">Качество, което остава.</span>
+        </p>
+
         {/* CTA — the light variant, since this one sits on a photograph rather
             than on paper like every other button on the site. */}
         <Link
           to="/products"
-          className="cta-button cta-button--light fade-up mt-10 font-sans uppercase tracking-[0.14em] md:mt-12 md:tracking-[0.18em]"
-          style={{ animationDelay: '1.5s' }}
+          className="cta-button cta-button--light fade-up mt-8 font-sans uppercase tracking-[0.14em] md:mt-10 md:tracking-[0.18em]"
+          style={{ animationDelay: '1.45s' }}
         >
           <span>Разгледай нашите продукти</span>
         </Link>
