@@ -35,7 +35,7 @@ const PHOTOS = [
  */
 export default function Showcase() {
   return (
-    <section aria-label="Галерия" className="relative isolate overflow-hidden px-4 py-16 md:px-8 md:py-24">
+    <section aria-label="Галерия" className="relative isolate overflow-hidden px-3 py-12 sm:px-4 md:px-8 md:py-20">
       <div aria-hidden="true" className="showcase-glow pointer-events-none absolute inset-0 -z-10" />
       <div className="mx-auto max-w-[1200px]">
         {/* Checkerboard: photo left / headline right, then swapped. Two columns
@@ -46,13 +46,13 @@ export default function Showcase() {
           return (
             <div
               key={src}
-              className={`grid grid-cols-2 items-center gap-3 sm:gap-6 md:gap-10 ${i === 0 ? '' : 'mt-8 sm:mt-12 md:mt-20'}`}
+              className={`grid grid-cols-2 items-center gap-2.5 sm:gap-5 md:gap-8 ${i === 0 ? '' : 'mt-5 sm:mt-10 md:mt-14'}`}
             >
               {/* Photo on a cream mat, as in the reference */}
               <div
-                className={`rounded-lg bg-[#ebe0cf] p-1.5 shadow-[0_10px_30px_-18px_rgba(64,45,24,0.55)] sm:p-2.5 md:rounded-xl md:p-3.5 ${flipped ? 'order-2' : ''}`}
+                className={`rounded-lg bg-[#ebe0cf] p-1 shadow-[0_10px_30px_-18px_rgba(64,45,24,0.55)] sm:p-2 md:rounded-xl md:p-3 ${flipped ? 'order-2' : ''}`}
               >
-                <figure className="group relative aspect-[3/4] w-full overflow-hidden rounded-md bg-timber-bark/5 ring-[1.5px] ring-timber-bark sm:aspect-[4/3] md:rounded-lg">
+                <figure className="group relative aspect-[2/3] w-full overflow-hidden rounded-md bg-timber-bark/5 ring-[1.5px] ring-timber-bark sm:aspect-[4/3] md:rounded-lg">
                   <img
                     src={src}
                     alt={alt}
@@ -67,9 +67,9 @@ export default function Showcase() {
 
               {/* Headline, straight on the glow — no panel */}
               <div
-                className={`flex items-center justify-center px-1 py-6 sm:px-4 md:px-8 ${flipped ? 'order-1' : ''}`}
+                className={`flex items-center justify-center px-0.5 py-2 sm:px-3 md:px-6 ${flipped ? 'order-1' : ''}`}
               >
-                <h2 className="text-center font-display text-[clamp(0.95rem,4.8vw,1.5rem)] font-bold uppercase leading-[1.1] tracking-[0.01em] text-timber-bark sm:text-3xl md:text-4xl lg:text-5xl">
+                <h2 className="text-center font-display text-[clamp(1.2rem,6.6vw,2.25rem)] font-bold uppercase leading-[1.05] tracking-[0.005em] text-timber-bark sm:text-4xl md:text-5xl lg:text-6xl">
                   {headline.map(({ text, accent }, line) => (
                     // The deeper accent: at phone sizes the type is no longer
                     // "large", and ember drops under AA where the honey glow sits.
@@ -84,7 +84,7 @@ export default function Showcase() {
           )
         })}
 
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 md:mt-24 md:gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 md:mt-16 md:gap-5 lg:grid-cols-3">
           {PHOTOS.map(({ src, alt }) => (
             <figure
               key={src}
