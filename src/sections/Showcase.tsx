@@ -35,7 +35,8 @@ const PHOTOS = [
  */
 export default function Showcase() {
   return (
-    <section aria-label="Галерия" className="white-wash relative px-4 py-16 md:px-8 md:py-24">
+    <section aria-label="Галерия" className="relative isolate overflow-hidden px-4 py-16 md:px-8 md:py-24">
+      <div aria-hidden="true" className="showcase-glow pointer-events-none absolute inset-0 -z-10" />
       <div className="mx-auto max-w-[1200px]">
         {/* Checkerboard: photo left / headline right, then swapped. Two columns
             at every size — on phones too — so the rhythm survives the narrow
@@ -64,14 +65,14 @@ export default function Showcase() {
                 </figure>
               </div>
 
-              {/* Headline panel */}
+              {/* Headline, straight on the glow — no panel */}
               <div
-                className={`flex items-center justify-center rounded-lg bg-gradient-to-br from-[#f3ebdf] to-[#e8dcc9] px-2 py-7 ring-1 ring-timber-bark/10 sm:px-6 sm:py-12 md:rounded-xl md:px-10 md:py-16 ${flipped ? 'order-1' : ''}`}
+                className={`flex items-center justify-center px-1 py-6 sm:px-4 md:px-8 ${flipped ? 'order-1' : ''}`}
               >
                 <h2 className="text-center font-display text-[clamp(0.95rem,4.8vw,1.5rem)] font-bold uppercase leading-[1.1] tracking-[0.01em] text-timber-bark sm:text-3xl md:text-4xl lg:text-5xl">
                   {headline.map(({ text, accent }, line) => (
-                    // The deeper accent: ember drops below AA on this panel at
-                    // the smallest phone sizes, where the type is no longer "large".
+                    // The deeper accent: at phone sizes the type is no longer
+                    // "large", and ember drops under AA where the honey glow sits.
                     <span key={text} className={accent ? 'text-[#7d5228]' : undefined}>
                       {line > 0 && <br />}
                       {text}

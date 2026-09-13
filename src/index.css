@@ -123,6 +123,32 @@
     border-top: 1px solid rgba(64, 45, 24, 0.12);
   }
 
+  /* The home page's photo section: a light mesh of honey, peach and white
+     blooms instead of flat cream. Stops are kept light enough that the
+     accent headline still clears AA over the deepest honey spot. */
+  .showcase-glow {
+    background:
+      radial-gradient(40% 30% at 10% 12%, rgba(236, 178, 96, 0.3) 0%, transparent 70%),
+      radial-gradient(36% 28% at 90% 36%, rgba(255, 255, 255, 0.85) 0%, transparent 72%),
+      radial-gradient(44% 32% at 80% 90%, rgba(214, 140, 80, 0.2) 0%, transparent 70%),
+      radial-gradient(38% 30% at 16% 70%, rgba(252, 236, 208, 0.9) 0%, transparent 70%),
+      linear-gradient(160deg, #fbf5ea 0%, #f4e6d0 48%, #f8eedf 100%);
+  }
+
+  /* A second set of blooms drifting very slowly over the first, so the light
+     feels alive. Transform only — composited, no repaint per frame. */
+  .showcase-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(28% 22% at 32% 28%, rgba(240, 186, 110, 0.26) 0%, transparent 70%),
+      radial-gradient(26% 22% at 68% 62%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
+      radial-gradient(22% 18% at 50% 88%, rgba(226, 160, 96, 0.16) 0%, transparent 70%);
+    animation: glowDrift 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
   /* CTA button — adapted from Uiverse.io by gharsh11032000, recoloured white.
      The ::before blob starts as a small circle and scales up to flood the pill. */
   .cta-button {
@@ -306,6 +332,15 @@
   }
 }
 
+@keyframes glowDrift {
+  from {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5%, 4%, 0) scale(1.08);
+  }
+}
+
 @keyframes fadeDown {
   from {
     transform: translateY(-1rem);
@@ -332,7 +367,8 @@
   .hero-kenburns,
   .glyph-rise,
   .fade-up,
-  .fade-down {
+  .fade-down,
+  .showcase-glow::before {
     animation: none !important;
     opacity: 1;
     transform: none;
