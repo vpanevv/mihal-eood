@@ -33,4 +33,5 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { srcUrl: '/images/gallery/viber_image_2026-08-14_13-18-18-999.jpg', alt: 'МИХАЛ ЕООД — снимка 22', width: 1200, height: 1600 },
   { srcUrl: '/images/gallery/viber_image_2026-08-14_13-18-19-284.jpg', alt: 'МИХАЛ ЕООД — снимка 23', width: 1200, height: 1600 },
   { srcUrl: '/images/gallery/viber_image_2026-08-14_13-18-19-506.jpg', alt: 'МИХАЛ ЕООД — снимка 24', width: 1200, height: 1600 },
+  { srcUrl: '/images/new-4.jpg', alt: 'МИХАЛ ЕООД — склад за дървен материал', width: 1200, height: 1600 },
 ]

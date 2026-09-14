@@ -1,32 +1,54 @@
+import { useState } from 'react'
+import Lightbox from '../components/Lightbox'
+import type { GalleryImage } from '../data/gallery'
+
 type Line = { text: string; accent?: boolean }
 
-type Feature = {
-  src: string
-  alt: string
-  /** Rendered one per line; the accented line picks up the sap gold. */
+type Feature = GalleryImage & {
+  /** Rendered one per line; the accented line picks up the deeper brown. */
   headline: Line[]
 }
 
-// Features lead the section in a checkerboard, each with its own headline.
-// Anything not featured falls through to the grid below.
+// Four rows in a checkerboard, each photo with its own headline. Tapping a
+// photo opens it full size, and the lightbox steps through all four.
 const FEATURES: Feature[] = [
   {
-    src: '/images/new-5.jpg',
+    srcUrl: '/images/new-5.jpg',
     alt: 'МИХАЛ ЕООД — натоварен камион с дървен материал',
+    width: 900,
+    height: 1600,
     headline: [{ text: 'Вашият проект.' }, { text: 'Нашият материал.', accent: true }],
   },
   {
-    src: '/images/new-6.jpg',
+    srcUrl: '/images/new-6.jpg',
     alt: 'МИХАЛ ЕООД — подготвена доставка дървен материал',
+    width: 1200,
+    height: 1600,
     headline: [{ text: 'Качеството започва от' }, { text: 'дървения материал.', accent: true }],
+  },
+  {
+    srcUrl: '/images/new-1.jpg',
+    alt: 'МИХАЛ ЕООД — камион с дървен материал за доставка',
+    width: 1200,
+    height: 1600,
+    headline: [{ text: 'Собствен транспорт.' }, { text: 'Доставка в цялата страна.', accent: true }],
+  },
+  {
+    srcUrl: '/images/new-2.jpg',
+    alt: 'МИХАЛ ЕООД — товарене на греди',
+    width: 1200,
+    height: 1600,
+    headline: [{ text: 'Големи обеми.' }, { text: 'Точни размери.', accent: true }],
   },
 ]
 
-const PHOTOS = [
-  { src: '/images/new-1.jpg', alt: 'МИХАЛ ЕООД — дървен материал' },
-  { src: '/images/new-2.jpg', alt: 'МИХАЛ ЕООД — слепени греди' },
-  { src: '/images/new-4.jpg', alt: 'МИХАЛ ЕООД — сух дървен материал' },
-]
+function ExpandIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true" className="h-4 w-4 md:h-5 md:w-5">
+      <path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" />
+    </svg>
+  )
+}
 
 /**
  * Photo section below the hero. Every image is lazy and carries its intrinsic
@@ -34,36 +56,46 @@ const PHOTOS = [
  * own height rather than shoving the footer around as photos arrive.
  */
 export default function Showcase() {
+  const [zoomed, setZoomed] = useState<number | null>(null)
+
   return (
+    <>
     <section aria-label="Галерия" className="relative isolate overflow-hidden px-3 py-12 sm:px-4 md:px-8 md:py-20">
       <div aria-hidden="true" className="showcase-glow pointer-events-none absolute inset-0 -z-10" />
       <div className="mx-auto max-w-[1200px]">
         {/* Checkerboard: photo left / headline right, then swapped. Two columns
             at every size — on phones too — so the rhythm survives the narrow
             screen instead of collapsing into a stack. */}
-        {FEATURES.map(({ src, alt, headline }, i) => {
+        {FEATURES.map(({ srcUrl, alt, width, height, headline }, i) => {
           const flipped = i % 2 === 1
           return (
             <div
-              key={src}
+              key={srcUrl}
               className={`grid grid-cols-2 items-center gap-2.5 sm:gap-5 md:gap-8 ${i === 0 ? '' : 'mt-5 sm:mt-10 md:mt-14'}`}
             >
-              {/* Photo on a cream mat, as in the reference */}
-              <div
-                className={`rounded-lg bg-[#ebe0cf] p-1 shadow-[0_10px_30px_-18px_rgba(64,45,24,0.55)] sm:p-2 md:rounded-xl md:p-3 ${flipped ? 'order-2' : ''}`}
+              {/* Photo on a cream mat; the whole mat is the tap target */}
+              <button
+                type="button"
+                onClick={() => setZoomed(i)}
+                aria-label={`Отвори снимката: ${alt}`}
+                className={`group block rounded-lg bg-[#ebe0cf] p-1 text-left shadow-[0_10px_30px_-18px_rgba(64,45,24,0.55)] transition-transform duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-ember focus-visible:ring-offset-2 focus-visible:ring-offset-timber-paper active:scale-[0.98] sm:p-2 md:rounded-xl md:p-3 ${flipped ? 'order-2' : ''}`}
               >
-                <figure className="group relative aspect-[2/3] w-full overflow-hidden rounded-md bg-timber-bark/5 ring-[1.5px] ring-timber-bark sm:aspect-[4/3] md:rounded-lg">
+                <figure className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-timber-bark/5 ring-[1.5px] ring-timber-bark sm:aspect-[4/3] md:rounded-lg">
                   <img
-                    src={src}
+                    src={srcUrl}
                     alt={alt}
                     loading="lazy"
                     decoding="async"
-                    width={900}
-                    height={1600}
+                    width={width}
+                    height={height}
                     className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                   />
+                  <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-timber-bark/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-timber-cream/90 text-timber-bark opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:bottom-3 md:right-3 md:h-9 md:w-9">
+                    <ExpandIcon />
+                  </span>
                 </figure>
-              </div>
+              </button>
 
               {/* Headline, straight on the glow — no panel */}
               <div
@@ -83,26 +115,19 @@ export default function Showcase() {
             </div>
           )
         })}
-
-        <div className="mt-10 grid gap-3 sm:grid-cols-2 md:mt-16 md:gap-5 lg:grid-cols-3">
-          {PHOTOS.map(({ src, alt }) => (
-            <figure
-              key={src}
-              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-timber-bark/5 ring-[1.5px] ring-timber-bark"
-            >
-              <img
-                src={src}
-                alt={alt}
-                loading="lazy"
-                decoding="async"
-                width={1200}
-                height={1600}
-                className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-              />
-            </figure>
-          ))}
-        </div>
       </div>
     </section>
+
+    {/* Outside the section: its `isolate` makes a stacking context, and a
+        z-70 viewer inside it would still sit beneath the fixed nav and footer. */}
+    <Lightbox
+      images={FEATURES}
+      index={zoomed}
+      onClose={() => setZoomed(null)}
+      onStep={(step) =>
+        setZoomed((i) => (i === null ? i : (i + step + FEATURES.length) % FEATURES.length))
+      }
+    />
+    </>
   )
 }
