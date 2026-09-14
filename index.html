@@ -8,7 +8,7 @@
       name="description"
       content="МИХАЛ ЕООД — сглобяване, изсушаване и доставка на качествен дървен материал от Разлог."
     />
-    <meta name="theme-color" content="#1a1207" />
+    <meta name="theme-color" content="#f7f1e8" />
 
     <!-- Link previews (Facebook, Messenger, Viber, LinkedIn).
          og:image must be an absolute URL — a relative path is not resolved by
@@ -52,6 +52,17 @@
     />
   </head>
   <body>
+    <!-- Netlify Forms: the deploy bot only registers forms it finds in static
+         HTML, and the contact form is rendered by React. This hidden twin
+         carries the same name and fields so submissions are accepted. -->
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

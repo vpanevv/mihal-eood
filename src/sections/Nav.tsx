@@ -72,7 +72,7 @@ export default function Nav() {
     <>
       <header
         className="fade-down fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8 md:pt-6"
-        style={{ animationDelay: '0.25s' }}
+        style={{ animationDelay: '0.1s' }}
       >
         <div className="liquid-glass-light relative mx-auto h-16 max-w-[1500px] overflow-hidden rounded-full md:h-20">
           {/* Opacity ramps with scroll position, so the bar gains weight

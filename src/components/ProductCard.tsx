@@ -33,10 +33,10 @@ export default function ProductCard({ product, onOpen, delay }: Props) {
 
         {/* Dark at the base so the label always has something to sit on, and a
             lighter wash overall that lifts on hover to reveal more of the photo. */}
-        <div className="absolute inset-0 bg-[#4a3116] opacity-18 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-[#4a3116] opacity-12" />
         <div className="absolute inset-0 bg-timber-bark/30 transition-colors duration-500 group-hover:bg-timber-bark/15" />
         <div className="absolute inset-0 bg-gradient-to-t from-timber-bark/90 via-timber-bark/25 to-transparent" />
-        <div className="hero-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
+        <div className="hero-grain absolute inset-0 opacity-[0.06]" />
 
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
           <h2 className="font-display text-xl font-bold uppercase leading-[1.05] tracking-[0.01em] text-white [text-shadow:0_2px_20px_rgba(18,12,4,0.7)] md:text-2xl">

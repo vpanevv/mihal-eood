@@ -46,10 +46,12 @@ export default function ProductDialog({ product, onClose }: Props) {
         aria-label="Затвори"
         tabIndex={-1}
         onClick={onClose}
-        className="absolute inset-0 cursor-default bg-timber-bark/55 backdrop-blur-sm"
+        className="absolute inset-0 cursor-default bg-timber-bark/60"
       />
 
-      <div className="liquid-glass fade-up relative max-h-full w-full max-w-lg overflow-y-auto rounded-3xl p-7 md:p-10">
+      {/* Opaque cream rather than blurred glass: a full-screen backdrop blur
+          re-renders the page behind on every frame and stutters on phones. */}
+      <div className="liquid-glass-panel pop-in relative max-h-full w-full max-w-lg overflow-y-auto rounded-3xl p-7 md:p-10">
         <button
           ref={closeRef}
           type="button"

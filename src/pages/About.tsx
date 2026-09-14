@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Nav from '../sections/Nav'
-import Footer from '../sections/Footer'
 import CardCarousel, { type Card } from '../components/CardCarousel'
 
 const CARDS: Card[] = [
@@ -33,26 +31,19 @@ export default function About() {
   }, [])
 
   return (
-    <>
-      <Nav />
+    <main className="relative z-10 min-h-svh pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
+      {/* The visible headline is gone, but the page still needs one heading. */}
+      <h1 className="sr-only">За нас</h1>
 
+      <div className="fade-up mx-auto max-w-[900px]">
+        <CardCarousel cards={CARDS} label="За нас" />
 
-      <main className="relative z-10 min-h-svh pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
-        {/* The visible headline is gone, but the page still needs one heading. */}
-        <h1 className="sr-only">За нас</h1>
-
-        <div className="fade-up mx-auto max-w-[900px]">
-          <CardCarousel cards={CARDS} label="За нас" />
-
-          <div className="mt-14 flex justify-center px-[9vw] md:mt-16 md:px-0">
-            <Link to="/" className="cta-button cta-button--sm font-sans uppercase tracking-[0.18em]">
-              <span>Назад</span>
-            </Link>
-          </div>
+        <div className="mt-14 flex justify-center px-[9vw] md:mt-16 md:px-0">
+          <Link to="/" className="cta-button cta-button--sm font-sans uppercase tracking-[0.18em]">
+            <span>Назад</span>
+          </Link>
         </div>
-      </main>
-
-      <Footer />
-    </>
+      </div>
+    </main>
   )
 }

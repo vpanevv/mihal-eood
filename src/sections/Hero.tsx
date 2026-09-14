@@ -9,7 +9,7 @@ const WORDS = (() => {
   let glyphIndex = 0
   return HEADLINE.split(' ').map((word) => ({
     word,
-    glyphs: [...word].map((glyph) => ({ glyph, delay: 0.55 + glyphIndex++ * 0.055 })),
+    glyphs: [...word].map((glyph) => ({ glyph, delay: 0.25 + glyphIndex++ * 0.045 })),
   }))
 })()
 
@@ -38,12 +38,15 @@ export default function Hero() {
         />
       )}
 
-      {/* Tint: a warm multiply, then a vertical fall-off so the type stays legible */}
-      <div className="absolute inset-0 bg-[#4a3116] opacity-20 mix-blend-multiply" />
+      {/* Tint: a warm wash, then a vertical fall-off so the type stays legible.
+          Plain alpha layers, no blend modes — a multiply or overlay over the
+          slowly scaling photo is re-blended across the whole screen every
+          frame, which is what made the first seconds stutter on phones. */}
+      <div className="absolute inset-0 bg-[#4a3116] opacity-15" />
       <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/40 via-timber-bark/10 to-timber-bark/60" />
       <div className="hero-scrim absolute inset-0" />
       <div className="hero-vignette absolute inset-0" />
-      <div className="hero-grain absolute inset-0 opacity-[0.14] mix-blend-overlay" />
+      <div className="hero-grain absolute inset-0 opacity-[0.07]" />
 
       {/* Headline + CTA */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
@@ -71,7 +74,7 @@ export default function Hero() {
             sentences on phones rather than mid-phrase. */}
         <p
           className="fade-up mt-6 text-center font-display text-[clamp(1rem,4.6vw,1.35rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-8 md:text-[1.7rem] md:tracking-[0.16em]"
-          style={{ animationDelay: '1.2s' }}
+          style={{ animationDelay: '0.7s' }}
         >
           <span className="block sm:inline">Дърво с характер.</span>{' '}
           <span className="block sm:inline">Качество, което остава.</span>
@@ -82,7 +85,7 @@ export default function Hero() {
         <Link
           to="/products"
           className="cta-button cta-button--light fade-up mt-8 font-sans uppercase tracking-[0.14em] md:mt-10 md:tracking-[0.18em]"
-          style={{ animationDelay: '1.45s' }}
+          style={{ animationDelay: '0.9s' }}
         >
           <span>Разгледай нашите продукти</span>
         </Link>
@@ -91,7 +94,7 @@ export default function Hero() {
       {/* Hairline rule that hands the eye off to whatever section comes next */}
       <div
         className="fade-up absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-timber-sap/45 to-transparent"
-        style={{ animationDelay: '1.6s' }}
+        style={{ animationDelay: '1s' }}
       />
     </section>
   )

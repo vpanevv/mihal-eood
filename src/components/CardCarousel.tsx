@@ -50,11 +50,21 @@ export default function CardCarousel({ cards, label }: Props) {
     })
   }, [])
 
+  // Scroll fires many times per frame on touch; measure at most once a frame.
+  const frame = useRef(0)
+  const onScroll = useCallback(() => {
+    cancelAnimationFrame(frame.current)
+    frame.current = requestAnimationFrame(syncActive)
+  }, [syncActive])
+
   useEffect(() => {
     syncActive()
-    window.addEventListener('resize', syncActive)
-    return () => window.removeEventListener('resize', syncActive)
-  }, [syncActive])
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(frame.current)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [syncActive, onScroll])
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowRight') {
@@ -70,7 +80,7 @@ export default function CardCarousel({ cards, label }: Props) {
     <section aria-roledescription="карусел" aria-label={label}>
       <div
         ref={trackRef}
-        onScroll={syncActive}
+        onScroll={onScroll}
         onKeyDown={onKeyDown}
         tabIndex={0}
         className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-[9vw] pb-2 focus:outline-none md:gap-6 md:px-0"
@@ -85,16 +95,18 @@ export default function CardCarousel({ cards, label }: Props) {
               src={card.image}
               alt=""
               aria-hidden="true"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
             {/* This is the one card that carries paragraphs rather than a short
                 label, so it holds more tint than the rest of the site — even at
                 50% it reads brighter than before, because the brown itself is
                 now a warm coffee rather than near black. */}
-            <div className="absolute inset-0 bg-[#4a3116] opacity-15 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-[#4a3116] opacity-10" />
             <div className="absolute inset-0 bg-timber-bark/50" />
             <div className="hero-scrim absolute inset-0" />
-            <div className="hero-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
+            <div className="hero-grain absolute inset-0 opacity-[0.06]" />
 
             <div className="relative flex min-h-[420px] items-center justify-center p-8 md:min-h-[460px] md:p-14">
               <p className="max-w-[46ch] text-center font-sans text-[0.95rem] font-light leading-[1.85] text-white [text-shadow:0_1px_18px_rgba(18,12,4,0.85)] md:text-[1.05rem]">

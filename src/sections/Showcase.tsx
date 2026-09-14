@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import Lightbox from '../components/Lightbox'
-import type { GalleryImage } from '../data/gallery'
+import { thumbFor, type GalleryImage } from '../data/gallery'
 
 type Line = { text: string; accent?: boolean }
 
-type Feature = GalleryImage & {
+type Feature = Omit<GalleryImage, 'thumbUrl'> & {
   /** Rendered one per line; the accented line picks up the deeper brown. */
   headline: Line[]
 }
 
 // Four rows in a checkerboard, each photo with its own headline. Tapping a
 // photo opens it full size, and the lightbox steps through all four.
-const FEATURES: Feature[] = [
+const FEATURES: (Feature & { thumbUrl: string })[] = ([
   {
     srcUrl: '/images/new-5.jpg',
     alt: 'МИХАЛ ЕООД — натоварен камион с дървен материал',
@@ -40,7 +40,7 @@ const FEATURES: Feature[] = [
     height: 1600,
     headline: [{ text: 'Големи обеми.' }, { text: 'Точни размери.', accent: true }],
   },
-]
+] satisfies Feature[]).map((feature) => ({ ...feature, thumbUrl: thumbFor(feature.srcUrl) }))
 
 function ExpandIcon() {
   return (
@@ -66,7 +66,7 @@ export default function Showcase() {
         {/* Checkerboard: photo left / headline right, then swapped. Two columns
             at every size — on phones too — so the rhythm survives the narrow
             screen instead of collapsing into a stack. */}
-        {FEATURES.map(({ srcUrl, alt, width, height, headline }, i) => {
+        {FEATURES.map(({ srcUrl, thumbUrl, alt, width, height, headline }, i) => {
           const flipped = i % 2 === 1
           return (
             <div
@@ -81,8 +81,12 @@ export default function Showcase() {
                 className={`group block rounded-lg bg-[#ebe0cf] p-1 text-left shadow-[0_10px_30px_-18px_rgba(64,45,24,0.55)] transition-transform duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-ember focus-visible:ring-offset-2 focus-visible:ring-offset-timber-paper active:scale-[0.98] sm:p-2 md:rounded-xl md:p-3 ${flipped ? 'order-2' : ''}`}
               >
                 <figure className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-timber-bark/5 ring-[1.5px] ring-timber-bark sm:aspect-[4/3] md:rounded-lg">
+                  {/* Half the row wide: phones take the 640px copy, large
+                      retina screens the full photo. */}
                   <img
-                    src={srcUrl}
+                    src={thumbUrl}
+                    srcSet={`${thumbUrl} 640w, ${srcUrl} ${width}w`}
+                    sizes="(min-width: 1200px) 560px, 48vw"
                     alt={alt}
                     loading="lazy"
                     decoding="async"

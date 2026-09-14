@@ -19,7 +19,7 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
 }
 
 const control =
-  'absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-timber-bark/60 text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:h-14 md:w-14'
+  'absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-timber-bark/70 text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:h-14 md:w-14'
 
 export default function Lightbox({ images, index, onClose, onStep }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
@@ -87,7 +87,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
         aria-label="Затвори"
         tabIndex={-1}
         onClick={onClose}
-        className="absolute inset-0 cursor-default bg-timber-bark/90 backdrop-blur-md"
+        className="absolute inset-0 cursor-default bg-timber-bark/95"
       />
 
       <img
@@ -96,7 +96,8 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
         alt={image.alt}
         width={image.width}
         height={image.height}
-        className="fade-up relative max-h-full max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)]"
+        decoding="async"
+        className="pop-in relative max-h-full max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)]"
       />
 
       {count > 1 && (
@@ -119,7 +120,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
         type="button"
         onClick={onClose}
         aria-label="Затвори"
-        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-timber-bark/60 text-lg text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white hover:text-timber-bark md:right-8 md:top-8"
+        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-timber-bark/70 text-lg text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark md:right-8 md:top-8"
       >
         ✕
       </button>

@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Nav from '../sections/Nav'
-import Footer from '../sections/Footer'
 
 const ICON = 'h-9 w-9 text-timber-ember md:h-10 md:w-10'
 
@@ -49,43 +47,36 @@ export default function Delivery() {
   }, [])
 
   return (
-    <>
-      <Nav />
+    <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
+      <h1 className="sr-only">Услуги</h1>
 
+      <p
+        className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-timber-bark md:text-5xl"
+        style={{ animationDelay: '0.05s' }}
+      >
+        Разполагаме с:
+      </p>
 
-      <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
-        <h1 className="sr-only">Услуги</h1>
+      <div className="mt-12 grid w-full max-w-[1000px] gap-5 sm:grid-cols-3 md:mt-16 md:gap-6">
+        {CAPABILITIES.map(({ label, Icon }, i) => (
+          <div
+            key={label}
+            className="liquid-glass-panel fade-up flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center md:py-12"
+            style={{ animationDelay: `${0.12 + i * 0.07}s` }}
+          >
+            <Icon />
+            <h2 className="font-display text-lg font-bold uppercase leading-tight tracking-[0.06em] text-timber-bark md:text-xl">
+              {label}
+            </h2>
+          </div>
+        ))}
+      </div>
 
-        <p
-          className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-timber-bark md:text-5xl"
-          style={{ animationDelay: '0.15s' }}
-        >
-          Разполагаме с:
-        </p>
-
-        <div className="mt-12 grid w-full max-w-[1000px] gap-5 sm:grid-cols-3 md:mt-16 md:gap-6">
-          {CAPABILITIES.map(({ label, Icon }, i) => (
-            <div
-              key={label}
-              className="liquid-glass-panel fade-up flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center md:py-12"
-              style={{ animationDelay: `${0.3 + i * 0.1}s` }}
-            >
-              <Icon />
-              <h2 className="font-display text-lg font-bold uppercase leading-tight tracking-[0.06em] text-timber-bark md:text-xl">
-                {label}
-              </h2>
-            </div>
-          ))}
-        </div>
-
-        <div className="fade-up mt-14 md:mt-16" style={{ animationDelay: '0.65s' }}>
-          <Link to="/contacts" className="cta-button font-sans uppercase tracking-[0.16em]">
-            <span>Свържи се с нас</span>
-          </Link>
-        </div>
-      </main>
-
-      <Footer />
-    </>
+      <div className="fade-up mt-14 md:mt-16" style={{ animationDelay: '0.35s' }}>
+        <Link to="/contacts" className="cta-button font-sans uppercase tracking-[0.16em]">
+          <span>Свържи се с нас</span>
+        </Link>
+      </div>
+    </main>
   )
 }

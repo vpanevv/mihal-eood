@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Nav from '../sections/Nav'
-import Footer from '../sections/Footer'
 import Lightbox from '../components/Lightbox'
 import { GALLERY_IMAGES } from '../data/gallery'
 
@@ -22,9 +20,6 @@ export default function Gallery() {
 
   return (
     <>
-      <Nav />
-
-
       <main className="relative z-10 px-4 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         <div className="mx-auto max-w-[1400px]">
           <h1 className="sr-only">Галерия</h1>
@@ -45,8 +40,13 @@ export default function Gallery() {
                 aria-label={`Отвори ${img.alt}`}
                 className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-[1.5px] ring-timber-bark transition-shadow duration-500 hover:ring-timber-ember focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:mb-4"
               >
+                {/* Tiles are a quarter to a half of the screen wide, so they
+                    load the 640px copy; a large retina screen can still pick
+                    the full photo, which the lightbox then has cached. */}
                 <img
-                  src={img.srcUrl}
+                  src={img.thumbUrl}
+                  srcSet={`${img.thumbUrl} 640w, ${img.srcUrl} ${img.width}w`}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                   alt={img.alt}
                   width={img.width}
                   height={img.height}
@@ -64,15 +64,13 @@ export default function Gallery() {
             ))}
           </div>
 
-          <div className="fade-up mt-14 flex justify-center md:mt-16" style={{ animationDelay: '0.2s' }}>
+          <div className="fade-up mt-14 flex justify-center md:mt-16" style={{ animationDelay: '0.1s' }}>
             <Link to="/" className="cta-button cta-button--sm font-sans uppercase tracking-[0.18em]">
               <span>Назад</span>
             </Link>
           </div>
         </div>
       </main>
-
-      <Footer />
 
       <Lightbox
         images={GALLERY_IMAGES}

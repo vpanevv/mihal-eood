@@ -1,5 +1,7 @@
 export type GalleryImage = {
   srcUrl: string
+  /** 640px-wide copy for grids; the lightbox loads srcUrl. */
+  thumbUrl: string
   alt: string
   /** Intrinsic size, so the masonry grid reserves each tile before the
       image loads instead of reflowing 24 times on the way down. */
@@ -7,8 +9,11 @@ export type GalleryImage = {
   height: number
 }
 
+/** Every photo has a 640px copy under /images/thumbs with the same base name. */
+export const thumbFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs/$1.jpg')
+
 /** Yard and product photography. Numbered files first, then later additions. */
-export const GALLERY_IMAGES: GalleryImage[] = [
+const ENTRIES: Omit<GalleryImage, 'thumbUrl'>[] = [
   { srcUrl: '/images/gallery/mihal-razlog-2-min.jpeg', alt: 'МИХАЛ ЕООД — снимка 1', width: 1000, height: 667 },
   { srcUrl: '/images/gallery/mihal-razlog-3-min.jpeg', alt: 'МИХАЛ ЕООД — снимка 2', width: 1000, height: 666 },
   { srcUrl: '/images/gallery/mihal-razlog-4-min.jpeg', alt: 'МИХАЛ ЕООД — снимка 3', width: 1000, height: 667 },
@@ -35,3 +40,8 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { srcUrl: '/images/gallery/viber_image_2026-08-14_13-18-19-506.jpg', alt: 'МИХАЛ ЕООД — снимка 24', width: 1200, height: 1600 },
   { srcUrl: '/images/new-4.jpg', alt: 'МИХАЛ ЕООД — склад за дървен материал', width: 1200, height: 1600 },
 ]
+
+export const GALLERY_IMAGES: GalleryImage[] = ENTRIES.map((entry) => ({
+  ...entry,
+  thumbUrl: thumbFor(entry.srcUrl),
+}))

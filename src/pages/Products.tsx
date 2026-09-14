@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Nav from '../sections/Nav'
-import Footer from '../sections/Footer'
 import ProductCard from '../components/ProductCard'
 import ProductDialog from '../components/ProductDialog'
 import { PRODUCTS, type Product } from '../data/products'
@@ -15,9 +13,6 @@ export default function Products() {
 
   return (
     <>
-      <Nav />
-
-
       <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
         <h1 className="sr-only">Продукти</h1>
 
@@ -27,19 +22,17 @@ export default function Products() {
               key={product.id}
               product={product}
               onOpen={setOpen}
-              delay={0.15 + i * 0.09}
+              delay={0.05 + i * 0.07}
             />
           ))}
         </div>
 
-        <div className="fade-up mt-14 md:mt-16" style={{ animationDelay: '0.65s' }}>
+        <div className="fade-up mt-14 md:mt-16" style={{ animationDelay: '0.35s' }}>
           <Link to="/" className="cta-button cta-button--sm font-sans uppercase tracking-[0.18em]">
             <span>Назад</span>
           </Link>
         </div>
       </main>
-
-      <Footer />
 
       <ProductDialog product={open} onClose={() => setOpen(null)} />
     </>
