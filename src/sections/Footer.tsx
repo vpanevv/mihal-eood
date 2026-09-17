@@ -1,93 +1,74 @@
 import { Link } from 'react-router-dom'
-
-const ICON = 'h-4 w-4 shrink-0 text-[#7d5228]'
-
-function PinIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <path d="M20 10c0 5-8 12-8 12s-8-7-8-12a8 8 0 1 1 16 0Z" strokeLinejoin="round" />
-      <circle cx="12" cy="10" r="2.6" />
-    </svg>
-  )
-}
-
-function PhoneIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <path
-        d="M6.2 3.5h3l1.4 4-2 1.4a12.5 12.5 0 0 0 6.5 6.5l1.4-2 4 1.4v3a1.6 1.6 0 0 1-1.8 1.6C10.6 18.8 5.2 13.4 4.6 5.3A1.6 1.6 0 0 1 6.2 3.5Z"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function ClockIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <circle cx="12" cy="12" r="8.6" />
-      <path d="M12 7.2V12l3.2 2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
+import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon } from '../components/Icons'
+import {
+  ADDRESS_CITY,
+  ADDRESS_LANDMARK,
+  ADDRESS_STREET,
+  DIRECTIONS_LINK,
+  EMAIL,
+  HOURS_WEEKDAYS,
+  MAP_LINK,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+} from '../data/company'
 
 const headingClass =
-  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#7d5228]'
+  'flex items-center gap-2.5 font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-ember'
+
+const ICON = 'h-4 w-4 shrink-0 text-timber-ember'
 
 /** Underline wipes in on hover, matching the nav links. */
 const linkClass =
-  'group/link relative inline-block text-timber-bark/90 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
+  'group/link relative inline-flex min-h-[36px] items-center text-timber-bark/90 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
 
 function Underline() {
   return (
-    <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-ember transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />
+    <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-gold transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />
   )
 }
 
 export default function Footer() {
   return (
-    <footer id="contact" className="footer-panel relative z-10">
-      {/* Hairline that catches the eye coming off the page above */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-timber-ember/30 to-transparent" />
-
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-14 sm:grid-cols-2 md:px-10 md:py-16 lg:grid-cols-3 lg:gap-8">
+    <footer className="footer-panel relative z-10">
+      <div className="mx-auto grid max-w-[1200px] gap-10 px-5 py-14 sm:grid-cols-2 md:px-8 md:py-16 lg:grid-cols-4 lg:gap-8">
         <section>
           <h2 className={headingClass}>
-            <PinIcon />
+            <PinIcon className={ICON} />
             Адрес
           </h2>
-          <address className="mt-4 space-y-1 font-sans text-[0.95rem] font-medium not-italic leading-[1.75] text-timber-bark/90">
-            <p>гр. Разлог</p>
-            <p>ул. Христо Ботев, срещу бензиностанция „Лукойл“</p>
+          <address className="mt-4 space-y-1 font-sans text-[0.95rem] not-italic leading-[1.75] text-timber-bark/85">
+            <p>{ADDRESS_CITY}</p>
+            <p>{ADDRESS_STREET}</p>
+            <p>{ADDRESS_LANDMARK}</p>
           </address>
         </section>
 
         <section>
           <h2 className={headingClass}>
-            <PhoneIcon />
+            <PhoneIcon className={ICON} />
             Контакти
           </h2>
-          <div className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] font-medium leading-[1.75]">
-            <a href="tel:+359888726194" className={linkClass}>
-              0888 726 194
+          <div className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] leading-[1.75]">
+            <a href={PHONE_HREF} className={linkClass}>
+              {PHONE_DISPLAY}
               <Underline />
             </a>
-            <a href="mailto:mihaleood@gmail.com" className={linkClass}>
-              mihaleood@gmail.com
+            <a href={`mailto:${EMAIL}`} className={linkClass}>
+              {EMAIL}
               <Underline />
             </a>
           </div>
         </section>
 
-        <section className="sm:col-span-2 lg:col-span-1">
+        <section>
           <h2 className={headingClass}>
-            <ClockIcon />
+            <ClockIcon className={ICON} />
             Работно време
           </h2>
-          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] font-medium leading-[1.75] text-timber-bark/90">
+          <dl className="mt-4 space-y-2 font-sans text-[0.95rem] leading-[1.75] text-timber-bark/85">
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Понеделник – Петък</dt>
-              <dd className="text-timber-bark">08.00 – 17.00 ч.</dd>
+              <dd className="font-medium text-timber-bark">{HOURS_WEEKDAYS} ч.</dd>
             </div>
             <div className="flex flex-wrap items-baseline gap-x-3">
               <dt>Събота – Неделя</dt>
@@ -95,17 +76,47 @@ export default function Footer() {
             </div>
           </dl>
         </section>
+
+        <section>
+          <h2 className={headingClass}>
+            <MailIcon className={ICON} />
+            Връзки
+          </h2>
+          <ul className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] leading-[1.75]">
+            <li>
+              <a href={MAP_LINK} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                Google Карти
+                <Underline />
+              </a>
+            </li>
+            <li>
+              <a href={DIRECTIONS_LINK} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <span className="inline-flex items-center gap-2">
+                  <NavigationIcon className="h-3.5 w-3.5 text-timber-ember" />
+                  Навигация до базата
+                </span>
+                <Underline />
+              </a>
+            </li>
+            <li>
+              <Link to="/privacy" className={linkClass}>
+                Политика за поверителност
+                <Underline />
+              </Link>
+            </li>
+          </ul>
+        </section>
       </div>
 
       <div className="border-t border-timber-bark/10">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row md:px-10">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row md:px-8">
           <Link
             to="/"
-            className="font-display text-xs font-medium uppercase tracking-[0.32em] text-timber-bark transition-opacity hover:opacity-70"
+            className="inline-flex min-h-[36px] items-center font-display text-xs font-medium uppercase tracking-[0.3em] text-timber-bark transition-opacity hover:opacity-70"
           >
-            Михал<span className="ml-2 text-[#7d5228]">ЕООД</span>
+            Михал<span className="ml-2 text-timber-ember">ЕООД</span>
           </Link>
-          <p className="font-sans text-[0.68rem] font-medium uppercase tracking-[0.18em] text-timber-bark/70">
+          <p className="font-sans text-[0.68rem] font-medium uppercase tracking-[0.18em] text-timber-bark/65">
             © {new Date().getFullYear()} — Всички права запазени
           </p>
         </div>

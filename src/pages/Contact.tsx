@@ -1,337 +1,136 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
+import PageBanner from '../components/PageBanner'
+import InquiryForm from '../components/InquiryForm'
+import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon } from '../components/Icons'
+import {
+  ADDRESS_CITY,
+  ADDRESS_LANDMARK,
+  ADDRESS_STREET,
+  DIRECTIONS_LINK,
+  EMAIL,
+  HOURS_WEEKDAYS,
+  MAP_EMBED,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+} from '../data/company'
 
-const RECIPIENT = 'mihaleood@gmail.com'
-// The exact yard entrance (41°53'10.7"N 23°28'51.8"E). Searching the street
-// address dropped the pin on the road rather than on the business, so the map
-// is driven by coordinates and the address is kept only as the label.
-const MAP_COORDS = '41.886306,23.481056'
-const MAP_LABEL = 'гр. Разлог, ул. Христо Ботев, срещу бензиностанция „Лукойл“'
-
-/**
- * Netlify Forms. Netlify registers a form by reading static HTML at deploy
- * time, and this one is rendered by React, so a hidden twin with the same name
- * and fields sits in index.html. Submissions POST here as url-encoded data;
- * the email to RECIPIENT is a form notification set up in the Netlify UI.
- */
-const FORM_NAME = 'contact'
-const HONEYPOT = 'bot-field'
-
-type Fields = {
-  name: string
-  email: string
-  subject: string
-  message: string
-  human: boolean
-}
-
-type Errors = Partial<Record<keyof Fields, string>>
-
-const EMPTY: Fields = { name: '', email: '', subject: '', message: '', human: false }
-
-// Deliberately permissive: anything with a local part, an @, and a dotted domain.
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-
-function validate(values: Fields): Errors {
-  const errors: Errors = {}
-  if (values.name.trim().length < 2) errors.name = 'Моля, въведете име (поне 2 символа).'
-  if (!values.email.trim()) errors.email = 'Моля, въведете е-мейл.'
-  else if (!EMAIL_RE.test(values.email.trim())) errors.email = 'Моля, въведете валиден е-мейл адрес.'
-  if (values.subject.trim().length < 3) errors.subject = 'Моля, въведете тема (поне 3 символа).'
-  if (values.message.trim().length < 10)
-    errors.message = 'Моля, опишете запитването си (поне 10 символа).'
-  if (!values.human) errors.human = 'Моля, потвърдете, че не сте робот.'
-  return errors
-}
-
-const fieldClass =
-  'w-full rounded-xl border bg-timber-bark/[0.04] px-4 py-3 font-sans text-[0.95rem] font-light text-timber-bark placeholder:text-timber-bark/40 transition-colors focus:outline-none focus:ring-2 focus:ring-timber-ember/60'
-const labelClass =
-  'block font-sans text-[0.68rem] font-medium uppercase tracking-[0.22em] text-timber-ember'
+const cardClass = 'card fade-up flex gap-4 rounded-2xl p-5 md:p-6'
+const iconWrap =
+  'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-timber-gold/15 text-timber-ember'
+const labelClass = 'font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-timber-ember'
+const valueClass = 'mt-2 font-display text-lg font-bold uppercase tracking-[0.02em] text-timber-bark'
+const noteClass = 'mt-1 font-sans text-[0.85rem] font-light leading-[1.6] text-timber-bark/70'
 
 export default function Contact() {
-  const [values, setValues] = useState<Fields>(EMPTY)
-  const [errors, setErrors] = useState<Errors>({})
-  const [submitted, setSubmitted] = useState(false)
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [failed, setFailed] = useState<string | null>(null)
-  // Bots fill every field they find; humans never see this one.
-  const honeypot = useRef<HTMLInputElement>(null)
-
   useEffect(() => {
     document.title = 'Контакти — МИХАЛ ЕООД'
   }, [])
 
-  const set = <K extends keyof Fields>(key: K, value: Fields[K]) => {
-    const next = { ...values, [key]: value }
-    setValues(next)
-    setSent(false)
-    // Only re-validate live once they have tried to submit, so the form does
-    // not shout at someone still filling in the first field.
-    if (submitted) setErrors(validate(next))
-  }
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (sending) return
-    setSubmitted(true)
-    setFailed(null)
-
-    if (honeypot.current?.value) return // silently drop bot submissions
-
-    const found = validate(values)
-    setErrors(found)
-    if (Object.keys(found).length > 0) {
-      document.querySelector<HTMLElement>('[data-error="true"]')?.focus()
-      return
-    }
-
-    setSending(true)
-    try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': FORM_NAME,
-          [HONEYPOT]: '',
-          name: values.name.trim(),
-          email: values.email.trim(),
-          subject: values.subject.trim(),
-          message: values.message.trim(),
-        }).toString(),
-      })
-      if (!res.ok) throw new Error(String(res.status))
-      setSent(true)
-      setValues(EMPTY)
-      setErrors({})
-      setSubmitted(false)
-    } catch {
-      setFailed(`Съобщението не беше изпратено. Опитайте отново или ни пишете на ${RECIPIENT}.`)
-    } finally {
-      setSending(false)
-    }
-  }
-
-  const borderFor = (key: keyof Fields) =>
-    errors[key] ? 'border-red-500/70' : 'border-timber-bark/20 focus:border-timber-ember'
-
   return (
-    <main className="relative z-10 px-4 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="sr-only">Контакти</h1>
+    <main className="relative z-10">
+      <PageBanner crumb="Контакти" title="Свържете се" accent="с нас" image="/images/new-5.jpg" />
 
-        <form
-          name={FORM_NAME}
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot={HONEYPOT}
-          noValidate
-          onSubmit={onSubmit}
-          className="liquid-glass-panel fade-up rounded-3xl px-6 py-10 md:px-12 md:py-14"
-        >
-          {/* Netlify matches the submission to its form by this field. */}
-          <input type="hidden" name="form-name" value={FORM_NAME} />
+      {/* Четирите начина за връзка — телефонът пръв, и на телефон той е най-горе. */}
+      <section aria-label="Начини за връзка" className="py-10 md:py-16">
+        <div className="mx-auto grid max-w-[1200px] gap-3 px-5 sm:grid-cols-2 md:gap-5 md:px-8 lg:grid-cols-4">
+          <a href={PHONE_HREF} className={`${cardClass} transition-colors hover:bg-timber-cream`}>
+            <span className={iconWrap}>
+              <PhoneIcon />
+            </span>
+            <span>
+              <span className={labelClass}>Телефон</span>
+              <span className={`${valueClass} block`}>{PHONE_DISPLAY}</span>
+              <span className={`${noteClass} block`}>Понеделник – Петък</span>
+            </span>
+          </a>
 
-          <p className="font-sans text-[0.68rem] uppercase tracking-[0.24em] text-timber-ember">
-            Пишете ни
-          </p>
-          <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-[0.95] text-timber-bark md:text-5xl">
-            Свържете се с нас
-          </h2>
-          <div className="mt-6 h-px w-full bg-gradient-to-r from-timber-ember/40 via-timber-ember/12 to-transparent" />
+          <a
+            href={`mailto:${EMAIL}`}
+            className={`${cardClass} transition-colors hover:bg-timber-cream`}
+            style={{ animationDelay: '0.05s' }}
+          >
+            <span className={iconWrap}>
+              <MailIcon />
+            </span>
+            <span className="min-w-0">
+              <span className={labelClass}>Е-мейл</span>
+              <span className="mt-2 block break-words font-sans text-[0.95rem] font-medium text-timber-bark">
+                {EMAIL}
+              </span>
+              <span className={`${noteClass} block`}>Отговор до 24 часа</span>
+            </span>
+          </a>
 
-          {sent && (
-            <p
-              role="status"
-              className="mt-8 rounded-xl border border-timber-ember/35 bg-timber-ember/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-bark"
-            >
-              Благодарим! Съобщението е изпратено — ще се свържем с вас скоро.
-            </p>
-          )}
-
-          {failed && (
-            <p
-              role="alert"
-              className="mt-8 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 font-sans text-[0.9rem] font-light text-timber-bark"
-            >
-              {failed}
-            </p>
-          )}
-
-          <div className="mt-8 space-y-6">
-            <div>
-              <label htmlFor="name" className={labelClass}>
-                Име <span aria-hidden="true">*</span>
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                value={values.name}
-                onChange={(e) => set('name', e.target.value)}
-                aria-invalid={!!errors.name}
-                aria-describedby={errors.name ? 'name-error' : undefined}
-                data-error={!!errors.name}
-                placeholder="Вашето име"
-                className={`mt-3 ${fieldClass} ${borderFor('name')}`}
-              />
-              {errors.name && (
-                <p id="name-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
-                  {errors.name}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="email" className={labelClass}>
-                Е-мейл <span aria-hidden="true">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                inputMode="email"
-                required
-                value={values.email}
-                onChange={(e) => set('email', e.target.value)}
-                aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? 'email-error' : undefined}
-                data-error={!!errors.email}
-                placeholder="ime@primer.bg"
-                className={`mt-3 ${fieldClass} ${borderFor('email')}`}
-              />
-              {errors.email && (
-                <p id="email-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="subject" className={labelClass}>
-                Тема <span aria-hidden="true">*</span>
-              </label>
-              <input
-                id="subject"
-                name="subject"
-                type="text"
-                required
-                value={values.subject}
-                onChange={(e) => set('subject', e.target.value)}
-                aria-invalid={!!errors.subject}
-                aria-describedby={errors.subject ? 'subject-error' : undefined}
-                data-error={!!errors.subject}
-                placeholder="Запитване за дървен материал"
-                className={`mt-3 ${fieldClass} ${borderFor('subject')}`}
-              />
-              {errors.subject && (
-                <p id="subject-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
-                  {errors.subject}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="message" className={labelClass}>
-                Съобщение <span aria-hidden="true">*</span>
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                required
-                value={values.message}
-                onChange={(e) => set('message', e.target.value)}
-                aria-invalid={!!errors.message}
-                aria-describedby={errors.message ? 'message-error' : undefined}
-                data-error={!!errors.message}
-                placeholder="Какви количества и размери ви трябват?"
-                className={`mt-3 resize-y ${fieldClass} ${borderFor('message')}`}
-              />
-              {errors.message && (
-                <p id="message-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
-                  {errors.message}
-                </p>
-              )}
-            </div>
-
-            {/* Honeypot — hidden from people, irresistible to bots. Netlify
-                discards any submission that fills it. */}
-            <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
-              <label htmlFor={HONEYPOT}>Не попълвайте това поле</label>
-              <input id={HONEYPOT} name={HONEYPOT} type="text" tabIndex={-1} autoComplete="off" ref={honeypot} />
-            </div>
-
-            <div>
-              <label className="flex cursor-pointer items-start gap-3">
-                <input
-                  type="checkbox"
-                  checked={values.human}
-                  onChange={(e) => set('human', e.target.checked)}
-                  aria-invalid={!!errors.human}
-                  aria-describedby={errors.human ? 'human-error' : undefined}
-                  data-error={!!errors.human}
-                  className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-timber-bark/25 bg-timber-bark/[0.04] text-timber-sap accent-timber-ember focus:outline-none focus:ring-2 focus:ring-timber-ember/60"
-                />
-                <span className="font-sans text-[0.9rem] font-light leading-snug text-timber-bark/75">
-                  Не съм робот <span aria-hidden="true">*</span>
-                </span>
-              </label>
-              {errors.human && (
-                <p id="human-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
-                  {errors.human}
-                </p>
-              )}
-            </div>
+          <div className={cardClass} style={{ animationDelay: '0.1s' }}>
+            <span className={iconWrap}>
+              <PinIcon />
+            </span>
+            <span>
+              <span className={labelClass}>Адрес</span>
+              <span className="mt-2 block font-sans text-[0.95rem] font-medium leading-[1.6] text-timber-bark">
+                {ADDRESS_CITY}
+                <br />
+                {ADDRESS_STREET}
+              </span>
+              <span className={`${noteClass} block`}>{ADDRESS_LANDMARK}</span>
+            </span>
           </div>
 
-          <div className="mt-10">
-            <button
-              type="submit"
-              disabled={sending}
-              className="cta-button font-sans uppercase tracking-[0.18em] disabled:cursor-wait disabled:opacity-60"
-            >
-              <span>{sending ? 'Изпращане…' : 'Изпрати'}</span>
-            </button>
+          <div className={cardClass} style={{ animationDelay: '0.15s' }}>
+            <span className={iconWrap}>
+              <ClockIcon />
+            </span>
+            <span>
+              <span className={labelClass}>Работно време</span>
+              <span className={`${valueClass} block`}>{HOURS_WEEKDAYS}</span>
+              <span className={`${noteClass} block`}>Събота и неделя — почивни</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Формата и картата */}
+      <section className="pb-14 md:pb-24">
+        <div className="mx-auto grid max-w-[1200px] items-start gap-6 px-5 md:px-8 lg:grid-cols-[1.15fr_1fr] lg:gap-8">
+          <div id="inquiry">
+            <InquiryForm />
           </div>
 
-          <p className="mt-6 font-sans text-[0.78rem] font-light text-timber-bark/60">
-            Полетата, отбелязани със <span aria-hidden="true">*</span>, са задължителни.
-          </p>
-        </form>
+          <section aria-labelledby="map-heading" className="card fade-up overflow-hidden rounded-3xl">
+            <div className="px-6 pt-6 md:px-8 md:pt-8">
+              <p className="eyebrow">Складова база</p>
+              <h2
+                id="map-heading"
+                className="mt-3 font-display text-[clamp(1.5rem,5vw,2.25rem)] font-bold uppercase leading-[1] text-timber-bark"
+              >
+                Как да
+                <br />
+                ни намерите
+              </h2>
+              <p className="mt-3 font-sans text-[0.9rem] font-light leading-[1.7] text-timber-bark/70">
+                {ADDRESS_CITY}, {ADDRESS_STREET}, {ADDRESS_LANDMARK}
+              </p>
+              <a
+                href={DIRECTIONS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline mt-5"
+              >
+                <NavigationIcon className="h-4 w-4" />
+                Навигация до базата
+              </a>
+            </div>
 
-        {/* Map */}
-        <section
-          aria-label="Локация"
-          className="liquid-glass-panel fade-up mt-8 overflow-hidden rounded-3xl"
-          style={{ animationDelay: '0.1s' }}
-        >
-          <div className="flex flex-wrap items-baseline justify-between gap-3 px-6 py-6 md:px-10">
-            <h2 className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-timber-ember">
-              Намерете ни
-            </h2>
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${MAP_COORDS}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group/link relative font-sans text-[0.85rem] font-light text-timber-bark/75 transition-colors hover:text-timber-bark"
-            >
-              Отвори в Google Maps
-              <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-timber-sap transition-transform duration-500 ease-out group-hover/link:origin-left group-hover/link:scale-x-100" />
-            </a>
-          </div>
-          <iframe
-            title={`Карта — ${MAP_LABEL}`}
-            src={`https://www.google.com/maps?q=${MAP_COORDS}&hl=bg&z=17&output=embed`}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="h-[320px] w-full border-0 bg-timber-bark/5 md:h-[420px]"
-          />
-        </section>
-      </div>
+            <iframe
+              title="Карта — складовата база в Разлог"
+              src={MAP_EMBED}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="mt-6 h-[300px] w-full border-0 bg-timber-bark/5 md:h-[380px]"
+            />
+          </section>
+        </div>
+      </section>
     </main>
   )
 }

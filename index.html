@@ -2,11 +2,13 @@
 <html lang="bg">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover so env(safe-area-inset-*) resolves and the fixed
+         phone bar clears the home indicator on iPhones. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>МИХАЛ ЕООД — Качествен сух дървен материал</title>
     <meta
       name="description"
-      content="МИХАЛ ЕООД — сглобяване, изсушаване и доставка на качествен дървен материал от Разлог."
+      content="Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди. Складова база, собствена сушилня, рязане по размер и доставка в цялата страна."
     />
     <meta name="theme-color" content="#f7f1e8" />
 
@@ -55,11 +57,20 @@
     <!-- Netlify Forms: the deploy bot only registers forms it finds in static
          HTML, and the contact form is rendered by React. This hidden twin
          carries the same name and fields so submissions are accepted. -->
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
       <input type="text" name="name" />
+      <input type="tel" name="phone" />
       <input type="email" name="email" />
-      <input type="text" name="subject" />
+      <input type="text" name="material" />
       <textarea name="message"></textarea>
+      <input type="file" name="attachment" />
       <input type="text" name="bot-field" />
     </form>
 

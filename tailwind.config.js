@@ -15,20 +15,27 @@ export default {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      // The design proposal's palette (September 2026): a neutral, yellow-leaning
+      // ground (hue 47°) instead of the earlier orange-pink cream, with colour
+      // coming only from the brown and the gold.
       colors: {
         timber: {
-          // bark was #1a1207 — near black. Lifted to a warm coffee so the
-          // site reads as wood rather than shadow; still 11.6:1 with white
-          // text, and 11.6:1 as dark text on the white nav.
-          bark: '#402d18',
-          // ember stays the on-light accent (the nav logo sits on white), so
-          // it can only brighten as far as AA allows: 5.1:1 at this value.
-          ember: '#96622e',
-          // sap is the on-dark accent, and carries most of the new warmth.
-          sap: '#e0a24f',
-          cream: '#f7f0e4',
-          // The single ground colour: the tone the mobile menu already used.
-          paper: '#f7f1e8',
+          // ТЪМНО — text and dark bands. 15.3:1 on paper.
+          bark: '#2a2011',
+          // КАФЯВО — primary buttons and active chips. White on it is 8:1.
+          brown: '#634d25',
+          // ЗЛАТИСТО — fills, icons and rules. Only 3:1 on paper, so never
+          // small text on a light ground; dark text on it is 5:1.
+          gold: '#b4883e',
+          // The gold, deepened for small labels on light grounds: 5.6:1 on paper.
+          ember: '#7f5f27',
+          // The gold, lifted for text on dark photos and bands: 6.6:1 on bark.
+          sap: '#c9a05a',
+          // ХАРТИЯ / ФОН / ФУТЪР
+          paper: '#fbfaf6',
+          ground: '#edebe1',
+          stone: '#e4e1d4',
+          cream: '#f4f2ea',
         },
       },
     },

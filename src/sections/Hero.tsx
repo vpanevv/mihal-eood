@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { PhoneIcon } from '../components/Icons'
+import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 
 const HEADLINE = 'МИХАЛ ЕООД'
 
@@ -18,12 +20,14 @@ const WORDS = (() => {
 // page's LCP image, so it serves the export.
 const HERO_IMAGE = '/images/hero.jpg'
 
+const ADVANTAGES = ['Собствена складова база', 'Сушилня на място', 'Доставка в цялата страна']
+
 export default function Hero() {
   // If the photo is missing the gradient fallback shows through instead of a broken image.
   const [photoFailed, setPhotoFailed] = useState(false)
 
   return (
-    <section className="hero-fallback relative h-svh min-h-[560px] w-full overflow-hidden">
+    <section className="hero-fallback relative h-svh min-h-[600px] w-full overflow-hidden">
       {/* Photograph */}
       {!photoFailed && (
         <img
@@ -43,15 +47,15 @@ export default function Hero() {
           slowly scaling photo is re-blended across the whole screen every
           frame, which is what made the first seconds stutter on phones. */}
       <div className="absolute inset-0 bg-[#4a3116] opacity-15" />
-      <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/40 via-timber-bark/10 to-timber-bark/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-timber-bark/40 via-timber-bark/10 to-timber-bark/65" />
       <div className="hero-scrim absolute inset-0" />
       <div className="hero-vignette absolute inset-0" />
       <div className="hero-grain absolute inset-0 opacity-[0.07]" />
 
-      {/* Headline + CTA */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
+      {/* Headline, tagline, two buttons, three advantages */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 pb-20 pt-24">
         {/* Wraps to two lines on phones, so it can be sized far larger there than the one-line desktop setting */}
-        <h1 className="text-center font-display text-[clamp(3rem,16vw,6rem)] font-bold uppercase leading-[0.86] tracking-[0.005em] text-white [text-shadow:0_2px_40px_rgba(18,12,4,0.55)] md:text-[min(10.5vw,12rem)]">
+        <h1 className="text-center font-display text-[clamp(3rem,15vw,5.75rem)] font-bold uppercase leading-[0.86] tracking-[0.005em] text-white [text-shadow:0_2px_40px_rgba(18,12,4,0.55)] md:text-[min(10vw,11rem)]">
           <span className="sr-only">{HEADLINE}</span>
           {WORDS.map(({ word, glyphs }) => (
             <span key={word} aria-hidden="true" className="mx-[0.14em] inline-block whitespace-nowrap">
@@ -70,32 +74,61 @@ export default function Hero() {
         </h1>
 
         {/* Supporting line. Lands after the headline's glyph sweep and before
-            the button, so the three read in order. Breaks between the two
-            sentences on phones rather than mid-phrase. */}
+            the buttons, so the three read in order. */}
         <p
-          className="fade-up mt-6 text-center font-display text-[clamp(1rem,4.6vw,1.35rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-8 md:text-[1.7rem] md:tracking-[0.16em]"
+          className="fade-up mt-5 text-center font-display text-[clamp(0.95rem,4.2vw,1.3rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-7 md:text-[1.6rem] md:tracking-[0.16em]"
           style={{ animationDelay: '0.7s' }}
         >
           <span className="block sm:inline">Дърво с характер.</span>{' '}
           <span className="block sm:inline">Качество, което остава.</span>
         </p>
 
-        {/* CTA — the light variant, since this one sits on a photograph rather
-            than on paper like every other button on the site. */}
-        <Link
-          to="/products"
-          className="cta-button cta-button--light fade-up mt-8 font-sans uppercase tracking-[0.14em] md:mt-10 md:tracking-[0.18em]"
+        <p
+          className="fade-up mt-4 max-w-[46ch] text-center font-sans text-[0.9rem] font-light leading-[1.7] text-white/80 [text-shadow:0_1px_14px_rgba(18,12,4,0.7)] md:text-[1.05rem]"
+          style={{ animationDelay: '0.8s' }}
+        >
+          Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди
+        </p>
+
+        <div
+          className="fade-up mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center md:mt-10"
           style={{ animationDelay: '0.9s' }}
         >
-          <span>Разгледай нашите продукти</span>
-        </Link>
+          <Link to="/products" className="btn btn-gold">
+            Разгледай продуктите
+          </Link>
+          <a href={PHONE_HREF} className="btn btn-outline-light">
+            <PhoneIcon className="h-4 w-4" />
+            {PHONE_DISPLAY}
+          </a>
+        </div>
+
+        <ul
+          className="fade-up mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-2.5 md:mt-12"
+          style={{ animationDelay: '1s' }}
+        >
+          {ADVANTAGES.map((item) => (
+            <li
+              key={item}
+              className="flex items-center gap-2.5 font-sans text-[0.66rem] font-medium uppercase tracking-[0.18em] text-white/80 md:text-[0.72rem]"
+            >
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-timber-gold" />
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* Hairline rule that hands the eye off to whatever section comes next */}
-      <div
-        className="fade-up absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-timber-sap/45 to-transparent"
-        style={{ animationDelay: '1s' }}
-      />
+      {/* The hand-off to the next section. No rule at all: three stacked
+          layers blur the photograph harder and harder towards the bottom,
+          each masked in so no layer shows an edge of its own, and a wash in
+          the paper colour finishes it. The hero simply dissolves. */}
+      <div aria-hidden="true" className="hero-edge pointer-events-none absolute inset-x-0 bottom-0 z-10">
+        <span className="hero-edge__layer hero-edge__layer--soft" />
+        <span className="hero-edge__layer hero-edge__layer--mid" />
+        <span className="hero-edge__layer hero-edge__layer--deep" />
+        <span className="hero-edge__wash" />
+      </div>
     </section>
   )
 }

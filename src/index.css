@@ -8,6 +8,7 @@
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -26,9 +27,13 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      radial-gradient(110% 70% at 50% 0%, #fdfbf6 0%, transparent 62%),
-      radial-gradient(80% 50% at 100% 100%, rgba(224, 162, 79, 0.14) 0%, transparent 70%),
-      linear-gradient(180deg, #faf6ef 0%, #f4ece0 55%, #efe4d4 100%);
+      radial-gradient(110% 70% at 50% 0%, #fdfcf9 0%, transparent 62%),
+      linear-gradient(180deg, #fbfaf6 0%, #f3f1ea 55%, #edebe1 100%);
+  }
+
+  /* Anchored sections land below the fixed bar rather than under it. */
+  [id] {
+    scroll-margin-top: 6.5rem;
   }
 }
 
@@ -58,110 +63,58 @@
     animation: popIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  /* Liquid glass — a white tint over a heavy blur, with an inset specular
-     highlight along the top edge and a hairline rim to catch the light. */
-  .liquid-glass {
-    /* The white sheen stays — it is what reads as glass. The opacity that
-       carries legibility is a dark layer inside the element, driven by
-       scroll position, so this deliberately has no background-color. */
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0.04) 42%,
-      rgba(255, 255, 255, 0.09) 100%
-    );
-    backdrop-filter: blur(18px) saturate(170%);
-    -webkit-backdrop-filter: blur(18px) saturate(170%);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
-      inset 0 -1px 0 0 rgba(255, 255, 255, 0.07),
-      0 12px 38px -10px rgba(20, 13, 5, 0.45);
-  }
-
-  /* Cream glass. On the paper pages there is little behind it to blur, so the
-     glassiness has to come from the edges: a bright specular line along the
-     top, a lit rim, an inner bottom bounce and a soft lift off the page. The
-     blur and saturation still do the work over the hero photograph. */
-  .liquid-glass-light {
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 255, 255, 0.18) 42%,
-      rgba(255, 253, 250, 0.42) 100%
-    );
-    /* The bar is 70–92% opaque cream, so a wide radius bought nothing visible
-       while costing a re-blur of everything beneath it on every scroll frame. */
+  /* The nav once the page has scrolled off its photo: paper glass. The bar is
+     mostly opaque, so a modest blur is all the glass it needs. */
+  .nav-solid {
+    background-color: rgba(251, 250, 246, 0.9);
     backdrop-filter: blur(14px) saturate(160%);
     -webkit-backdrop-filter: blur(14px) saturate(160%);
     box-shadow:
-      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.95),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-      inset 0 -1.5px 2px -1px rgba(255, 255, 255, 0.75),
-      inset 0 -1px 0 0 rgba(64, 45, 24, 0.07),
-      0 2px 6px -2px rgba(64, 45, 24, 0.12),
-      0 18px 45px -18px rgba(64, 45, 24, 0.42);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      inset 0 0 0 1px rgba(42, 32, 17, 0.06),
+      0 14px 36px -18px rgba(42, 32, 17, 0.35);
   }
 
-  /* Mobile menu in the same cream glass. */
-  /* Near-opaque, so it needs no full-screen blur to open smoothly on a phone. */
-  .liquid-glass-panel-light {
-    background-color: rgba(249, 244, 236, 0.97);
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.75) 0%,
-      rgba(255, 255, 255, 0.3) 100%
-    );
+  /* Over the photograph at the top of every page: a faint dark sheet, so the
+     white links hold on bright boards without hiding the picture. */
+  .nav-clear {
+    background-color: rgba(42, 32, 17, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
   }
 
-  /* A soft fall of white laid over the brown, so the palette lifts instead of
-     sitting flat. Kept off the areas that carry body copy. */
-  /* On paper a white wash does nothing, so this warms rather than lightens. */
-  .white-wash {
-    background:
-      radial-gradient(85% 60% at 50% 0%, rgba(224, 162, 79, 0.1) 0%, transparent 72%),
-      linear-gradient(to bottom, rgba(64, 45, 24, 0.03) 0%, transparent 40%);
-  }
-
-  /* Same material, opaque enough to read a full menu against. */
-  .liquid-glass-panel {
-    background-color: #fdfaf4;
+  /* Opaque white card — dialogs, forms, contact cards. */
+  .liquid-glass-panel,
+  .card {
+    background-color: #ffffff;
     box-shadow:
-      inset 0 0 0 1px rgba(64, 45, 24, 0.1),
-      0 10px 30px -18px rgba(64, 45, 24, 0.5);
+      inset 0 0 0 1px rgba(42, 32, 17, 0.07),
+      0 12px 30px -20px rgba(42, 32, 17, 0.45);
   }
 
-  /* The footer steps down from the page, so the site closes on something
-     with weight rather than dissolving into the same cream. Its own class,
-     not the shared panel, which the contact form and map also use. */
   .footer-panel {
-    background-image: linear-gradient(180deg, #efe6d8 0%, #e7dbc9 100%);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
-    border-top: 1px solid rgba(64, 45, 24, 0.12);
+    background-color: theme('colors.timber.stone');
+    border-top: 1px solid rgba(42, 32, 17, 0.08);
   }
 
-  /* The home page's photo section: a light mesh of honey, peach and white
-     blooms instead of flat cream. Stops are kept light enough that the
-     accent headline still clears AA over the deepest honey spot. */
+  /* The home page's photo section: soft blooms on the neutral ground. */
   .showcase-glow {
     background:
-      radial-gradient(40% 30% at 10% 12%, rgba(236, 178, 96, 0.3) 0%, transparent 70%),
+      radial-gradient(40% 30% at 10% 12%, rgba(180, 136, 62, 0.16) 0%, transparent 70%),
       radial-gradient(36% 28% at 90% 36%, rgba(255, 255, 255, 0.85) 0%, transparent 72%),
-      radial-gradient(44% 32% at 80% 90%, rgba(214, 140, 80, 0.2) 0%, transparent 70%),
-      radial-gradient(38% 30% at 16% 70%, rgba(252, 236, 208, 0.9) 0%, transparent 70%),
-      linear-gradient(160deg, #fbf5ea 0%, #f4e6d0 48%, #f8eedf 100%);
+      radial-gradient(44% 32% at 80% 90%, rgba(180, 136, 62, 0.12) 0%, transparent 70%),
+      radial-gradient(38% 30% at 16% 70%, rgba(255, 255, 255, 0.8) 0%, transparent 70%),
+      linear-gradient(160deg, #fbfaf6 0%, #f1eee4 48%, #f7f5ef 100%);
   }
 
-  /* A second set of blooms drifting very slowly over the first, so the light
-     feels alive. Transform only — composited, no repaint per frame. */
+  /* A second set of blooms drifting very slowly over the first. Transform
+     only — composited, no repaint per frame. */
   .showcase-glow::before {
     content: '';
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(28% 22% at 32% 28%, rgba(240, 186, 110, 0.26) 0%, transparent 70%),
-      radial-gradient(26% 22% at 68% 62%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
-      radial-gradient(22% 18% at 50% 88%, rgba(226, 160, 96, 0.16) 0%, transparent 70%);
+      radial-gradient(28% 22% at 32% 28%, rgba(180, 136, 62, 0.14) 0%, transparent 70%),
+      radial-gradient(26% 22% at 68% 62%, rgba(255, 255, 255, 0.7) 0%, transparent 70%);
     animation: glowDrift 28s ease-in-out infinite alternate;
     will-change: transform;
   }
@@ -175,129 +128,58 @@
     }
   }
 
-  /* CTA button — adapted from Uiverse.io by gharsh11032000, recoloured white.
-     The ::before blob starts as a small circle and scales up to flood the pill. */
-  .cta-button {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    padding: 13px 24px;
-    font-size: 13px;
-    line-height: 1;
-    color: theme('colors.timber.bark');
-    border: 2px solid theme('colors.timber.bark');
-    border-radius: 34px;
-    background-color: transparent;
-    font-weight: 600;
-    transition:
-      scale 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-      box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    overflow: hidden;
+  /* Buttons. 48px tall so they are an easy thumb target on a phone. */
+  .btn {
+    @apply inline-flex min-h-[48px] select-none items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-6 font-sans text-[0.78rem] font-medium uppercase tracking-[0.16em] transition-[background-color,border-color,color,transform] duration-200 ease-out active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-paper disabled:pointer-events-none disabled:opacity-60 md:px-8;
   }
 
-  .cta-button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 60px;
-    height: 60px;
-    border-radius: inherit;
-    scale: 0;
-    z-index: 0;
-    background-color: theme('colors.timber.bark');
-    transition: scale 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  .btn-primary {
+    @apply bg-timber-brown text-white hover:bg-timber-bark;
   }
 
-  /* Label rides above the blob rather than relying on a negative z-index,
-     which would drop it behind the hero's overlay stack. */
-  .cta-button > span {
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  .btn-gold {
+    @apply bg-timber-gold text-timber-bark hover:bg-[#c49a52];
   }
 
-  .cta-button:hover::before,
-  .cta-button:focus-visible::before {
-    scale: 9;
+  .btn-outline {
+    @apply border border-timber-bark/20 bg-white/70 text-timber-bark hover:border-timber-bark/60 hover:bg-white;
   }
 
-  .cta-button:hover,
-  .cta-button:focus-visible {
-    scale: 1.06;
-    box-shadow: 0 0 24px rgba(64, 45, 24, 0.25);
+  .btn-outline-light {
+    @apply border border-white/55 text-white hover:border-white hover:bg-white hover:text-timber-bark;
   }
 
-  .cta-button:hover > span,
-  .cta-button:focus-visible > span {
-    color: theme('colors.timber.paper');
+  /* Filter chips. aria-pressed carries the state, so it is also what styles it. */
+  .chip {
+    @apply inline-flex min-h-[40px] shrink-0 items-center rounded-full border border-timber-bark/15 bg-white px-4 font-sans text-[0.8rem] text-timber-bark/80 transition-colors duration-200 hover:border-timber-bark/40 hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold;
   }
 
-  .cta-button:active {
-    scale: 1;
+  .chip[aria-pressed='true'] {
+    @apply border-timber-brown bg-timber-brown text-white;
   }
 
-  /* The hero's button sits on a photograph, not on paper, so it inverts. */
-  .cta-button.cta-button--light {
-    color: #fff;
-    border-color: #fff;
+  .eyebrow {
+    @apply font-sans text-[0.68rem] font-medium uppercase tracking-[0.24em] text-timber-ember;
   }
 
-  .cta-button.cta-button--light::before {
-    background-color: #fff;
+  .field {
+    @apply w-full rounded-xl border bg-white px-4 py-3 font-sans text-base font-normal text-timber-bark transition-colors placeholder:text-timber-bark/40 focus:outline-none focus:ring-2 focus:ring-timber-gold/50;
   }
 
-  .cta-button.cta-button--light:hover > span,
-  .cta-button.cta-button--light:focus-visible > span {
-    color: theme('colors.timber.bark');
+  .field-label {
+    @apply mb-2 block font-sans text-[0.68rem] font-medium uppercase tracking-[0.2em] text-timber-bark/70;
   }
 
-  .cta-button.cta-button--light:hover,
-  .cta-button.cta-button--light:focus-visible {
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
-  }
-
-  /* Compact variant for secondary actions such as the back link. */
-  .cta-button.cta-button--sm {
-    padding: 10px 24px;
-    font-size: 11.5px;
-    border-width: 1.5px;
-  }
-
-  /* The Bulgarian label is long; step it down so it clears a 320px viewport. */
-  @media (max-width: 380px) {
-    .cta-button {
-      padding: 12px 20px;
-      font-size: 11.5px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .cta-button {
-      padding: 17px 44px;
-      font-size: 17px;
-    }
-
-    .cta-button.cta-button--sm {
-      padding: 12px 30px;
-      font-size: 13px;
-    }
-  }
-
-  /* Technical drawings arrive on a bright amber that glows against the brown.
-     Desaturating and darkening in place pulls it toward the sap gold already
-     in the palette, so it stays a distinct technical layer without shouting.
-     The band colour matches the filtered result, so any letterboxing blends. */
+  /* Technical drawings arrive on a bright amber. Desaturating and darkening
+     in place pulls them toward the gold of the palette. */
   .profile-band {
-    background-color: #c79a45;
-    border-top: 1px solid rgba(26, 18, 7, 0.25);
+    background-color: #c09a52;
   }
 
   .profile-band img {
-    filter: saturate(0.66) brightness(0.9);
+    filter: saturate(0.6) brightness(0.92);
   }
 
-  /* The carousel scrolls horizontally; its scrollbar would sit across the cards. */
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -319,25 +201,90 @@
     background: linear-gradient(
       to bottom,
       transparent 18%,
-      rgba(40, 28, 14, 0.46) 46%,
-      rgba(40, 28, 14, 0.46) 58%,
-      transparent 86%
+      rgba(30, 22, 11, 0.46) 46%,
+      rgba(30, 22, 11, 0.46) 62%,
+      transparent 90%
     );
   }
 
-  .hero-vignette {
-    background: radial-gradient(
-      120% 85% at 50% 45%,
-      transparent 35%,
-      rgba(40, 28, 14, 0.40) 100%
+  /* The foot of the hero. Progressive blur: each layer is shorter and blurs
+     harder than the one above, and every layer is masked in from nothing, so
+     none of them draws a visible edge. With the wash on top there is no line
+     between the photograph and the section below — it just dissolves. */
+  .hero-edge {
+    height: 8.5rem;
+  }
+
+  .hero-edge__layer {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    display: block;
+  }
+
+  .hero-edge__layer--soft {
+    height: 100%;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 60%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 60%);
+  }
+
+  .hero-edge__layer--mid {
+    height: 66%;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+  }
+
+  .hero-edge__layer--deep {
+    height: 34%;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 75%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 75%);
+  }
+
+  .hero-edge__wash {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(251, 250, 246, 0.08) 45%,
+      rgba(251, 250, 246, 0.42) 78%,
+      rgba(251, 250, 246, 0.88) 94%,
+      #fbfaf6 100%
     );
+  }
+
+  @media (min-width: 768px) {
+    .hero-edge {
+      height: 11rem;
+    }
+  }
+
+  /* Phones: the photograph is still running its slow zoom under this band, and
+     re-blurring it every frame is the one thing that would stutter. The wash
+     alone carries the transition there. */
+  @media (max-width: 767px) {
+    .hero-edge__layer {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+
+  .hero-vignette {
+    background: radial-gradient(120% 85% at 50% 45%, transparent 35%, rgba(30, 22, 11, 0.42) 100%);
   }
 
   /* Stand-in so the hero still reads before the photo is dropped in. */
   .hero-fallback {
     background:
-      radial-gradient(90% 70% at 65% 35%, #c08f4d 0%, transparent 60%),
-      linear-gradient(160deg, #6b4c22 0%, #46311a 55%, #2e2011 100%);
+      radial-gradient(90% 70% at 65% 35%, #8f7442 0%, transparent 60%),
+      linear-gradient(160deg, #634d25 0%, #3d2f18 55%, #2a2011 100%);
   }
 }
 
@@ -413,5 +360,9 @@
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+
+  html:focus-within {
+    scroll-behavior: auto;
   }
 }

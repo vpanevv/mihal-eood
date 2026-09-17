@@ -1,82 +1,119 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import PageBanner from '../components/PageBanner'
+import ServicesSection from '../components/ServicesSection'
+import { ArrowIcon, CheckIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
+import { DIRECTIONS_LINK, MAP_EMBED, PHONE_DISPLAY, PHONE_HREF } from '../data/company'
+import { DELIVERY_TOWNS } from '../data/services'
 
-const ICON = 'h-9 w-9 text-timber-ember md:h-10 md:w-10'
-
-function WarehouseIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-      <path d="M4 20 24 8l20 12v22H4V20Z" strokeLinejoin="round" />
-      <path d="M14 42V26h20v16" strokeLinejoin="round" />
-      <path d="M14 32h20M24 26v16" />
-    </svg>
-  )
-}
-
-function TruckIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-      <path d="M3 12h25v20H3zM28 19h8l6 7v6h-14z" strokeLinejoin="round" />
-      <circle cx="13" cy="36" r="4" />
-      <circle cx="34" cy="36" r="4" />
-      <path d="M17 36h13" />
-    </svg>
-  )
-}
-
-function ForkliftIcon() {
-  return (
-    <svg className={ICON} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-      <path d="M6 32V14h12l6 10v8z" strokeLinejoin="round" />
-      <path d="M32 8v26M32 34h11" strokeLinecap="round" />
-      <circle cx="12" cy="38" r="4" />
-      <circle cx="26" cy="38" r="4" />
-    </svg>
-  )
-}
-
-const CAPABILITIES = [
-  { label: 'Складова база', Icon: WarehouseIcon },
-  { label: 'Собствен транспорт', Icon: TruckIcon },
-  { label: 'Подемна техника', Icon: ForkliftIcon },
+const TERMS = [
+  'Оферта след запитване по телефона или през формата, с цена според размерите и количеството.',
+  'Доставка със собствен транспорт; цената зависи от обема и адреса на обекта.',
+  'Товарене с подемна техника в базата — без ръчно разтоварване.',
+  'Фактура за всяка поръчка.',
 ]
 
 export default function Delivery() {
   useEffect(() => {
-    document.title = 'Услуги — МИХАЛ ЕООД'
+    document.title = 'Услуги и доставка — МИХАЛ ЕООД'
   }, [])
 
   return (
-    <main className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 py-32 md:px-10 md:py-44">
-      <h1 className="sr-only">Услуги</h1>
+    <main className="relative z-10">
+      <PageBanner crumb="Услуги" title="Услуги и" accent="доставка" image="/images/new-1.jpg" />
 
-      <p
-        className="fade-up font-display text-3xl font-bold uppercase tracking-[0.02em] text-timber-bark md:text-5xl"
-        style={{ animationDelay: '0.05s' }}
-      >
-        Разполагаме с:
-      </p>
+      <section className="py-12 md:py-20">
+        <ServicesSection />
+      </section>
 
-      <div className="mt-12 grid w-full max-w-[1000px] gap-5 sm:grid-cols-3 md:mt-16 md:gap-6">
-        {CAPABILITIES.map(({ label, Icon }, i) => (
-          <div
-            key={label}
-            className="liquid-glass-panel fade-up flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center md:py-12"
-            style={{ animationDelay: `${0.12 + i * 0.07}s` }}
-          >
-            <Icon />
-            <h2 className="font-display text-lg font-bold uppercase leading-tight tracking-[0.06em] text-timber-bark md:text-xl">
-              {label}
+      {/* Зона на доставка */}
+      <section aria-labelledby="zone-heading" className="bg-timber-ground/70 py-14 md:py-20">
+        <div className="mx-auto grid max-w-[1200px] gap-8 px-5 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+          <div className="fade-up">
+            <p className="eyebrow">Зона на доставка</p>
+            <h2
+              id="zone-heading"
+              className="mt-3 font-display text-[clamp(1.6rem,5.5vw,2.75rem)] font-bold uppercase leading-[1] text-timber-bark"
+            >
+              Пирин и
+              <br />
+              <span className="text-timber-ember">цялата страна</span>
             </h2>
-          </div>
-        ))}
-      </div>
 
-      <div className="fade-up mt-14 md:mt-16" style={{ animationDelay: '0.35s' }}>
-        <Link to="/contacts" className="cta-button font-sans uppercase tracking-[0.16em]">
-          <span>Свържи се с нас</span>
-        </Link>
-      </div>
+            <ul className="mt-7 flex flex-wrap gap-2.5">
+              {DELIVERY_TOWNS.map((town) => (
+                <li
+                  key={town}
+                  className="rounded-full border border-timber-bark/15 bg-white px-4 py-2 font-sans text-[0.85rem] text-timber-bark/85"
+                >
+                  {town}
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-5 font-sans text-[0.92rem] font-light leading-[1.8] text-timber-bark/70">
+              … и цялата страна по договаряне.
+            </p>
+
+            <a
+              href={DIRECTIONS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary mt-7"
+            >
+              <NavigationIcon className="h-4 w-4" />
+              Навигация до базата
+            </a>
+          </div>
+
+          <div className="card fade-up overflow-hidden rounded-3xl">
+            <iframe
+              title="Карта — складовата база в Разлог"
+              src={MAP_EMBED}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="h-[300px] w-full border-0 bg-timber-bark/5 md:h-[420px]"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Условия */}
+      <section aria-labelledby="terms-heading" className="py-14 md:py-20">
+        <div className="mx-auto max-w-[900px] px-5 md:px-8">
+          <p className="eyebrow fade-up">Условия</p>
+          <h2
+            id="terms-heading"
+            className="fade-up mt-3 font-display text-[clamp(1.6rem,5.5vw,2.5rem)] font-bold uppercase leading-[1] text-timber-bark"
+          >
+            Как работим
+          </h2>
+
+          <ul className="mt-8 space-y-4">
+            {TERMS.map((term, i) => (
+              <li
+                key={term}
+                className="fade-up flex items-start gap-3.5 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-bark/80"
+                style={{ animationDelay: `${0.04 + i * 0.05}s` }}
+              >
+                <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-timber-gold" />
+                {term}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Link to="/contacts#inquiry" className="btn btn-primary">
+              Изпрати запитване
+              <ArrowIcon className="h-4 w-4" />
+            </Link>
+            <a href={PHONE_HREF} className="btn btn-outline">
+              <PhoneIcon className="h-4 w-4" />
+              {PHONE_DISPLAY}
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

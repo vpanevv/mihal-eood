@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom
 import App from './App.tsx'
 import Nav from './sections/Nav.tsx'
 import Footer from './sections/Footer.tsx'
+import MobileActionBar from './components/MobileActionBar.tsx'
 import ScrollToTop from './components/ScrollToTop.tsx'
 import './index.css'
 
@@ -16,6 +17,7 @@ const loaders = {
   delivery: () => import('./pages/Delivery.tsx'),
   gallery: () => import('./pages/Gallery.tsx'),
   contact: () => import('./pages/Contact.tsx'),
+  privacy: () => import('./pages/Privacy.tsx'),
 }
 
 const About = lazy(loaders.about)
@@ -23,6 +25,7 @@ const Products = lazy(loaders.products)
 const Delivery = lazy(loaders.delivery)
 const Gallery = lazy(loaders.gallery)
 const Contact = lazy(loaders.contact)
+const Privacy = lazy(loaders.privacy)
 
 // The route chunks are a few kB each. Fetching them once the page is idle
 // means a nav click renders straight away instead of waiting on the network.
@@ -51,6 +54,9 @@ function Layout() {
         <Outlet />
       </Suspense>
       <Footer />
+      {/* Clears the fixed phone bar, so it never covers the end of the footer. */}
+      <div aria-hidden="true" className="h-[84px] lg:hidden" />
+      <MobileActionBar />
     </>
   )
 }
@@ -66,6 +72,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contacts" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

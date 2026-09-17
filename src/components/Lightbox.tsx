@@ -19,11 +19,15 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
 }
 
 const control =
-  'absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-timber-bark/70 text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-sap md:h-14 md:w-14'
+  'absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-timber-bark/70 text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold md:h-14 md:w-14'
+
+/** Horizontal travel that counts as a swipe rather than a tap. */
+const SWIPE_PX = 50
 
 export default function Lightbox({ images, index, onClose, onStep }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const lastFocused = useRef<Element | null>(null)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
   const open = index !== null
   const count = images.length
 
@@ -74,12 +78,31 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
   if (index === null) return null
   const image = images[index]
 
+  // Swiping is how a phone expects to move between photos.
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.changedTouches[0]
+    touchStart.current = { x: t.clientX, y: t.clientY }
+  }
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current
+    if (!start) return
+    touchStart.current = null
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    // Ignore mostly-vertical travel, which is a scroll attempt, not a swipe.
+    if (Math.abs(dx) < SWIPE_PX || Math.abs(dx) < Math.abs(t.clientY - start.y)) return
+    go(dx < 0 ? 1 : -1)
+  }
+
   return (
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-10"
       role="dialog"
       aria-modal="true"
       aria-label={image.alt}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {/* Click-away layer */}
       <button
@@ -90,15 +113,25 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
         className="absolute inset-0 cursor-default bg-timber-bark/95"
       />
 
-      <img
-        key={image.srcUrl}
-        src={image.srcUrl}
-        alt={image.alt}
-        width={image.width}
-        height={image.height}
-        decoding="async"
-        className="pop-in relative max-h-full max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)]"
-      />
+      <figure className="pop-in relative flex max-h-full flex-col items-center gap-4">
+        <img
+          key={image.srcUrl}
+          src={image.srcUrl}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          decoding="async"
+          className="max-h-[78svh] max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)]"
+        />
+        <figcaption className="text-center font-sans text-[0.72rem] uppercase tracking-[0.2em] text-white/80">
+          {image.alt}
+          {count > 1 && (
+            <span className="mt-1.5 block text-white/50">
+              {index + 1} / {count}
+            </span>
+          )}
+        </figcaption>
+      </figure>
 
       {count > 1 && (
         <>
@@ -108,10 +141,6 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
           <button type="button" onClick={() => go(1)} aria-label="Следваща снимка" className={`${control} right-3 md:right-6`}>
             <Chevron dir="right" />
           </button>
-
-          <p className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 font-sans text-[0.72rem] uppercase tracking-[0.22em] text-timber-cream/60 md:bottom-8">
-            {index + 1} / {count}
-          </p>
         </>
       )}
 

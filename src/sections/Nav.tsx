@@ -1,59 +1,47 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { PhoneIcon } from '../components/Icons'
+import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 
 const LINKS = [
-  { label: 'Продукти', href: '/products', route: true },
-  { label: 'Услуги', href: '/delivery', route: true },
-  { label: 'Галерия', href: '/gallery', route: true },
-  { label: 'За нас', href: '/about-us', route: true },
-  { label: 'Контакти', href: '/contacts', route: true },
+  { label: 'Начало', href: '/' },
+  // Продукти is deliberately absent: the six categories live on the landing
+  // page, and /products is reached from there rather than from the bar.
+  { label: 'Услуги', href: '/delivery' },
+  { label: 'Галерия', href: '/gallery' },
+  { label: 'За нас', href: '/about-us' },
+  { label: 'Контакти', href: '/contacts' },
 ]
 
-/** Scroll distance over which the bar ramps from clear to fully opaque. */
-const DARKEN_OVER = 140
-
-/** Tint opacity for a given scroll progress (0–1). */
-const tintFor = (progress: number) => 0.7 + 0.22 * progress
+/** Scroll depth at which the bar leaves the photograph and becomes paper. */
+const SOLID_AFTER = 60
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const tintRef = useRef<HTMLDivElement>(null)
-  const progressRef = useRef(0)
+  const [solid, setSolid] = useState(() => window.scrollY > SOLID_AFTER)
+  const { pathname } = useLocation()
 
-  // The bar darkens continuously with scroll rather than snapping at a
-  // threshold — a white tint alone lightens against bright photography, so
-  // content behind it bled through and the links became hard to read.
-  //
-  // The opacity is written straight to the node instead of going through
-  // state: driving it with setState re-rendered the whole nav subtree on
-  // every scroll frame, which is the last place to be doing React work.
+  // A boolean rather than a per-frame opacity: the bar only has two states, so
+  // React does work twice per page instead of on every scroll frame.
+  const frame = useRef(0)
   useEffect(() => {
-    let frame = 0
-    const apply = () => {
-      progressRef.current = Math.min(window.scrollY / DARKEN_OVER, 1)
-      const node = tintRef.current
-      if (node) node.style.opacity = String(tintFor(progressRef.current))
-    }
+    const apply = () => setSolid(window.scrollY > SOLID_AFTER)
     const onScroll = () => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(apply)
+      cancelAnimationFrame(frame.current)
+      frame.current = requestAnimationFrame(apply)
     }
     apply()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
-      cancelAnimationFrame(frame)
+      cancelAnimationFrame(frame.current)
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
 
-  // The open menu forces the bar fully opaque; closing restores the scroll
-  // position's own tint.
-  useEffect(() => {
-    const node = tintRef.current
-    if (node) node.style.opacity = String(menuOpen ? 0.94 : tintFor(progressRef.current))
-  }, [menuOpen])
+  // Close the menu when a navigation happens, however it was triggered.
+  useEffect(() => setMenuOpen(false), [pathname])
 
-  // Lock the page behind the mobile overlay, and let Escape dismiss it.
+  // Lock the page behind the overlay, and let Escape dismiss it.
   useEffect(() => {
     if (!menuOpen) return
     const onKey = (e: KeyboardEvent) => {
@@ -68,111 +56,136 @@ export default function Nav() {
     }
   }, [menuOpen])
 
+  const onPhoto = !solid && !menuOpen
+
   return (
     <>
       <header
-        className="fade-down fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8 md:pt-6"
+        className="fade-down fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5"
         style={{ animationDelay: '0.1s' }}
       >
-        <div className="liquid-glass-light relative mx-auto h-16 max-w-[1500px] overflow-hidden rounded-full md:h-20">
-          {/* Opacity ramps with scroll position, so the bar gains weight
-              exactly as much as it needs to stay legible. */}
-          <div
-            ref={tintRef}
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-timber-paper"
-            style={{ opacity: 0.7 }}
-          />
+        <div
+          className={`relative mx-auto h-16 max-w-[1400px] overflow-hidden rounded-full transition-[background-color,box-shadow] duration-300 md:h-[72px] ${
+            onPhoto ? 'nav-clear' : 'nav-solid'
+          }`}
+        >
+          <div className="relative flex h-full items-center justify-between gap-4 pl-6 pr-3 md:pl-9 md:pr-4">
+            <Link
+              to="/"
+              className={`-my-2 flex items-center py-2 font-display text-sm font-medium uppercase tracking-[0.3em] transition-opacity hover:opacity-70 md:text-base ${
+                onPhoto ? 'text-white' : 'text-timber-bark'
+              }`}
+            >
+              Михал
+              <span className={`ml-2 ${onPhoto ? 'text-timber-sap' : 'text-timber-ember'}`}>ЕООД</span>
+            </Link>
 
-          <div className="relative flex h-full items-center justify-between px-6 md:px-10">
-          <Link
-            to="/"
-            className="font-display text-sm font-medium uppercase tracking-[0.32em] text-timber-bark transition-opacity hover:opacity-60 md:text-base"
-          >
-            Михал<span className="ml-2 text-timber-ember">ЕООД</span>
-          </Link>
-
-          <nav aria-label="Основна навигация" className="hidden lg:block">
-            <ul className="flex items-center gap-11">
-              {LINKS.map(({ label, href, route }) => {
-                const className =
-                  'group relative block font-serif text-xl tracking-[0.02em] text-timber-bark/90 transition-colors hover:text-timber-bark focus-visible:text-timber-bark'
-                // Underline wipes in from the left, out to the right
-                const underline = (
-                  <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-timber-ember transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100" />
-                )
-                return (
+            <nav aria-label="Основна навигация" className="hidden lg:block">
+              <ul className="flex items-center gap-7 xl:gap-9">
+                {LINKS.map(({ label, href }) => (
                   <li key={href}>
-                    {route ? (
-                      <Link to={href} className={className}>
-                        {label}
-                        {underline}
-                      </Link>
-                    ) : (
-                      <a href={href} className={className}>
-                        {label}
-                        {underline}
-                      </a>
-                    )}
+                    <NavLink
+                      to={href}
+                      end={href === '/'}
+                      className={({ isActive }) =>
+                        `group relative block font-serif text-[1.05rem] transition-colors xl:text-lg ${
+                          onPhoto
+                            ? isActive
+                              ? 'text-timber-sap'
+                              : 'text-white/85 hover:text-white'
+                            : isActive
+                              ? 'text-timber-ember'
+                              : 'text-timber-bark/80 hover:text-timber-bark'
+                        }`
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          {label}
+                          {/* Active page keeps the gold rule; the rest wipe it in on hover. */}
+                          <span
+                            className={`absolute -bottom-1 left-0 h-px w-full origin-left bg-timber-gold transition-transform duration-300 ease-out ${
+                              isActive
+                                ? 'scale-x-100'
+                                : 'origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100'
+                            }`}
+                          />
+                        </>
+                      )}
+                    </NavLink>
                   </li>
-                )
-              })}
-            </ul>
-          </nav>
+                ))}
+              </ul>
+            </nav>
 
-          <button
-            type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'Затвори менюто' : 'Отвори менюто'}
-            className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[7px] lg:hidden"
-          >
-            <span
-              className={`block h-px w-7 bg-timber-bark transition-transform duration-300 ${
-                menuOpen ? 'translate-y-[4px] rotate-45' : ''
-              }`}
-            />
-            <span
-              className={`block h-px w-7 bg-timber-bark transition-transform duration-300 ${
-                menuOpen ? '-translate-y-[4px] -rotate-45' : ''
-              }`}
-            />
-          </button>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/contacts#inquiry"
+                className="btn btn-primary hidden !min-h-[44px] !px-6 !text-[0.7rem] lg:inline-flex"
+              >
+                Запитване
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                aria-label={menuOpen ? 'Затвори менюто' : 'Отвори менюто'}
+                className={`relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-[7px] rounded-full transition-colors lg:hidden ${
+                  onPhoto ? 'text-white' : 'text-timber-bark'
+                }`}
+              >
+                <span
+                  className={`block h-px w-7 bg-current transition-transform duration-300 ${
+                    menuOpen ? 'translate-y-[4px] rotate-45' : ''
+                  }`}
+                />
+                <span
+                  className={`block h-px w-7 bg-current transition-transform duration-300 ${
+                    menuOpen ? '-translate-y-[4px] -rotate-45' : ''
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile overlay */}
+      {/* Mobile overlay — the six pages full screen, as in the proposal. */}
       <div
         id="mobile-menu"
         hidden={!menuOpen}
-        className="liquid-glass-panel-light fixed inset-0 z-40 lg:hidden"
+        className="fixed inset-0 z-40 bg-timber-bark lg:hidden"
       >
-        <nav aria-label="Мобилна навигация" className="flex h-full items-center px-8">
-          <ul className="w-full space-y-2">
-            {LINKS.map(({ label, href, route }, i) => (
-              <li key={href} className={menuOpen ? 'fade-up' : ''} style={{ animationDelay: `${0.08 + i * 0.07}s` }}>
-                {route ? (
-                  <Link
-                    to={href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block py-3 font-serif text-4xl text-timber-bark"
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <a
-                    href={href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block py-3 font-serif text-4xl text-timber-bark"
-                  >
-                    {label}
-                  </a>
-                )}
+        <nav aria-label="Мобилна навигация" className="flex h-full flex-col justify-center px-7 pb-28 pt-24">
+          <ul className="w-full">
+            {LINKS.map(({ label, href }, i) => (
+              <li
+                key={href}
+                className={`border-b border-white/10 ${menuOpen ? 'fade-up' : ''}`}
+                style={{ animationDelay: `${0.04 + i * 0.05}s` }}
+              >
+                <NavLink
+                  to={href}
+                  end={href === '/'}
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `block py-4 font-display text-[2rem] font-bold uppercase tracking-[0.02em] ${
+                      isActive ? 'text-timber-sap' : 'text-white'
+                    }`
+                  }
+                >
+                  {label}
+                </NavLink>
               </li>
             ))}
           </ul>
+
+          <a href={PHONE_HREF} className="btn btn-gold mt-9 self-start">
+            <PhoneIcon className="h-4 w-4" />
+            {PHONE_DISPLAY}
+          </a>
         </nav>
       </div>
     </>
