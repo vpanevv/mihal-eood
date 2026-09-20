@@ -28,56 +28,69 @@ export type Product = {
   groups: Group[]
 }
 
+/** Sizes as given by the company (September 2026), in centimetres and metres. */
 export const PRODUCTS: Product[] = [
   {
     id: 'suh-material',
     name: 'Сух дървен материал',
-    summary: 'Бук и бор · дебелини 2–10 см · дължини 2,5 и 4 м',
+    summary: 'Бор, смърч, дъб, бук и липа · дебелини 1,8 – 12 см · ширини 8 – 23 см',
     Icon: PlanksIcon,
     filters: ['dry'],
     drawing: '/images/drawing-2.png',
     note: 'От собствена сушилня. Материалът отлежава един месец след сушенето, преди да влезе в продажба.',
     groups: [
       {
-        title: 'Бук',
+        title: 'Иглолистна дървесина — бор и смърч',
         specs: [
-          { label: 'дебелина', values: ['4', '5', '6'], unit: 'см' },
-          { label: 'дължина', values: ['2,5', '4'], unit: 'м' },
+          {
+            label: 'дебелина',
+            values: ['1,8', '2,2', '2,5', '3', '4', '5', '6', '7', '… до 12'],
+            unit: 'см',
+          },
+          { label: 'ширина', values: ['8 – 23'], unit: 'см' },
+          { label: 'дължина', values: ['от 4'], unit: 'м' },
         ],
       },
       {
-        title: 'Бор',
+        title: 'Широколистна дървесина — дъб, бук и липа',
         specs: [
-          { label: 'дебелина', values: ['2', '3', '4', '5', '6', '8', '10'], unit: 'см' },
-          { label: 'дължина', values: ['4'], unit: 'м' },
+          { label: 'дебелина', values: ['3 – 7'], unit: 'см' },
+          { label: 'ширина', values: ['свободна'], unit: '' },
+          { label: 'дължина', values: ['3'], unit: 'м' },
         ],
       },
     ],
   },
   {
     id: 'dyusheme',
-    name: 'Дюшеме',
-    summary: 'Подова настилка от дълги прави дъски · дължина 4 м',
+    name: 'Дюшеме и декинг',
+    summary: 'Дебелина 2,5 – 4 см · ширина 8 – 22 см',
     Icon: FloorIcon,
     filters: ['floor'],
     drawing: '/images/drawing-3.png',
-    note: 'Вид подова настилка, изработена от дълги прави дъски.',
-    groups: [{ specs: [{ label: 'дължина', values: ['4'], unit: 'м' }] }],
+    note: 'Дюшеме за вътрешна настилка и декинг за тераси — в едни и същи дебелини и ширини.',
+    groups: [
+      {
+        specs: [
+          { label: 'дебелина', values: ['2,5 – 4'], unit: 'см' },
+          { label: 'ширина', values: ['8 – 22'], unit: 'см' },
+        ],
+      },
+    ],
   },
   {
     id: 'lamperia',
     name: 'Ламперия /сачак/',
-    summary: 'Иглолистна · ширина 10–22 см · дебелина 1,9 см',
+    summary: 'Дебелина 1,5 – 2,5 см · ширина 8 – 23 см · модел по избор',
     Icon: PanelIcon,
     filters: ['panel'],
     drawing: '/images/drawing-1.png',
-    note: 'Произведена от висококачествена иглолистна дървесина. Сачак за обшивка — тесен и широк.',
+    note: 'Произведена от висококачествена иглолистна дървесина. Профилът се избира от клиента.',
     groups: [
       {
         specs: [
-          { label: 'ширина', values: ['10 – 22'], unit: 'см' },
-          { label: 'дебелина', values: ['1,9'], unit: 'см' },
-          { label: 'дължина', values: ['4'], unit: 'м' },
+          { label: 'дебелина', values: ['1,5 – 2,5'], unit: 'см' },
+          { label: 'ширина', values: ['8 – 23'], unit: 'см' },
         ],
       },
     ],
@@ -85,30 +98,37 @@ export const PRODUCTS: Product[] = [
   {
     id: 'slepeni-gredi',
     name: 'Слепени греди',
-    summary: 'Изработка по поръчка · размери по запитване',
+    summary: 'Изработка по поръчка · дължини до 9,5 м',
     Icon: GlulamIcon,
     filters: ['beams', 'custom'],
     drawing: '/images/drawing-5.png',
     note: 'Изработват се по поръчка. Разполагаме с камера за сушене на дървен материал с обем до 50 м³.',
-    groups: [],
+    groups: [{ specs: [{ label: 'дължина', values: ['до 9,5'], unit: 'м' }] }],
   },
   {
     id: 'gredi-talpi',
     name: 'Греди и талпи',
-    summary: 'Строителна дървесина · рязане по размер',
+    summary: 'Сухи греди във всякакъв размер · дължини 4 – 6 м',
     Icon: BeamIcon,
     filters: ['beams', 'custom'],
-    note: 'Строителна дървесина за покриви и конструкции. Сеченията и дължините се уточняват при запитване.',
-    groups: [],
+    note: 'Строителна дървесина за покриви и конструкции. Сеченията се режат по ваша спецификация.',
+    groups: [
+      {
+        specs: [
+          { label: 'сечение', values: ['всякакъв размер'], unit: '' },
+          { label: 'дължина', values: ['4 – 6'], unit: 'м' },
+        ],
+      },
+    ],
   },
   {
     id: 'letvi-daski',
     name: 'Летви и дъски',
-    summary: 'Челни дъски и дървена обшивка · тясна и широка',
+    summary: 'Челни дъски 15 – 23 см · обшивка тясна и широка',
     Icon: LathsIcon,
     filters: ['boards'],
-    note: 'Челни дъски и дървена обшивка — тясна и широка. Наличните размери се уточняват при запитване.',
-    groups: [],
+    note: 'Челни дъски и дървена обшивка — тясна и широка.',
+    groups: [{ specs: [{ label: 'челни дъски, ширина', values: ['15 – 23'], unit: 'см' }] }],
   },
 ]
 
@@ -122,14 +142,15 @@ export const PRODUCT_FILTERS: { id: Filter | 'all'; label: string }[] = [
   { id: 'custom', label: 'По поръчка' },
 ]
 
-/** Comparison table under the product grid. Only sizes the company has given. */
+/** Comparison table under the product grid. */
 export const SPEC_ROWS: { name: string; thickness: string; width: string; length: string }[] = [
-  { name: 'Бук', thickness: '4, 5, 6 см', width: '—', length: '2,5 и 4 м' },
-  { name: 'Бор', thickness: '2 – 10 см', width: '—', length: '4 м' },
-  { name: 'Дюшеме', thickness: 'по запитване', width: 'по запитване', length: '4 м' },
-  { name: 'Ламперия', thickness: '1,9 см', width: '10 – 22 см', length: '4 м' },
-  { name: 'Греди и талпи', thickness: 'по размер', width: 'по размер', length: 'по размер' },
-  { name: 'Слепени греди', thickness: 'по поръчка', width: 'по поръчка', length: 'по поръчка' },
+  { name: 'Дъски — бор и смърч', thickness: '1,8 – 12 см', width: '8 – 23 см', length: 'от 4 м' },
+  { name: 'Дъб, бук и липа', thickness: '3 – 7 см', width: 'свободна', length: '3 м' },
+  { name: 'Дюшеме и декинг', thickness: '2,5 – 4 см', width: '8 – 22 см', length: 'по заявка' },
+  { name: 'Ламперия /сачак/', thickness: '1,5 – 2,5 см', width: '8 – 23 см', length: 'по заявка' },
+  { name: 'Челни дъски', thickness: 'по заявка', width: '15 – 23 см', length: 'по заявка' },
+  { name: 'Греди', thickness: 'всякакъв размер', width: 'всякакъв размер', length: '4 – 6 м' },
+  { name: 'Слепени греди', thickness: 'по поръчка', width: 'по поръчка', length: 'до 9,5 м' },
 ]
 
 export const inquiryHref = (productId?: string) =>

@@ -109,7 +109,7 @@ export default function ProductDialog({ product, onClose }: Props) {
                           key={value}
                           className="rounded-lg bg-timber-gold/12 px-2.5 py-1 font-sans text-[0.9rem] font-medium text-timber-bark ring-1 ring-inset ring-timber-gold/40"
                         >
-                          {value} {spec.unit}
+                          {spec.unit ? `${value} ${spec.unit}` : value}
                         </span>
                       ))}
                     </dd>
