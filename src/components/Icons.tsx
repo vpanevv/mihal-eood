@@ -59,6 +59,12 @@ export const CheckIcon = (p: IconProps) => (
   </Svg>
 )
 
+export const ChevronDownIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Svg>
+)
+
 export const PlusIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M12 5v14M5 12h14" />
@@ -116,6 +122,25 @@ export const ForkliftIcon = (p: IconProps) => (
     <path d="M16 12h-4" />
     <circle cx="6" cy="18.5" r="1.8" />
     <circle cx="11.5" cy="18.5" r="1.8" />
+  </Svg>
+)
+
+/* Wood species */
+
+export const ConiferIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3 7.5 9.5h9L12 3Z" />
+    <path d="M12 8.5 6 16h12l-6-7.5Z" />
+    <path d="M4.5 21h15" />
+    <path d="M12 21v-5" />
+  </Svg>
+)
+
+export const HardwoodIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 21v-7" />
+    <path d="M12 14c-4.4 0-7-2.4-7-5.4C5 5.6 8 3 12 3s7 2.6 7 5.6c0 3-2.6 5.4-7 5.4Z" />
+    <path d="M9.5 10.5 12 13l2.5-2.5" />
   </Svg>
 )
 

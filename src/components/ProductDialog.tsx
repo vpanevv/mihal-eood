@@ -54,14 +54,29 @@ export default function ProductDialog({ product, onClose }: Props) {
       {/* Opaque white rather than blurred glass: a full-screen backdrop blur
           re-renders the page behind on every frame and stutters on phones. */}
       <div className="card pop-in relative max-h-full w-full max-w-lg overflow-y-auto rounded-3xl">
-        {product.drawing && (
-          <div className="profile-band relative aspect-[19/9] w-full overflow-hidden rounded-t-3xl">
+        {/* A photograph of the product leads, where there is one; otherwise the
+            milled profile does. */}
+        {product.photo ? (
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-3xl bg-timber-bark/5">
             <img
-              src={product.drawing}
-              alt={`Профил на ${product.name}`}
+              src={product.photo}
+              alt={product.name}
+              width={1200}
+              height={1600}
+              decoding="async"
               className="h-full w-full object-cover object-center"
             />
           </div>
+        ) : (
+          product.drawing && (
+            <div className="profile-band relative aspect-[19/9] w-full overflow-hidden rounded-t-3xl">
+              <img
+                src={product.drawing}
+                alt={`Профил на ${product.name}`}
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
+          )
         )}
 
         <div className="p-7 md:p-9">

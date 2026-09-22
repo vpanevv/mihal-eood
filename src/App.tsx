@@ -4,7 +4,7 @@ import Hero from './sections/Hero'
 import Showcase from './sections/Showcase'
 import SectionHeading from './components/SectionHeading'
 import ServicesSection from './components/ServicesSection'
-import CategoryGrid from './components/CategoryGrid'
+import WoodSelector from './components/WoodSelector'
 import GalleryStrip from './components/GalleryStrip'
 import InquiryForm from './components/InquiryForm'
 import Faq from './components/Faq'
@@ -32,7 +32,7 @@ export default function App() {
           <h2 id="materials-heading" className="sr-only">
             Нашите материали
           </h2>
-          <CategoryGrid />
+          <WoodSelector />
           <div className="mt-10">
             <Link to="/products" className="btn btn-outline">
               Виж всички размери

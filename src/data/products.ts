@@ -24,6 +24,8 @@ export type Product = {
   filters: Filter[]
   /** Milled profile cross-section, shown in the detail dialog. */
   drawing?: string
+  /** Photograph of the real product; leads both the card and its dialog. */
+  photo?: string
   note?: string
   groups: Group[]
 }
@@ -127,6 +129,7 @@ export const PRODUCTS: Product[] = [
     summary: 'Челни дъски 15 – 23 см · обшивка тясна и широка',
     Icon: LathsIcon,
     filters: ['boards'],
+    photo: '/images/products/letvi-daski.jpg',
     note: 'Челни дъски и дървена обшивка — тясна и широка.',
     groups: [{ specs: [{ label: 'челни дъски, ширина', values: ['15 – 23'], unit: 'см' }] }],
   },
