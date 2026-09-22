@@ -91,14 +91,6 @@ export const NavigationIcon = (p: IconProps) => (
 
 /* Services */
 
-export const SawIcon = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M3 15 15 3l3 3L6 18" />
-    <path d="m6 12 2 2M9 9l2 2M12 6l2 2" />
-    <path d="M4 20h16" />
-  </Svg>
-)
-
 export const DryingIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M4 4h16" />
@@ -107,21 +99,48 @@ export const DryingIcon = (p: IconProps) => (
   </Svg>
 )
 
-export const TruckIcon = (p: IconProps) => (
+/** Рендосване — a hand plane taking a shaving off a board. */
+export const PlaneIcon = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M2.5 6h11v10h-11zM13.5 9.5h4l3 3.5v3h-7z" />
-    <circle cx="7" cy="17.5" r="1.8" />
-    <circle cx="17" cy="17.5" r="1.8" />
+    <path d="M3 13h14l3 3v3H3z" />
+    <path d="M7 13V9.5a2 2 0 0 1 2-2h2.5" />
+    <path d="M3 16h14" />
   </Svg>
 )
 
-export const ForkliftIcon = (p: IconProps) => (
+/** Шлайфане — a sanding block over a surface. */
+export const SandingIcon = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M3 16V8h6l3 5v3" />
-    <path d="M16 3v14h5" />
-    <path d="M16 12h-4" />
-    <circle cx="6" cy="18.5" r="1.8" />
-    <circle cx="11.5" cy="18.5" r="1.8" />
+    <rect x="3" y="8" width="18" height="5" rx="1.5" />
+    <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    <path d="M3.5 17h2M9 17h2M14.5 17h2M20 17h.5" />
+    <path d="M3.5 20.5h2M9 20.5h2M14.5 20.5h2M20 20.5h.5" />
+  </Svg>
+)
+
+/** Боядисване — a paint roller on its handle. */
+export const PaintIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="13" height="5" rx="1.5" />
+    <path d="M16 6.5h3a1.5 1.5 0 0 1 1.5 1.5v2A1.5 1.5 0 0 1 19 11.5h-6.5a1.5 1.5 0 0 0-1.5 1.5v1.5" />
+    <rect x="9" y="14.5" width="4" height="5.5" rx="1.2" />
+  </Svg>
+)
+
+/** Импрегниране — a drop soaking into the board. */
+export const ImpregnationIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3s4 4.7 4 7.3a4 4 0 0 1-8 0C8 7.7 12 3 12 3Z" />
+    <rect x="3" y="16" width="18" height="5" rx="1.5" />
+    <path d="M12 14.4V16" />
+  </Svg>
+)
+
+/** Клинозъбене — the interlocking finger joint itself. */
+export const FingerJointIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3 6h6l2 2h-2l2 2h-2l2 2h-2l2 2h-2l2 2H3z" />
+    <path d="M21 6h-6l-2 2h2l-2 2h2l-2 2h2l-2 2h2l-2 2h8z" />
   </Svg>
 )
 

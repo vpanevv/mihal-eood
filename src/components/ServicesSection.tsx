@@ -1,4 +1,5 @@
 import SectionHeading from './SectionHeading'
+import { thumbFor } from '../data/gallery'
 import { PROCESS, SERVICES } from '../data/services'
 
 type Props = {
@@ -15,25 +16,53 @@ export default function ServicesSection({ withLink = false }: Props) {
         accent="материал"
         aside={
           withLink
-            ? 'Режем по зададен размер, сушим в собствена камера, товарим с подемна техника и доставяме до обекта.'
+            ? 'Сушим в собствена камера до 50 м³, рендосваме, шлайфаме, боядисваме, импрегнираме и клинозъбим — и доставяме готовия материал до обекта.'
             : undefined
         }
       />
 
-      <div className="mt-10 grid grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-5">
-        {SERVICES.map(({ title, text, Icon }, i) => (
+      {/* Same shell as the product cards: a photograph leads where there is
+          one, an icon where there is not yet. */}
+      <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-14 md:grid-cols-3 md:gap-5">
+        {SERVICES.map(({ title, text, photo, Icon }, i) => (
           <article
             key={title}
-            className="card fade-up rounded-2xl p-5 md:p-7"
+            className="card fade-up flex flex-col overflow-hidden rounded-2xl"
             style={{ animationDelay: `${0.05 + i * 0.06}s` }}
           >
-            <Icon className="h-8 w-8 text-timber-gold md:h-9 md:w-9" />
-            <h3 className="mt-5 font-display text-base font-bold uppercase leading-tight tracking-[0.04em] text-timber-bark md:text-lg">
-              {title}
-            </h3>
-            <p className="mt-2.5 font-sans text-[0.83rem] font-light leading-[1.65] text-timber-bark/70 md:text-[0.9rem]">
-              {text}
-            </p>
+            {photo ? (
+              <div className="aspect-[4/3] w-full overflow-hidden bg-timber-bark/5">
+                <img
+                  src={thumbFor(photo)}
+                  srcSet={`${thumbFor(photo)} 640w, ${photo} 1200w`}
+                  sizes="(min-width: 768px) 33vw, 46vw"
+                  alt={title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+            ) : null}
+
+            {/* An icon card sits in a row beside photographed ones, so its
+                content centres in the height the row gives it. */}
+            <div className={`p-5 md:p-7 ${photo ? '' : 'flex grow flex-col justify-center'}`}>
+              {!photo && <Icon className="h-8 w-8 text-timber-gold md:h-9 md:w-9" />}
+              <h3
+                className={`font-display text-base font-bold uppercase leading-tight tracking-[0.04em] text-timber-bark md:text-lg ${
+                  photo ? '' : 'mt-5'
+                }`}
+              >
+                {title}
+              </h3>
+
+              {/* The description carries the serif of the site's accent voice,
+                  opened by a short gold rule so it reads as its own block. */}
+              <span aria-hidden="true" className="mt-3 block h-px w-10 bg-timber-gold/70" />
+              <p className="mt-3 font-serif text-[0.95rem] leading-[1.6] text-timber-bark/80 md:text-base md:leading-[1.65]">
+                {text}
+              </p>
+            </div>
           </article>
         ))}
       </div>
