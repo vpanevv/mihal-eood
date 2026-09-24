@@ -21,7 +21,7 @@ const SPECIES: Species[] = [
     name: 'Иглолистна дървесина',
     woods: 'Бор и смърч',
     Icon: ConiferIcon,
-    products: ['letvi-daski', 'gredi-talpi', 'lamperia'],
+    products: ['letvi-daski', 'chelni-daski', 'gredi-talpi', 'lamperia'],
   },
   {
     id: 'hardwood',

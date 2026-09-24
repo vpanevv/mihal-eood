@@ -23,30 +23,56 @@ export default function About() {
     <main className="relative z-10">
       <PageBanner crumb="За нас" title="Фирмата зад" accent="материала" image="/images/new-6.jpg" />
 
-      <section className="py-12 md:py-20">
+      <section aria-labelledby="about-heading" className="py-12 md:py-20">
         <div className="mx-auto max-w-[1000px] px-5 md:px-8">
-          <p className="fade-up font-serif text-[clamp(1.4rem,4.6vw,2.15rem)] leading-[1.35] text-timber-bark">
-            Материалът престоява <span className="text-timber-ember">месец след сушилнята</span>, преди
-            да влезе в продажба — защото добрият покрив започва от дъска, която няма да се усуче.
+          <p id="about-heading" className="eyebrow fade-up">
+            За МИХАЛ ЕООД
           </p>
 
-          <div className="mt-10 grid gap-7 md:mt-14 md:grid-cols-2 md:gap-10">
+          <p className="fade-up mt-5 font-serif text-[clamp(1.25rem,4vw,1.9rem)] leading-[1.4] text-timber-bark">
+            МИХАЛ ЕООД е дружество, регистрирано през 2008 г. в гр. Разлог, с основна дейност
+            търговия и обработка на <span className="text-timber-ember">сух дървен материал</span>.
+          </p>
+
+          <div className="mt-10 grid gap-7 md:mt-12 md:grid-cols-2 md:gap-10">
             <p
               className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
               style={{ animationDelay: '0.05s' }}
             >
-              Михал ЕООД е създадена през 2008 г. в Разлог. Основната дейност на фирмата е търговия
-              със сух дървен материал. Разполагаме със складова база, собствен транспорт и подемна
-              техника, а материалът се суши в собствена камера с обем до 50 м³.
+              Дружеството разполага със собствена складова база, транспортни средства и подемна
+              техника, което осигурява цялостен контрол върху веригата на доставка — от съхранението
+              на материала до неговото доставяне на клиента.
             </p>
             <p
               className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
               style={{ animationDelay: '0.1s' }}
             >
-              Продаваме сух дървен материал, челни дъски, дюшеме, сачак за обшивка и дървена обшивка —
-              тясна и широка. Наши основни клиенти са строителни фирми от района, цехове за мебели и
-              частни клиенти, които се връщат заради коректността, конкурентната цена и съобразяването
-              с изискванията им.
+              Продуктовата гама включва сух дървен материал, дюшеме, ламперия, сачак за обшивка и
+              слепени греди. Материалът преминава задължителен престой от минимум един месец след
+              сушилня, преди да бъде предложен за продажба, с цел гарантиране на подходящото ниво на
+              влажност.
+            </p>
+            <p
+              className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80 md:col-span-2 md:max-w-[62ch]"
+              style={{ animationDelay: '0.15s' }}
+            >
+              В рамките на своята дейност МИХАЛ ЕООД работи основно със строителни фирми,
+              производители на мебели и частни клиенти, като поддържа дългосрочни партньорства въз
+              основа на коректност, качество и спазване на договорените срокове.
+            </p>
+          </div>
+
+          {/* Мисията затваря разказа, затова е изнесена на отделна карта. */}
+          <div className="card fade-up mt-10 rounded-3xl p-6 md:mt-14 md:p-10" style={{ animationDelay: '0.2s' }}>
+            <span aria-hidden="true" className="block h-px w-12 bg-timber-gold" />
+            <p className="mt-5 font-serif text-[1.05rem] leading-[1.7] text-timber-bark/85 md:text-[1.2rem] md:leading-[1.75]">
+              <strong className="font-display text-base font-bold uppercase tracking-[0.06em] text-timber-bark md:text-lg">
+                Нашата мисия
+              </strong>{' '}
+              е да бъдем надежден и последователен доставчик на висококачествен дървен материал за
+              нашите клиенти — съчетавайки традицията в обработката на дървесина с грижа за всяка
+              отделна поръчка. Стремим се да бъдем партньорът, на когото строителни и мебелни фирми
+              могат да разчитат за срокове, качество и коректност, независимо от мащаба на проекта.
             </p>
           </div>
         </div>
