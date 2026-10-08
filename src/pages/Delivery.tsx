@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import ServicesSection from '../components/ServicesSection'
 import { ArrowIcon, CheckIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
+import ViberButton from '../components/ViberButton'
 import { DIRECTIONS_LINK, MAP_EMBED, PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 import { DELIVERY_TOWNS } from '../data/services'
 
@@ -111,6 +112,7 @@ export default function Delivery() {
               <PhoneIcon className="h-4 w-4" />
               {PHONE_DISPLAY}
             </a>
+            <ViberButton className="btn-outline" />
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import PageBanner from '../components/PageBanner'
 import InquiryForm from '../components/InquiryForm'
-import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon } from '../components/Icons'
+import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon, ViberIcon } from '../components/Icons'
 import {
   ADDRESS_CITY,
   ADDRESS_LANDMARK,
@@ -12,6 +12,7 @@ import {
   MAP_EMBED,
   PHONE_DISPLAY,
   PHONE_HREF,
+  VIBER_HREF,
 } from '../data/company'
 
 const cardClass = 'card fade-up flex gap-4 rounded-2xl p-5 md:p-6'
@@ -33,16 +34,30 @@ export default function Contact() {
       {/* Четирите начина за връзка — телефонът пръв, и на телефон той е най-горе. */}
       <section aria-label="Начини за връзка" className="py-10 md:py-16">
         <div className="mx-auto grid max-w-[1200px] gap-3 px-5 sm:grid-cols-2 md:gap-5 md:px-8 lg:grid-cols-4">
-          <a href={PHONE_HREF} className={`${cardClass} transition-colors hover:bg-timber-cream`}>
+          {/* Two ways in on one card, so it is a container with two links —
+              a link inside a link would be invalid. */}
+          <div className={cardClass}>
             <span className={iconWrap}>
               <PhoneIcon />
             </span>
-            <span>
+            <span className="min-w-0">
               <span className={labelClass}>Телефон</span>
-              <span className={`${valueClass} block`}>{PHONE_DISPLAY}</span>
+              <a
+                href={PHONE_HREF}
+                className={`${valueClass} block transition-colors hover:text-timber-ember focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold`}
+              >
+                {PHONE_DISPLAY}
+              </a>
               <span className={`${noteClass} block`}>Понеделник – Петък</span>
+              <a
+                href={VIBER_HREF}
+                className="mt-3 inline-flex min-h-[44px] items-center gap-2 font-sans text-[0.72rem] font-medium uppercase tracking-[0.16em] text-timber-ember transition-colors hover:text-timber-bark focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold"
+              >
+                <ViberIcon className="h-4 w-4" />
+                Пиши във Viber
+              </a>
             </span>
-          </a>
+          </div>
 
           <a
             href={`mailto:${EMAIL}`}

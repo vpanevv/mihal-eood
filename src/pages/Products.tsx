@@ -4,6 +4,7 @@ import PageBanner from '../components/PageBanner'
 import CategoryGrid from '../components/CategoryGrid'
 import ProductDialog from '../components/ProductDialog'
 import { ArrowIcon, PhoneIcon } from '../components/Icons'
+import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 import { PRODUCTS, PRODUCT_FILTERS, SPEC_ROWS, type Filter, type Product } from '../data/products'
 
@@ -150,6 +151,7 @@ export default function Products() {
               <PhoneIcon className="h-4 w-4" />
               {PHONE_DISPLAY}
             </a>
+            <ViberButton className="btn-outline-light" />
           </div>
         </div>
       </section>

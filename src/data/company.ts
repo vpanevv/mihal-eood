@@ -2,6 +2,8 @@
 
 export const PHONE_DISPLAY = '0888 726 194'
 export const PHONE_HREF = 'tel:+359888726194'
+/** Opens a Viber chat with the yard. Assumes the same number is registered on Viber. */
+export const VIBER_HREF = 'viber://chat?number=%2B359888726194'
 export const EMAIL = 'mihaleood@gmail.com'
 
 export const ADDRESS_CITY = 'гр. Разлог'

@@ -26,6 +26,14 @@ export const PhoneIcon = (p: IconProps) => (
   </Svg>
 )
 
+/** A chat bubble with a handset in it — Viber's idea, drawn in the site's own line style. */
+export const ViberIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 3.5h12A2.5 2.5 0 0 1 20.5 6v8A2.5 2.5 0 0 1 18 16.5h-4.2L10 20v-3.5H6A2.5 2.5 0 0 1 3.5 14V6A2.5 2.5 0 0 1 6 3.5Z" />
+    <path d="M9.2 7.4c-.5.4-.6 1.1-.3 1.9.8 2 2.4 3.6 4.4 4.4.8.3 1.5.2 1.9-.3l.4-.5a.6.6 0 0 0-.1-.8l-1.2-.9a.6.6 0 0 0-.7 0l-.4.3a.5.5 0 0 1-.5 0 4 4 0 0 1-1.5-1.5.5.5 0 0 1 0-.5l.3-.4a.6.6 0 0 0 0-.7l-.9-1.2a.6.6 0 0 0-.8-.1l-.5.4Z" />
+  </Svg>
+)
+
 export const MailIcon = (p: IconProps) => (
   <Svg {...p}>
     <rect x="3" y="5" width="18" height="14" rx="2" />

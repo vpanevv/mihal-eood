@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { PhoneIcon } from '../components/Icons'
+import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 
 const LINKS = [
@@ -182,10 +183,13 @@ export default function Nav() {
             ))}
           </ul>
 
-          <a href={PHONE_HREF} className="btn btn-gold mt-9 self-start">
-            <PhoneIcon className="h-4 w-4" />
-            {PHONE_DISPLAY}
-          </a>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <a href={PHONE_HREF} className="btn btn-gold">
+              <PhoneIcon className="h-4 w-4" />
+              {PHONE_DISPLAY}
+            </a>
+            <ViberButton className="btn-outline-light" />
+          </div>
         </nav>
       </div>
     </>

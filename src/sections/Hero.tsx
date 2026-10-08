@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PhoneIcon } from '../components/Icons'
+import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 
 const HEADLINE = 'МИХАЛ ЕООД'
@@ -101,6 +102,7 @@ export default function Hero() {
             <PhoneIcon className="h-4 w-4" />
             {PHONE_DISPLAY}
           </a>
+          <ViberButton className="btn-outline-light" />
         </div>
 
         <ul
