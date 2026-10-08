@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { useSearchParams } from 'react-router-dom'
+import CubicCalculator from './CubicCalculator'
 import { CheckIcon, PaperclipIcon } from './Icons'
 import { EMAIL, PHONE_DISPLAY } from '../data/company'
 import { PRODUCTS } from '../data/products'
+import { formatCalculation, newRow, summarize, type CubicRow } from '../utils/cubic'
 
 /**
  * Netlify Forms. Netlify registers a form by reading static HTML at deploy
@@ -18,7 +21,7 @@ const MAX_FILE_BYTES = 7 * 1024 * 1024
 const ACCEPT = '.pdf,.xls,.xlsx,.jpg,.jpeg,.png'
 
 type Fields = { name: string; phone: string; email: string; material: string; message: string }
-type Errors = Partial<Record<keyof Fields | 'attachment', string>>
+type Errors = Partial<Record<keyof Fields | 'attachment' | 'calculation', string>>
 
 const EMPTY: Fields = { name: '', phone: '', email: '', material: '', message: '' }
 
@@ -26,15 +29,20 @@ const EMPTY: Fields = { name: '', phone: '', email: '', material: '', message: '
 const PHONE_RE = /^\+?[\d\s()-]{8,18}$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-function validate(values: Fields): Errors {
+function validate(values: Fields, rows: CubicRow[]): Errors {
   const errors: Errors = {}
+  const { used, unfinished } = summarize(rows)
   if (values.name.trim().length < 2) errors.name = 'Моля, въведете име (поне 2 символа).'
   if (!values.phone.trim()) errors.phone = 'Моля, въведете телефон, за да ви върнем оферта.'
   else if (!PHONE_RE.test(values.phone.trim())) errors.phone = 'Моля, проверете телефонния номер.'
   if (values.email.trim() && !EMAIL_RE.test(values.email.trim()))
     errors.email = 'Моля, въведете валиден е-мейл адрес.'
-  if (values.message.trim().length < 10)
-    errors.message = 'Опишете накратко какво ви трябва (поне 10 символа).'
+  // A finished calculation says what is wanted, so it stands in for the message.
+  if (values.message.trim().length < 10 && used === 0)
+    errors.message = 'Опишете накратко какво ви трябва (поне 10 символа) или изчислете кубатура.'
+  // A half-filled row would be dropped without a word; say so instead.
+  if (unfinished > 0)
+    errors.calculation = 'Попълнете всички полета на реда или го премахнете — иначе няма да се брои.'
   return errors
 }
 
@@ -49,6 +57,8 @@ export default function InquiryForm() {
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
   const [fileName, setFileName] = useState<string | null>(null)
+  const [rows, setRows] = useState<CubicRow[]>(() => [newRow()])
+  const [calcOpen, setCalcOpen] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   // Bots fill every field they find; people never see this one.
   const honeypot = useRef<HTMLInputElement>(null)
@@ -59,7 +69,13 @@ export default function InquiryForm() {
     setSent(false)
     // Only re-validate live once they have tried to submit, so the form does
     // not shout at someone still filling in the first field.
-    if (submitted) setErrors({ ...validate(next), attachment: errors.attachment })
+    if (submitted) setErrors({ ...validate(next, rows), attachment: errors.attachment })
+  }
+
+  const setCalculation = (next: CubicRow[]) => {
+    setRows(next)
+    setSent(false)
+    if (submitted) setErrors({ ...validate(values, next), attachment: errors.attachment })
   }
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,12 +103,19 @@ export default function InquiryForm() {
 
     if (honeypot.current?.value) return // silently drop bot submissions
 
-    const found = validate(values)
-    setErrors({ ...found, attachment: errors.attachment })
+    const found = validate(values, rows)
     if (Object.keys(found).length > 0 || errors.attachment) {
+      // Render the errors now, not at the end of the handler: data-error is
+      // what says which field to focus, and it is written by that render. The
+      // calculator hides its rows when closed, so a problem there opens it.
+      flushSync(() => {
+        setErrors({ ...found, attachment: errors.attachment })
+        if (found.calculation) setCalcOpen(true)
+      })
       document.querySelector<HTMLElement>('[data-error="true"]')?.focus()
       return
     }
+    setErrors({ ...found, attachment: errors.attachment })
 
     const material = PRODUCTS.find((p) => p.id === values.material)
     // FormData rather than url-encoded: it is what carries the attachment, and
@@ -105,6 +128,7 @@ export default function InquiryForm() {
     body.set('email', values.email.trim())
     body.set('material', material ? material.name : 'Не е посочен')
     body.set('message', values.message.trim())
+    body.set('calculation', formatCalculation(rows))
     const file = fileRef.current?.files?.[0]
     if (file) body.set('attachment', file)
 
@@ -114,6 +138,8 @@ export default function InquiryForm() {
       if (!res.ok) throw new Error(String(res.status))
       setSent(true)
       setValues(EMPTY)
+      setRows([newRow()])
+      setCalcOpen(false)
       setErrors({})
       setFileName(null)
       setSubmitted(false)
@@ -267,6 +293,14 @@ export default function InquiryForm() {
           </select>
         </div>
       </div>
+
+      <CubicCalculator
+        rows={rows}
+        onChange={setCalculation}
+        open={calcOpen}
+        onOpenChange={setCalcOpen}
+        error={errors.calculation}
+      />
 
       <div className="mt-5">
         <label htmlFor="message" className="field-label">

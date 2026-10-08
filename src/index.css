@@ -170,6 +170,16 @@
     @apply mb-2 block font-sans text-[0.68rem] font-medium uppercase tracking-[0.2em] text-timber-bark/70;
   }
 
+  /* Before/after: --pos (0–100) is written by the slider. The "before" photo is
+     the one on top, clipped to the left of the handle. */
+  .ba-before {
+    clip-path: inset(0 calc(100% - var(--pos) * 1%) 0 0);
+  }
+
+  .ba-handle {
+    left: calc(var(--pos) * 1%);
+  }
+
   /* Technical drawings arrive on a bright amber. Desaturating and darkening
      in place pulls them toward the gold of the palette. */
   .profile-band {

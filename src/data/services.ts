@@ -15,6 +15,12 @@ export type Service = {
   Icon: ComponentType<{ className?: string }>
   /** Photograph of the work; leads the card where there is one, as on the product cards. */
   photo?: string
+  /**
+   * The same shot before the work. Given, the card shows a drag-to-compare
+   * slider — `before` on the left, `photo` as the result — instead of a still.
+   * Both need the same framing, or the slider will not line up.
+   */
+  before?: string
 }
 
 /** What the yard does to the timber before it leaves. */
@@ -30,12 +36,17 @@ export const SERVICES: Service[] = [
     text: 'Прецизно рендосване за равна, гладка повърхност и точни размери. Материалът е готов за директна употреба или последваща обработка.',
     Icon: PlaneIcon,
     photo: '/images/services/rendosvane.jpg',
+    // TEMPORARY: a greyscale copy of the photo above, to try the slider.
+    // Overwrite public/images/services/rendosvane-before.jpg (and its thumb) with the real shot.
+    before: '/images/services/rendosvane-before.jpg',
   },
   {
     title: 'Шлайфане',
     text: 'Фино шлайфане за гладка и равномерна повърхност без груби участъци. Подготвяме дървесината отлично за боядисване, омасляване или монтаж.',
     Icon: SandingIcon,
     photo: '/images/services/shlayfane.jpg',
+    // TEMPORARY: greyscale stand-in, as above — overwrite shlayfane-before.jpg with the real shot.
+    before: '/images/services/shlayfane-before.jpg',
   },
   {
     title: 'Боядисване',

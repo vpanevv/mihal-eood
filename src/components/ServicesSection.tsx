@@ -1,3 +1,4 @@
+import BeforeAfter from './BeforeAfter'
 import SectionHeading from './SectionHeading'
 import { thumbFor } from '../data/gallery'
 import { PROCESS, SERVICES } from '../data/services'
@@ -24,13 +25,15 @@ export default function ServicesSection({ withLink = false }: Props) {
       {/* Same shell as the product cards: a photograph leads where there is
           one, an icon where there is not yet. */}
       <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-14 md:grid-cols-3 md:gap-5">
-        {SERVICES.map(({ title, text, photo, Icon }, i) => (
+        {SERVICES.map(({ title, text, photo, before, Icon }, i) => (
           <article
             key={title}
             className="card fade-up flex flex-col overflow-hidden rounded-2xl"
             style={{ animationDelay: `${0.05 + i * 0.06}s` }}
           >
-            {photo ? (
+            {photo && before ? (
+              <BeforeAfter before={before} after={photo} title={title} />
+            ) : photo ? (
               <div className="aspect-[4/3] w-full overflow-hidden bg-timber-bark/5">
                 <img
                   src={thumbFor(photo)}
