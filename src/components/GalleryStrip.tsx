@@ -13,7 +13,7 @@ export default function GalleryStrip() {
   return (
     <>
       <div className="no-scrollbar reveal flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:gap-5 md:px-8">
-        {STRIP.map(({ thumbUrl, alt }, i) => (
+        {STRIP.map(({ thumbUrl, smUrl, alt }, i) => (
           <button
             key={thumbUrl}
             type="button"
@@ -23,9 +23,12 @@ export default function GalleryStrip() {
           >
             <img
               src={thumbUrl}
+              srcSet={`${smUrl} 400w, ${thumbUrl} 640w`}
+              sizes="(min-width: 1024px) 23vw, (min-width: 768px) 30vw, 72vw"
               alt={alt}
               loading="lazy"
               decoding="async"
+              {...{ fetchpriority: 'low' }}
               className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
             />
             <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-timber-bark/55 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

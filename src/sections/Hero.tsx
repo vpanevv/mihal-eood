@@ -19,6 +19,9 @@ const WORDS = (() => {
 // pixel-identical at 1774x887, 362 KB against 2.1 MB. This is the landing
 // page's LCP image, so it serves the export.
 const HERO_IMAGE = '/images/hero.jpg'
+// On a portrait phone only the middle ~23% of the photograph is ever visible, so
+// a 700px-wide crop of its centre shows the same picture for 100 KB, not 361.
+const HERO_IMAGE_PHONE = '/images/hero-m.jpg'
 
 const ADVANTAGES = ['Собствена складова база', 'Сушилня на място', 'Доставка в цялата страна']
 
@@ -30,16 +33,19 @@ export default function Hero() {
     <section className="hero-fallback relative h-svh min-h-[600px] w-full overflow-hidden">
       {/* Photograph */}
       {!photoFailed && (
-        <img
-          src={HERO_IMAGE}
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-          // Lowercase so React 18 passes it through; the camelCase prop is React 19+.
-          {...{ fetchpriority: 'high' }}
-          className="hero-kenburns absolute inset-0 h-full w-full object-cover object-center"
-          onError={() => setPhotoFailed(true)}
-        />
+        <picture>
+          <source media="(max-width: 767px) and (orientation: portrait)" srcSet={HERO_IMAGE_PHONE} />
+          <img
+            src={HERO_IMAGE}
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            // Lowercase so React 18 passes it through; the camelCase prop is React 19+.
+            {...{ fetchpriority: 'high' }}
+            className="hero-kenburns absolute inset-0 h-full w-full object-cover object-center"
+            onError={() => setPhotoFailed(true)}
+          />
+        </picture>
       )}
 
       {/* Tint: a warm wash, then a vertical fall-off so the type stays legible.

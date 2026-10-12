@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
+import { CloseIcon } from './Icons'
+import { useFocusTrap } from '../utils/useFocusTrap'
 import type { GalleryImage } from '../data/gallery'
 
 type Props = {
@@ -26,10 +28,13 @@ const SWIPE_PX = 50
 
 export default function Lightbox({ images, index, onClose, onStep }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
   const lastFocused = useRef<Element | null>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const open = index !== null
   const count = images.length
+
+  useFocusTrap(dialogRef, open)
 
   // Deliberately does not read `index`: two clicks in one tick would both see
   // the same stale value and collapse into a single step.
@@ -97,6 +102,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-10"
       role="dialog"
       aria-modal="true"
@@ -151,7 +157,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
         aria-label="Затвори"
         className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-timber-bark/70 text-lg text-white transition-colors hover:border-white hover:bg-white hover:text-timber-bark md:right-8 md:top-8"
       >
-        ✕
+        <CloseIcon className="h-5 w-5" />
       </button>
     </div>
   )

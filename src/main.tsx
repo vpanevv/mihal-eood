@@ -50,6 +50,13 @@ function Layout() {
   return (
     <>
       <ScrollToTop />
+      {/* First stop in the tab order: lets a keyboard user skip the bar. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-full focus:bg-timber-bark focus:px-5 focus:py-3 focus:font-sans focus:text-sm focus:font-medium focus:text-white focus:outline-none focus:ring-2 focus:ring-timber-gold"
+      >
+        Към съдържанието
+      </a>
       <Nav />
       <Suspense fallback={<RouteFallback />}>
         <Outlet />

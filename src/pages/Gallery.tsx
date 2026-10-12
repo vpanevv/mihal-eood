@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import Lightbox from '../components/Lightbox'
 import { ExpandIcon } from '../components/Icons'
 import { GALLERY_IMAGES, GALLERY_TOPICS, type GalleryTopic } from '../data/gallery'
@@ -8,9 +10,10 @@ export default function Gallery() {
   const [zoomed, setZoomed] = useState<number | null>(null)
   const [topic, setTopic] = useState<GalleryTopic | 'all'>('all')
 
-  useEffect(() => {
-    document.title = 'Галерия — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'Галерия — МИХАЛ ЕООД',
+    'Снимки от складовата база в Разлог: подреден сух дървен материал, пакети дъски, товарене и доставки.',
+  )
 
   // The viewer steps through what is on screen, so it must see the same list.
   const shown = useMemo(
@@ -24,8 +27,8 @@ export default function Gallery() {
   }
 
   return (
-    <main className="relative z-10">
-      <PageBanner crumb="Галерия" title="От" accent="базата" image="/images/gallery/mihal-razlog-12-min.jpeg" />
+    <main id="main" tabIndex={-1} className="relative z-10">
+      <PageBanner crumb="Галерия" title="От" accent="базата" image={BANNERS['/gallery']} />
 
       <section className="py-10 md:py-16">
         <div className="mx-auto max-w-[1400px] px-4 md:px-8">
@@ -57,18 +60,19 @@ export default function Gallery() {
                 aria-label={`Отвори ${img.alt}`}
                 className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold md:mb-4"
               >
-                {/* Tiles are a quarter to a half of the screen wide, so they
-                    load the 640px copy; a large retina screen can still pick
-                    the full photo, which the lightbox then has cached. */}
+                {/* A tile is a quarter to a half of the screen wide: a phone
+                    takes the 400px copy, a desktop the 640px one. Never the
+                    full photo — that is the lightbox's job. */}
                 <img
                   src={img.thumbUrl}
-                  srcSet={`${img.thumbUrl} 640w, ${img.srcUrl} ${img.width}w`}
+                  srcSet={`${img.smUrl} 400w, ${img.thumbUrl} 640w`}
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                   alt={img.alt}
                   width={img.width}
                   height={img.height}
-                  loading={i < 6 ? 'eager' : 'lazy'}
+                  loading={i < 4 ? 'eager' : 'lazy'}
                   decoding="async"
+                  {...(i < 4 ? {} : { fetchpriority: 'low' })}
                   className="block w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                 />
 

@@ -121,3 +121,23 @@
   src: url(/fonts/playfair-display-500-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* Metric-matched fallback for Playfair. While the web font is on its way the
+   text is drawn in a system font; if that font is narrower the paragraph wraps
+   differently and, when the real one arrives, everything below it jumps (About
+   measured 0.139, now 0). This face is Times scaled to Playfair's measured
+   width (~112%), so the swap changes the letterforms but not the line breaks.
+   Times, not Georgia: Georgia has no Cyrillic, so it never was the fallback for
+   Bulgarian text.
+
+   There is deliberately no equivalent for Inter. Tried it (Arial at 106.5%):
+   Inter's Cyrillic and Latin files arrive separately, and a scaled fallback
+   made the paragraph above the product grid wrap one line differently in the
+   gap between them — a +28px / -28px round trip, CLS 0.034 -> 0.306. Plain
+   system-ui measures 0.034, so that is what Inter keeps. */
+@font-face {
+  font-family: 'Playfair Fallback';
+  src: local('Times New Roman'), local('Times');
+  size-adjust: 112%;
+}
+

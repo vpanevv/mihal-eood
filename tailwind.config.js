@@ -12,7 +12,7 @@ export default {
       ),
       fontFamily: {
         display: ['Oswald', 'Arial Narrow', 'sans-serif'],
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        serif: ['"Playfair Display"', '"Playfair Fallback"', 'Georgia', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       // The design proposal's palette (September 2026): a neutral, yellow-leaning

@@ -42,6 +42,15 @@ export default function Nav() {
   // Close the menu when a navigation happens, however it was triggered.
   useEffect(() => setMenuOpen(false), [pathname])
 
+  // The menu covers the page, but Tab does not know that: without this a
+  // keyboard user tabs out of the menu into links they cannot see.
+  useEffect(() => {
+    if (!menuOpen) return
+    const behind = document.querySelectorAll<HTMLElement>('main, footer, [data-mobile-bar]')
+    behind.forEach((el) => el.setAttribute('inert', ''))
+    return () => behind.forEach((el) => el.removeAttribute('inert'))
+  }, [menuOpen])
+
   // Lock the page behind the overlay, and let Escape dismiss it.
   useEffect(() => {
     if (!menuOpen) return

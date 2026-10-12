@@ -31,6 +31,11 @@
       linear-gradient(180deg, #fbfaf6 0%, #f3f1ea 55%, #edebe1 100%);
   }
 
+  /* <main> is focused when the route changes; it is not a control, so no ring. */
+  main:focus {
+    outline: none;
+  }
+
   /* Anchored sections land below the fixed bar rather than under it. */
   [id] {
     scroll-margin-top: 6.5rem;

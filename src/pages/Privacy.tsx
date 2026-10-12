@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import { EMAIL, PHONE_DISPLAY } from '../data/company'
 
 const SECTIONS: { title: string; body: string }[] = [
@@ -26,17 +27,18 @@ const SECTIONS: { title: string; body: string }[] = [
 ]
 
 export default function Privacy() {
-  useEffect(() => {
-    document.title = 'Политика за поверителност — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'Политика за поверителност — МИХАЛ ЕООД',
+    'Политика за поверителност на МИХАЛ ЕООД — какви данни събираме през формата за запитване и как ги използваме.',
+  )
 
   return (
-    <main className="relative z-10">
+    <main id="main" tabIndex={-1} className="relative z-10">
       <PageBanner
         crumb="Поверителност"
         title="Политика за"
         accent="поверителност"
-        image="/images/gallery/mihal-razlog-13-min.jpeg"
+        image={BANNERS['/privacy']}
       />
 
       <section className="py-12 md:py-20">

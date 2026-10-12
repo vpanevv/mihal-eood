@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import Lightbox from '../components/Lightbox'
 import { ExpandIcon } from '../components/Icons'
-import { thumbFor, type GalleryImage } from '../data/gallery'
+import { smFor, thumbFor, type GalleryImage } from '../data/gallery'
 
 type Line = { text: string; accent?: boolean }
 
-type Feature = Omit<GalleryImage, 'thumbUrl'> & {
+type Feature = Omit<GalleryImage, 'thumbUrl' | 'smUrl'> & {
   /** Rendered one per line; the accented line picks up the deeper gold. */
   headline: Line[]
   /** Two lines of supporting copy under the headline. */
@@ -14,7 +14,7 @@ type Feature = Omit<GalleryImage, 'thumbUrl'> & {
 
 // Four rows in a checkerboard, each photo with its own headline. Tapping a
 // photo opens it full size, and the lightbox steps through all four.
-const FEATURES: (Feature & { thumbUrl: string })[] = ([
+const FEATURES: (Feature & { thumbUrl: string; smUrl: string })[] = ([
   {
     srcUrl: '/images/new-5.jpg',
     alt: 'МИХАЛ ЕООД — натоварен камион с дървен материал',
@@ -47,7 +47,11 @@ const FEATURES: (Feature & { thumbUrl: string })[] = ([
     headline: [{ text: 'Големи обеми.' }, { text: 'Точни размери.', accent: true }],
     text: 'Постоянни количества на склад за строителни фирми, мебелни цехове и частни клиенти.',
   },
-] satisfies Feature[]).map((feature) => ({ ...feature, thumbUrl: thumbFor(feature.srcUrl) }))
+] satisfies Feature[]).map((feature) => ({
+  ...feature,
+  thumbUrl: thumbFor(feature.srcUrl),
+  smUrl: smFor(feature.srcUrl),
+}))
 
 /**
  * Photo section below the hero. Every image is lazy and carries its intrinsic
@@ -65,7 +69,7 @@ export default function Showcase() {
           {/* Checkerboard: photo left / headline right, then swapped. Two columns
               at every size — on phones too — so the rhythm survives the narrow
               screen instead of collapsing into a stack. */}
-          {FEATURES.map(({ srcUrl, thumbUrl, alt, width, height, headline, text }, i) => {
+          {FEATURES.map(({ srcUrl, thumbUrl, smUrl, alt, width, height, headline, text }, i) => {
             const flipped = i % 2 === 1
             return (
               <div
@@ -84,11 +88,12 @@ export default function Showcase() {
                         retina screens the full photo. */}
                     <img
                       src={thumbUrl}
-                      srcSet={`${thumbUrl} 640w, ${srcUrl} ${width}w`}
+                      srcSet={`${smUrl} 400w, ${thumbUrl} 640w, ${srcUrl} ${width}w`}
                       sizes="(min-width: 1200px) 560px, 48vw"
                       alt={alt}
                       loading="lazy"
                       decoding="async"
+                      {...{ fetchpriority: 'low' }}
                       width={width}
                       height={height}
                       className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"

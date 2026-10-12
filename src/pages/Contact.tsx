@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import InquiryForm from '../components/InquiryForm'
 import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon, ViberIcon } from '../components/Icons'
 import {
@@ -26,13 +27,14 @@ const valueClass = 'mt-2 font-display text-lg font-bold uppercase tracking-[0.02
 const noteClass = 'mt-1 font-sans text-[0.85rem] font-light leading-[1.6] text-timber-bark/70'
 
 export default function Contact() {
-  useEffect(() => {
-    document.title = 'Контакти — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'Контакти — МИХАЛ ЕООД',
+    'Свържете се с МИХАЛ ЕООД: телефон 0888 726 194, е-мейл, адрес в Разлог, работно време и форма за запитване с калкулатор за кубатура.',
+  )
 
   return (
-    <main className="relative z-10">
-      <PageBanner crumb="Контакти" title="Свържете се" accent="с нас" image="/images/new-5.jpg" />
+    <main id="main" tabIndex={-1} className="relative z-10">
+      <PageBanner crumb="Контакти" title="Свържете се" accent="с нас" image={BANNERS['/contacts']} />
 
       {/* Четирите начина за връзка — телефонът пръв, и на телефон той е най-горе. */}
       <section aria-label="Начини за връзка" className="py-10 md:py-16">
@@ -47,7 +49,7 @@ export default function Contact() {
               <span className={labelClass}>Телефон</span>
               <a
                 href={PHONE_HREF}
-                className={`${valueClass} block transition-colors hover:text-timber-ember focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold`}
+                className="mt-1 flex min-h-[44px] items-center font-display text-lg font-bold uppercase tracking-[0.02em] text-timber-bark transition-colors hover:text-timber-ember focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold"
               >
                 {PHONE_DISPLAY}
               </a>

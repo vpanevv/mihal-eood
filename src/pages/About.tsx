@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import Stats from '../components/Stats'
 import { ArrowIcon, ClockIcon, NavigationIcon, PinIcon } from '../components/Icons'
 import {
@@ -15,13 +16,14 @@ import { thumbFor } from '../data/gallery'
 const BASE_PHOTO = '/images/gallery/mihal-razlog-2-min.jpeg'
 
 export default function About() {
-  useEffect(() => {
-    document.title = 'За нас — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'За нас — МИХАЛ ЕООД',
+    'МИХАЛ ЕООД е регистрирано през 2008 г. в гр. Разлог — търговия и обработка на сух дървен материал, със собствена складова база и транспорт.',
+  )
 
   return (
-    <main className="relative z-10">
-      <PageBanner crumb="За нас" title="Фирмата зад" accent="материала" image="/images/new-6.jpg" />
+    <main id="main" tabIndex={-1} className="relative z-10">
+      <PageBanner crumb="За нас" title="Фирмата зад" accent="материала" image={BANNERS['/about-us']} />
 
       <section aria-labelledby="about-heading" className="py-12 md:py-20">
         <div className="mx-auto max-w-[1000px] px-5 md:px-8">

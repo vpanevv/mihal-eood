@@ -17,7 +17,10 @@ export default function PageBanner({ title, accent, image, crumb }: Props) {
       <img
         src={thumbFor(image)}
         srcSet={`${thumbFor(image)} 640w, ${image} 1200w`}
-        sizes="100vw"
+        // A dark, overlaid banner: on a phone 320 css px (-> the 640px file at 2x)
+        // is plenty. With "100vw" a 390px screen asked for 780px and fetched
+        // the full photo, 4-8s of LCP on slow 4G.
+        sizes="(max-width: 767px) 320px, 100vw"
         alt=""
         aria-hidden="true"
         decoding="async"

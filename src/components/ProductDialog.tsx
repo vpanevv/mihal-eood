@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowIcon } from './Icons'
+import { ArrowIcon, CloseIcon } from './Icons'
+import { useFocusTrap } from '../utils/useFocusTrap'
 import { inquiryHref, type Product } from '../data/products'
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 export default function ProductDialog({ product, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
   const lastFocused = useRef<Element | null>(null)
 
   useEffect(() => {
@@ -33,10 +35,13 @@ export default function ProductDialog({ product, onClose }: Props) {
     }
   }, [product, onClose])
 
+  useFocusTrap(dialogRef, product !== null)
+
   if (!product) return null
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
       role="dialog"
       aria-modal="true"
@@ -60,6 +65,8 @@ export default function ProductDialog({ product, onClose }: Props) {
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-3xl bg-timber-bark/5">
             <img
               src={product.photo}
+              srcSet={`${product.photo.replace(/\.jpg$/, '-800.jpg')} 800w, ${product.photo} 1200w`}
+              sizes="(min-width: 640px) 512px, 92vw"
               alt={product.name}
               width={1200}
               height={1600}
@@ -87,7 +94,7 @@ export default function ProductDialog({ product, onClose }: Props) {
             aria-label="Затвори"
             className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-timber-bark/15 bg-white text-timber-bark transition-colors hover:border-timber-bark hover:bg-timber-bark hover:text-white"
           >
-            ✕
+            <CloseIcon className="h-4 w-4" />
           </button>
 
           <h2

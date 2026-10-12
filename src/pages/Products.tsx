@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import CategoryGrid from '../components/CategoryGrid'
 import ProductDialog from '../components/ProductDialog'
 import { ArrowIcon, DownloadIcon, PhoneIcon } from '../components/Icons'
@@ -13,9 +15,10 @@ export default function Products() {
   const [open, setOpen] = useState<Product | null>(null)
   const [filter, setFilter] = useState<Filter | 'all'>('all')
 
-  useEffect(() => {
-    document.title = 'Продукти — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'Продукти — МИХАЛ ЕООД',
+    'Размери и категории дървен материал от Разлог: дъски от бор и смърч, дъб, бук и липа, дюшеме, декинг, ламперия, греди и слепени греди.',
+  )
 
   const shown = useMemo(
     () => (filter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.filters.includes(filter))),
@@ -23,8 +26,8 @@ export default function Products() {
   )
 
   return (
-    <main className="relative z-10">
-      <PageBanner crumb="Продукти" title="Дървен" accent="материал" image="/images/gallery/mihal-razlog-9-min.jpeg" />
+    <main id="main" tabIndex={-1} className="relative z-10">
+      <PageBanner crumb="Продукти" title="Дървен" accent="материал" image={BANNERS['/products']} />
 
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">

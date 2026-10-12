@@ -1,5 +1,8 @@
 import { ArrowIcon } from './Icons'
 import { thumbFor } from '../data/gallery'
+
+/** products/x.jpg -> products/x-800.jpg */
+const mdFor = (photo: string) => photo.replace(/\.jpg$/, '-800.jpg')
 import { PRODUCTS, type Product } from '../data/products'
 
 type Props = {
@@ -27,13 +30,14 @@ export default function CategoryGrid({ products = PRODUCTS, onOpen }: Props) {
               <span className="relative block aspect-[4/3] w-full overflow-hidden rounded-t-2xl bg-timber-bark/5">
                 <img
                   src={thumbFor(photo)}
-                  srcSet={`${thumbFor(photo)} 640w, ${photo} 1200w`}
+                  srcSet={`${thumbFor(photo)} 640w, ${mdFor(photo)} 800w, ${photo} 1200w`}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
                   alt={name}
                   width={1200}
                   height={1600}
                   loading="lazy"
                   decoding="async"
+                  {...{ fetchpriority: 'low' }}
                   className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                 />
               </span>

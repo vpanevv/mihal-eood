@@ -4,6 +4,8 @@ export type GalleryImage = {
   srcUrl: string
   /** 640px-wide copy for grids; the lightbox loads srcUrl. */
   thumbUrl: string
+  /** 400px-wide copy for phone-sized tiles. */
+  smUrl: string
   alt: string
   /** Intrinsic size, so the masonry grid reserves each tile before the
       image loads instead of reflowing on the way down. */
@@ -15,6 +17,8 @@ export type GalleryEntry = GalleryImage & { topic: GalleryTopic }
 
 /** Every photo has a 640px copy under /images/thumbs with the same base name. */
 export const thumbFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs/$1.jpg')
+/** ...and a 400px copy under /images/thumbs-sm. */
+export const smFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs-sm/$1.jpg')
 
 export const GALLERY_TOPICS: { id: GalleryTopic | 'all'; label: string }[] = [
   { id: 'all', label: 'Всички' },
@@ -29,7 +33,7 @@ const PORTRAIT = { width: 667, height: 1000 }
 const PHONE = { width: 1200, height: 1600 }
 
 /** Yard, stock and delivery photography, tagged for the gallery filters. */
-const ENTRIES: Omit<GalleryEntry, 'thumbUrl'>[] = [
+const ENTRIES: Omit<GalleryEntry, 'thumbUrl' | 'smUrl'>[] = [
   { srcUrl: g('mihal-razlog-2-min.jpeg'), alt: 'Складовата база в Разлог', topic: 'yard', ...LANDSCAPE },
   { srcUrl: g('mihal-razlog-3-min.jpeg'), alt: 'Подреден материал под навеса', topic: 'yard', ...LANDSCAPE, height: 666 },
   { srcUrl: g('mihal-razlog-4-min.jpeg'), alt: 'Пакети дъски под навеса', topic: 'yard', ...LANDSCAPE },
@@ -64,4 +68,5 @@ const ENTRIES: Omit<GalleryEntry, 'thumbUrl'>[] = [
 export const GALLERY_IMAGES: GalleryEntry[] = ENTRIES.map((entry) => ({
   ...entry,
   thumbUrl: thumbFor(entry.srcUrl),
+  smUrl: smFor(entry.srcUrl),
 }))

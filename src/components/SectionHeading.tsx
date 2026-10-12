@@ -7,15 +7,17 @@ type Props = {
   accent?: string
   /** Supporting paragraph, set beside the headline on wide screens. */
   aside?: ReactNode
+  /** Lets a section name itself with aria-labelledby. */
+  id?: string
   className?: string
 }
 
-export default function SectionHeading({ eyebrow, title, accent, aside, className = '' }: Props) {
+export default function SectionHeading({ eyebrow, title, accent, aside, id, className = '' }: Props) {
   return (
     <div className={`reveal gap-8 md:flex md:items-end md:justify-between ${className}`}>
       <div className="max-w-[34ch]">
         <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-3 font-display text-[clamp(1.75rem,6vw,3rem)] font-bold uppercase leading-[0.98] tracking-[0.005em] text-timber-bark">
+        <h2 id={id} className="mt-3 font-display text-[clamp(1.75rem,6vw,3rem)] font-bold uppercase leading-[0.98] tracking-[0.005em] text-timber-bark">
           {title}
           {accent && (
             <>

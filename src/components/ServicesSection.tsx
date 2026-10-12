@@ -39,6 +39,8 @@ export default function ServicesSection({ withLink = false }: Props) {
                   alt={title}
                   loading="lazy"
                   decoding="async"
+                  // Lowercase so React 18 passes it through.
+                  {...{ fetchpriority: 'low' }}
                   className="h-full w-full object-cover object-center"
                 />
               </div>

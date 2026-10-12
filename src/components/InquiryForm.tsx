@@ -328,15 +328,7 @@ export default function InquiryForm() {
 
       {/* Attachment — a specification is usually a PDF or a spreadsheet. */}
       <div className="mt-5">
-        <label
-          htmlFor="attachment"
-          className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-timber-bark/25 bg-timber-ground/50 px-4 py-4 transition-colors hover:border-timber-gold hover:bg-timber-ground"
-        >
-          <PaperclipIcon className="h-5 w-5 shrink-0 text-timber-ember" />
-          <span className="font-sans text-[0.85rem] font-light text-timber-bark/75">
-            {fileName ?? 'Прикачете спецификация (PDF, XLS, JPG) — по желание'}
-          </span>
-        </label>
+        {/* The input comes first so the label can show its focus ring (peer). */}
         <input
           id="attachment"
           ref={fileRef}
@@ -344,9 +336,18 @@ export default function InquiryForm() {
           type="file"
           accept={ACCEPT}
           onChange={onFile}
-          className="sr-only"
+          className="peer sr-only"
           aria-describedby={errors.attachment ? 'attachment-error' : undefined}
         />
+        <label
+          htmlFor="attachment"
+          className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-timber-bark/25 bg-timber-ground/50 px-4 py-4 transition-colors hover:border-timber-gold hover:bg-timber-ground peer-focus-visible:border-timber-gold peer-focus-visible:ring-2 peer-focus-visible:ring-timber-gold"
+        >
+          <PaperclipIcon className="h-5 w-5 shrink-0 text-timber-ember" />
+          <span className="font-sans text-[0.85rem] font-light text-timber-bark/75">
+            {fileName ?? 'Прикачете спецификация (PDF, XLS, JPG) — по желание'}
+          </span>
+        </label>
         {errors.attachment && (
           <p id="attachment-error" className="mt-2 font-sans text-[0.8rem] text-red-700">
             {errors.attachment}

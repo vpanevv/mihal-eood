@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { usePageMeta } from './utils/usePageMeta'
 import { Link } from 'react-router-dom'
 import Hero from './sections/Hero'
 import Showcase from './sections/Showcase'
@@ -10,16 +10,15 @@ import InquiryForm from './components/InquiryForm'
 import Faq from './components/Faq'
 import { ArrowIcon } from './components/Icons'
 
-const LANDING_TITLE = 'МИХАЛ ЕООД — Качествен сух дървен материал'
-
 export default function App() {
   // Each route owns the title, otherwise it keeps whatever the last page set.
-  useEffect(() => {
-    document.title = LANDING_TITLE
-  }, [])
+  usePageMeta(
+    'МИХАЛ ЕООД — Качествен сух дървен материал',
+    'Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди. Складова база, собствена сушилня, рязане по размер и доставка в цялата страна.',
+  )
 
   return (
-    <main id="top">
+    <main id="main" tabIndex={-1}>
       <Hero />
 
       {/* The four photo blocks stay as they are, now with a line of copy each. */}
@@ -81,7 +80,7 @@ export default function App() {
 
       <section aria-labelledby="faq-heading" className="bg-timber-ground/70 py-14 md:py-24">
         <div className="mx-auto max-w-[900px] px-5 md:px-8">
-          <SectionHeading eyebrow="Въпроси" title="Често задавани" accent="въпроси" />
+          <SectionHeading id="faq-heading" eyebrow="Въпроси" title="Често задавани" accent="въпроси" />
           <div className="mt-9 md:mt-12">
             <Faq />
           </div>

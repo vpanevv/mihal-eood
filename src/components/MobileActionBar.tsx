@@ -10,6 +10,7 @@ import { PHONE_HREF } from '../data/company'
 export default function MobileActionBar() {
   return (
     <div
+      data-mobile-bar
       // No backdrop blur: the bar is all but opaque, and a blurred backdrop on
       // a fixed element is re-computed on every scroll frame for nothing.
       className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-timber-bark/97 px-3 pt-3 lg:hidden"

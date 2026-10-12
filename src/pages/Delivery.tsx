@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { usePageMeta } from '../utils/usePageMeta'
 import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
+import { BANNERS } from '../data/banners'
 import ServicesSection from '../components/ServicesSection'
 import { ArrowIcon, CheckIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
@@ -15,13 +16,14 @@ const TERMS = [
 ]
 
 export default function Delivery() {
-  useEffect(() => {
-    document.title = 'Услуги и доставка — МИХАЛ ЕООД'
-  }, [])
+  usePageMeta(
+    'Услуги и доставка — МИХАЛ ЕООД',
+    'Услуги на МИХАЛ ЕООД: сушене, рендосване, шлайфане, боядисване, импрегниране и клинозъбене. Доставка със собствен транспорт в цялата страна.',
+  )
 
   return (
-    <main className="relative z-10">
-      <PageBanner crumb="Услуги" title="Услуги и" accent="доставка" image="/images/new-1.jpg" />
+    <main id="main" tabIndex={-1} className="relative z-10">
+      <PageBanner crumb="Услуги" title="Услуги и" accent="доставка" image={BANNERS['/delivery']} />
 
       <section className="py-12 md:py-20">
         <ServicesSection />
