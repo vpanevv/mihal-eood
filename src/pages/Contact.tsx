@@ -15,7 +15,10 @@ import {
   VIBER_HREF,
 } from '../data/company'
 
-const cardClass = 'card reveal flex gap-4 rounded-2xl p-5 md:p-6'
+// At lg the four cards sit in one row, each about 270px wide. Icon beside the
+// text left the address 161px — a few pixels short of the e-mail — so it broke
+// mid-word ("…gmail.co / m"). Stacked, the text gets the whole card.
+const cardClass = 'card reveal flex gap-4 rounded-2xl p-5 md:p-6 lg:flex-col lg:gap-3'
 const iconWrap =
   'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-timber-gold/15 text-timber-ember'
 const labelClass = 'font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-timber-ember'
