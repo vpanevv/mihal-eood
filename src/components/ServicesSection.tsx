@@ -1,4 +1,3 @@
-import BeforeAfter from './BeforeAfter'
 import SectionHeading from './SectionHeading'
 import { thumbFor } from '../data/gallery'
 import { PROCESS, SERVICES } from '../data/services'
@@ -25,15 +24,13 @@ export default function ServicesSection({ withLink = false }: Props) {
       {/* Same shell as the product cards: a photograph leads where there is
           one, an icon where there is not yet. */}
       <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-14 md:grid-cols-3 md:gap-5">
-        {SERVICES.map(({ title, text, photo, before, Icon }, i) => (
+        {SERVICES.map(({ title, text, photo, Icon }, i) => (
           <article
             key={title}
-            className="card fade-up flex flex-col overflow-hidden rounded-2xl"
+            className="card reveal flex flex-col overflow-hidden rounded-2xl"
             style={{ animationDelay: `${0.05 + i * 0.06}s` }}
           >
-            {photo && before ? (
-              <BeforeAfter before={before} after={photo} title={title} />
-            ) : photo ? (
+            {photo ? (
               <div className="aspect-[4/3] w-full overflow-hidden bg-timber-bark/5">
                 <img
                   src={thumbFor(photo)}
@@ -72,8 +69,8 @@ export default function ServicesSection({ withLink = false }: Props) {
 
       {/* Процесът 01–04 */}
       <div className="mt-14 md:mt-20">
-        <p className="eyebrow fade-up">Процесът</p>
-        <h3 className="fade-up mt-3 font-display text-[clamp(1.5rem,5vw,2.5rem)] font-bold uppercase leading-[1] text-timber-bark">
+        <p className="eyebrow reveal">Процесът</p>
+        <h3 className="reveal mt-3 font-display text-[clamp(1.5rem,5vw,2.5rem)] font-bold uppercase leading-[1] text-timber-bark">
           От запитване до обекта
         </h3>
 
@@ -81,7 +78,7 @@ export default function ServicesSection({ withLink = false }: Props) {
           {PROCESS.map(({ title, text }, i) => (
             <li
               key={title}
-              className="fade-up relative rounded-2xl border border-timber-bark/10 bg-white/60 p-5 md:border-0 md:bg-transparent md:p-0"
+              className="reveal relative rounded-2xl border border-timber-bark/10 bg-white/60 p-5 md:border-0 md:bg-transparent md:p-0"
               style={{ animationDelay: `${0.05 + i * 0.06}s` }}
             >
               <span className="font-display text-3xl font-bold leading-none text-timber-gold md:text-5xl">

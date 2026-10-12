@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import CategoryGrid from '../components/CategoryGrid'
 import ProductDialog from '../components/ProductDialog'
-import { ArrowIcon, PhoneIcon } from '../components/Icons'
+import { ArrowIcon, DownloadIcon, PhoneIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
-import { PRODUCTS, PRODUCT_FILTERS, SPEC_ROWS, type Filter, type Product } from '../data/products'
+import { PRODUCTS, PRODUCT_FILTERS, type Filter, type Product } from '../data/products'
+import { SPEC_ROWS, SPEC_SHEET_FILENAME, SPEC_SHEET_PATH } from '../data/specs'
 
 export default function Products() {
   const [open, setOpen] = useState<Product | null>(null)
@@ -27,7 +28,7 @@ export default function Products() {
 
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">
-          <div className="fade-up gap-8 md:flex md:items-start md:justify-between">
+          <div className="reveal gap-8 md:flex md:items-start md:justify-between">
             <p className="max-w-[46ch] font-sans text-[0.95rem] font-light leading-[1.8] text-timber-bark/80">
               Целият асортимент на склад в Разлог. Всяка категория се реже по зададен размер.
             </p>
@@ -44,7 +45,7 @@ export default function Products() {
           <div
             role="group"
             aria-label="Филтри по категория"
-            className="no-scrollbar fade-up -mx-5 mt-8 flex gap-2.5 overflow-x-auto px-5 md:mx-0 md:mt-10 md:flex-wrap md:px-0"
+            className="no-scrollbar reveal -mx-5 mt-8 flex gap-2.5 overflow-x-auto px-5 md:mx-0 md:mt-10 md:flex-wrap md:px-0"
           >
             {PRODUCT_FILTERS.map(({ id, label }) => (
               <button
@@ -68,17 +69,17 @@ export default function Products() {
       {/* Спецификации */}
       <section aria-labelledby="specs-heading" className="bg-timber-ground/70 py-14 md:py-20">
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">
-          <p className="eyebrow fade-up">Технически данни</p>
+          <p className="eyebrow reveal">Технически данни</p>
           <h2
             id="specs-heading"
-            className="fade-up mt-3 font-display text-[clamp(1.6rem,5.5vw,2.75rem)] font-bold uppercase leading-[1] text-timber-bark"
+            className="reveal mt-3 font-display text-[clamp(1.6rem,5.5vw,2.75rem)] font-bold uppercase leading-[1] text-timber-bark"
           >
             Размери на склад
           </h2>
 
           {/* A table on wide screens; key/value rows on a phone, where five
               columns would either scroll sideways or squeeze to nothing. */}
-          <div className="card fade-up mt-8 overflow-hidden rounded-2xl md:mt-10">
+          <div className="card reveal mt-8 overflow-hidden rounded-2xl md:mt-10">
             <table className="hidden w-full border-collapse text-left md:table">
               <thead>
                 <tr className="border-b border-timber-bark/10 bg-timber-cream">
@@ -125,9 +126,25 @@ export default function Products() {
             </dl>
           </div>
 
-          <p className="mt-5 font-sans text-[0.82rem] font-light text-timber-bark/75">
-            Режем по зададена спецификация. Размери извън таблицата се уточняват при запитване.
-          </p>
+          <div className="reveal mt-5 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-[52ch] font-sans text-[0.82rem] font-light text-timber-bark/75">
+              Режем по зададена спецификация. Размери извън таблицата се уточняват при запитване.
+            </p>
+
+            {/* The same rows as the table, as a one-page A4 sheet to forward or
+                print. A plain link: `download` names the file, and it works
+                without any script. */}
+            <a
+              href={SPEC_SHEET_PATH}
+              download={SPEC_SHEET_FILENAME}
+              type="application/pdf"
+              className="btn btn-primary shrink-0"
+            >
+              <DownloadIcon className="h-4 w-4" />
+              Свали спецификацията
+              <span className="rounded-full bg-white/15 px-2 py-0.5 text-[0.62rem] tracking-[0.14em]">PDF</span>
+            </a>
+          </div>
         </div>
       </section>
 

@@ -7,6 +7,7 @@ import Footer from './sections/Footer.tsx'
 import MobileActionBar from './components/MobileActionBar.tsx'
 import ScrollToTop from './components/ScrollToTop.tsx'
 import './index.css'
+import { startReveal } from './utils/reveal.ts'
 
 // The landing page is what most visitors see first, so it stays in the main
 // bundle. Every other route is split out; the loaders are kept by name so the
@@ -60,6 +61,8 @@ function Layout() {
     </>
   )
 }
+
+startReveal()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

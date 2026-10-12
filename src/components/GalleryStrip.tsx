@@ -12,7 +12,7 @@ export default function GalleryStrip() {
 
   return (
     <>
-      <div className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:gap-5 md:px-8">
+      <div className="no-scrollbar reveal flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:gap-5 md:px-8">
         {STRIP.map(({ thumbUrl, alt }, i) => (
           <button
             key={thumbUrl}

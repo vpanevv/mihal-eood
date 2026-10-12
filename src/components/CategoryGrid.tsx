@@ -63,7 +63,7 @@ export default function CategoryGrid({ products = PRODUCTS, onOpen }: Props) {
           </>
         )
 
-        const shared = 'card fade-up flex flex-col overflow-hidden rounded-2xl text-left'
+        const shared = 'card reveal flex flex-col overflow-hidden rounded-2xl text-left'
         const style = { animationDelay: `${0.04 + i * 0.05}s` }
 
         return onOpen ? (

@@ -32,7 +32,7 @@ export default function Gallery() {
           <div
             role="group"
             aria-label="Филтри по тема"
-            className="no-scrollbar fade-up -mx-4 flex gap-2.5 overflow-x-auto px-4 md:mx-0 md:px-0"
+            className="no-scrollbar reveal -mx-4 flex gap-2.5 overflow-x-auto px-4 md:mx-0 md:px-0"
           >
             {GALLERY_TOPICS.map(({ id, label }) => (
               <button key={id} type="button" className="chip" aria-pressed={topic === id} onClick={() => pick(id)}>
@@ -41,7 +41,7 @@ export default function Gallery() {
             ))}
           </div>
 
-          <p className="fade-up mt-6 font-sans text-[0.8rem] uppercase tracking-[0.2em] text-timber-bark/70">
+          <p className="reveal mt-6 font-sans text-[0.8rem] uppercase tracking-[0.2em] text-timber-bark/70">
             Натиснете снимка, за да я видите в по-голям размер
           </p>
 

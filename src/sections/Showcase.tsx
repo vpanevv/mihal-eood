@@ -70,7 +70,7 @@ export default function Showcase() {
             return (
               <div
                 key={srcUrl}
-                className={`grid grid-cols-2 items-center gap-2.5 sm:gap-5 md:gap-8 ${i === 0 ? '' : 'mt-5 sm:mt-10 md:mt-14'}`}
+                className={`reveal grid grid-cols-2 items-center gap-2.5 sm:gap-5 md:gap-8 ${i === 0 ? '' : 'mt-5 sm:mt-10 md:mt-14'}`}
               >
                 {/* Photo on a light mat; the whole mat is the tap target */}
                 <button

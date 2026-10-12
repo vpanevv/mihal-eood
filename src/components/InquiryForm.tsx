@@ -165,7 +165,7 @@ export default function InquiryForm() {
       encType="multipart/form-data"
       noValidate
       onSubmit={onSubmit}
-      className="card fade-up rounded-3xl p-6 md:p-10"
+      className="card reveal rounded-3xl p-6 md:p-10"
     >
       {/* Netlify matches the submission to its form by this field. */}
       <input type="hidden" name="form-name" value={FORM_NAME} />

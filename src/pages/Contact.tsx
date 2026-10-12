@@ -15,7 +15,7 @@ import {
   VIBER_HREF,
 } from '../data/company'
 
-const cardClass = 'card fade-up flex gap-4 rounded-2xl p-5 md:p-6'
+const cardClass = 'card reveal flex gap-4 rounded-2xl p-5 md:p-6'
 const iconWrap =
   'flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-timber-gold/15 text-timber-ember'
 const labelClass = 'font-sans text-[0.66rem] font-medium uppercase tracking-[0.2em] text-timber-ember'
@@ -111,7 +111,7 @@ export default function Contact() {
             <InquiryForm />
           </div>
 
-          <section aria-labelledby="map-heading" className="card fade-up overflow-hidden rounded-3xl">
+          <section aria-labelledby="map-heading" className="card reveal overflow-hidden rounded-3xl">
             <div className="px-6 pt-6 md:px-8 md:pt-8">
               <p className="eyebrow">Складова база</p>
               <h2

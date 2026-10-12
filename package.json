@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "spec-sheet": "node scripts/build-spec-sheet.mjs",
+    "spec-sheet:check": "node scripts/build-spec-sheet.mjs --check"
   },
   "dependencies": {
     "react": "^18.3.1",
