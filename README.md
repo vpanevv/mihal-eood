@@ -72,12 +72,31 @@ If the hero photo is missing the page falls back to a warm gradient
 
 ## Structure
 
-- `src/sections/` — `Hero`, `Nav` (liquid glass bar + mobile menu), `Footer`
-- `src/pages/` — one file per route
-- `src/components/` — `TintedBackdrop` (shared photo + tint stack),
-  `CardCarousel`, `CoverflowCarousel`, `ProductCard`, `ProductDialog`,
-  `Lightbox`, `ScrollToTop`
-- `src/data/` — product specs and the gallery manifest
-- `src/index.css` — keyframes, liquid glass, CTA button, grain, vignette
-- `tailwind.config.js` — `timber` palette; `font-display` (Oswald),
-  `font-serif` (Playfair Display), `font-sans` (Inter)
+- `src/sections/` — `Hero`, `Nav` (cream glass bar + mobile menu), `Showcase` (the four photo
+  rows), `Footer`
+- `src/pages/` — one file per route; `Nav`, `Footer` and the phone bar live in the layout route
+  in `src/main.tsx`, so they mount once
+- `src/components/` — `WoodSelector` and `CategoryGrid` (home assortment), `ProductDialog`,
+  `ServicesSection`, `InquiryForm` with `CubicCalculator`, `PageBanner`, `Lightbox`,
+  `ViberButton`, `MobileActionBar`, `Icons`
+- `src/data/` — `products`, `specs` (the sizes table and PDF), `services`, `gallery`, `company`
+- `src/utils/` — `reveal` (scroll reveal), `cubic` (cubic-metre arithmetic)
+- `src/index.css` — keyframes, buttons, cards, nav states, hero edge, reveal
+- `tailwind.config.js` — `timber` palette; `font-display` (Oswald), `font-serif`
+  (Playfair Display), `font-sans` (Inter)
+- `scripts/` — `build-spec-sheet.mjs`
+
+## Спецификация (PDF)
+
+The "Свали спецификацията" button on Продукти serves `public/mihal-eood-specifikatsiya.pdf`.
+It is generated from the same rows as the sizes table (`src/data/specs.ts`), so a size is
+changed in one place — then rebuild the PDF:
+
+```bash
+npm run spec-sheet          # regenerate the PDF (needs Chrome and Node 22.18+)
+npm run spec-sheet:check    # exits 1 if the PDF no longer matches the data
+```
+
+Commit the regenerated PDF together with `scripts/spec-sheet.hash`. Set `CHROME_PATH` if Chrome
+is not in a standard location. The PDF is a committed file on purpose: Netlify's build does not
+need Chrome, and the sheet only changes when the sizes do.

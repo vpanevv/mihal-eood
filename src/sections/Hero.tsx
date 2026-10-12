@@ -76,7 +76,7 @@ export default function Hero() {
         {/* Supporting line. Lands after the headline's glyph sweep and before
             the buttons, so the three read in order. */}
         <p
-          className="fade-up mt-5 text-center font-display text-[clamp(0.95rem,4.2vw,1.3rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-7 md:text-[1.6rem] md:tracking-[0.16em]"
+          className="fade-up mt-5 text-center font-display text-[clamp(0.95rem,4.2vw,1.3rem)] font-medium uppercase leading-[1.35] tracking-[0.14em] pl-[0.14em] text-white/90 [text-shadow:0_2px_18px_rgba(18,12,4,0.6)] md:mt-7 md:pl-[0.16em] md:text-[1.6rem] md:tracking-[0.16em]"
           style={{ animationDelay: '0.7s' }}
         >
           <span className="block sm:inline">Дърво с характер.</span>{' '}
@@ -91,7 +91,10 @@ export default function Hero() {
         </p>
 
         <div
-          className="fade-up mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center md:mt-10"
+          // max-w-md only for the stacked phone layout. Left on at sm it capped
+          // the row at 448px while the two buttons are wider, so they spilled
+          // out of it to the right and the pair sat off-centre.
+          className="fade-up mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:justify-center md:mt-10"
           style={{ animationDelay: '0.9s' }}
         >
           <Link to="/products" className="btn btn-gold">

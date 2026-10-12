@@ -156,16 +156,5 @@ export const PRODUCT_FILTERS: { id: Filter | 'all'; label: string }[] = [
   { id: 'custom', label: 'По поръчка' },
 ]
 
-/** Comparison table under the product grid. */
-export const SPEC_ROWS: { name: string; thickness: string; width: string; length: string }[] = [
-  { name: 'Дъски — бор и смърч', thickness: '1,8 – 12 см', width: '8 – 23 см', length: 'от 4 м' },
-  { name: 'Дъб, бук и липа', thickness: '3 – 7 см', width: 'свободна', length: '3 м' },
-  { name: 'Дюшеме и декинг', thickness: '2,5 – 4 см', width: '8 – 22 см', length: 'по заявка' },
-  { name: 'Ламперия /сачак/', thickness: '1,5 – 2,5 см', width: '8 – 23 см', length: 'по заявка' },
-  { name: 'Челни дъски', thickness: 'по заявка', width: '15 – 23 см', length: 'по заявка' },
-  { name: 'Греди', thickness: 'всякакъв размер', width: 'всякакъв размер', length: '4 – 6 м' },
-  { name: 'Слепени греди', thickness: 'по поръчка', width: 'по поръчка', length: 'до 9,5 м' },
-]
-
 export const inquiryHref = (productId?: string) =>
   productId ? `/contacts?material=${productId}#inquiry` : '/contacts#inquiry'

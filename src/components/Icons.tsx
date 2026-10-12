@@ -26,6 +26,14 @@ export const PhoneIcon = (p: IconProps) => (
   </Svg>
 )
 
+/** A chat bubble with a handset in it — Viber's idea, drawn in the site's own line style. */
+export const ViberIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 3.5h12A2.5 2.5 0 0 1 20.5 6v8A2.5 2.5 0 0 1 18 16.5h-4.2L10 20v-3.5H6A2.5 2.5 0 0 1 3.5 14V6A2.5 2.5 0 0 1 6 3.5Z" />
+    <path d="M9.2 7.4c-.5.4-.6 1.1-.3 1.9.8 2 2.4 3.6 4.4 4.4.8.3 1.5.2 1.9-.3l.4-.5a.6.6 0 0 0-.1-.8l-1.2-.9a.6.6 0 0 0-.7 0l-.4.3a.5.5 0 0 1-.5 0 4 4 0 0 1-1.5-1.5.5.5 0 0 1 0-.5l.3-.4a.6.6 0 0 0 0-.7l-.9-1.2a.6.6 0 0 0-.8-.1l-.5.4Z" />
+  </Svg>
+)
+
 export const MailIcon = (p: IconProps) => (
   <Svg {...p}>
     <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -56,6 +64,26 @@ export const ArrowIcon = (p: IconProps) => (
 export const CheckIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </Svg>
+)
+
+export const CalculatorIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="5" y="3" width="14" height="18" rx="2" />
+    <rect x="8" y="6" width="8" height="3.5" rx="0.8" />
+    <path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01" strokeWidth="2" />
+  </Svg>
+)
+
+export const TrashIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 7h16M10 7V4.5h4V7M6.5 7l.8 12.5h9.4L17.5 7M10 11v5M14 11v5" />
+  </Svg>
+)
+
+export const DownloadIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" />
   </Svg>
 )
 

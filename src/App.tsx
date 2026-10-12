@@ -49,7 +49,7 @@ export default function App() {
         <ServicesSection withLink />
         <div className="mx-auto mt-10 max-w-[1200px] px-5 md:mt-14 md:px-8">
           <Link to="/delivery" className="btn btn-outline">
-            Всичко за услугите и доставката
+            Услуги и доставка
             <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>

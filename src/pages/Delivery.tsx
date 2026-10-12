@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import ServicesSection from '../components/ServicesSection'
 import { ArrowIcon, CheckIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
+import ViberButton from '../components/ViberButton'
 import { DIRECTIONS_LINK, MAP_EMBED, PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 import { DELIVERY_TOWNS } from '../data/services'
 
@@ -29,7 +30,7 @@ export default function Delivery() {
       {/* Зона на доставка */}
       <section aria-labelledby="zone-heading" className="bg-timber-ground/70 py-14 md:py-20">
         <div className="mx-auto grid max-w-[1200px] gap-8 px-5 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-12">
-          <div className="fade-up">
+          <div className="reveal">
             <p className="eyebrow">Зона на доставка</p>
             <h2
               id="zone-heading"
@@ -66,7 +67,7 @@ export default function Delivery() {
             </a>
           </div>
 
-          <div className="card fade-up overflow-hidden rounded-3xl">
+          <div className="card reveal overflow-hidden rounded-3xl">
             <iframe
               title="Карта — складовата база в Разлог"
               src={MAP_EMBED}
@@ -81,10 +82,10 @@ export default function Delivery() {
       {/* Условия */}
       <section aria-labelledby="terms-heading" className="py-14 md:py-20">
         <div className="mx-auto max-w-[900px] px-5 md:px-8">
-          <p className="eyebrow fade-up">Условия</p>
+          <p className="eyebrow reveal">Условия</p>
           <h2
             id="terms-heading"
-            className="fade-up mt-3 font-display text-[clamp(1.6rem,5.5vw,2.5rem)] font-bold uppercase leading-[1] text-timber-bark"
+            className="reveal mt-3 font-display text-[clamp(1.6rem,5.5vw,2.5rem)] font-bold uppercase leading-[1] text-timber-bark"
           >
             Как работим
           </h2>
@@ -93,7 +94,7 @@ export default function Delivery() {
             {TERMS.map((term, i) => (
               <li
                 key={term}
-                className="fade-up flex items-start gap-3.5 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-bark/80"
+                className="reveal flex items-start gap-3.5 font-sans text-[0.95rem] font-light leading-[1.75] text-timber-bark/80"
                 style={{ animationDelay: `${0.04 + i * 0.05}s` }}
               >
                 <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-timber-gold" />
@@ -111,6 +112,7 @@ export default function Delivery() {
               <PhoneIcon className="h-4 w-4" />
               {PHONE_DISPLAY}
             </a>
+            <ViberButton className="btn-outline" />
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon } from '../components/Icons'
+import { ClockIcon, MailIcon, NavigationIcon, PhoneIcon, PinIcon, ViberIcon } from '../components/Icons'
 import {
   ADDRESS_CITY,
   ADDRESS_LANDMARK,
@@ -10,6 +10,7 @@ import {
   MAP_LINK,
   PHONE_DISPLAY,
   PHONE_HREF,
+  VIBER_HREF,
 } from '../data/company'
 
 const headingClass =
@@ -51,6 +52,13 @@ export default function Footer() {
           <div className="mt-4 flex flex-col items-start gap-2 font-sans text-[0.95rem] leading-[1.75]">
             <a href={PHONE_HREF} className={linkClass}>
               {PHONE_DISPLAY}
+              <Underline />
+            </a>
+            <a href={VIBER_HREF} className={linkClass}>
+              <span className="inline-flex items-center gap-2">
+                <ViberIcon className="h-3.5 w-3.5 text-timber-ember" />
+                Viber
+              </span>
               <Underline />
             </a>
             <a href={`mailto:${EMAIL}`} className={linkClass}>

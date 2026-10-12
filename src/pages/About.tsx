@@ -25,18 +25,18 @@ export default function About() {
 
       <section aria-labelledby="about-heading" className="py-12 md:py-20">
         <div className="mx-auto max-w-[1000px] px-5 md:px-8">
-          <p id="about-heading" className="eyebrow fade-up">
+          <p id="about-heading" className="eyebrow reveal">
             За МИХАЛ ЕООД
           </p>
 
-          <p className="fade-up mt-5 font-serif text-[clamp(1.25rem,4vw,1.9rem)] leading-[1.4] text-timber-bark">
+          <p className="reveal mt-5 font-serif text-[clamp(1.25rem,4vw,1.9rem)] leading-[1.4] text-timber-bark">
             МИХАЛ ЕООД е дружество, регистрирано през 2008 г. в гр. Разлог, с основна дейност
             търговия и обработка на <span className="text-timber-ember">сух дървен материал</span>.
           </p>
 
           <div className="mt-10 grid gap-7 md:mt-12 md:grid-cols-2 md:gap-10">
             <p
-              className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
+              className="reveal font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
               style={{ animationDelay: '0.05s' }}
             >
               Дружеството разполага със собствена складова база, транспортни средства и подемна
@@ -44,7 +44,7 @@ export default function About() {
               на материала до неговото доставяне на клиента.
             </p>
             <p
-              className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
+              className="reveal font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80"
               style={{ animationDelay: '0.1s' }}
             >
               Продуктовата гама включва сух дървен материал, дюшеме, ламперия, сачак за обшивка и
@@ -53,7 +53,7 @@ export default function About() {
               влажност.
             </p>
             <p
-              className="fade-up font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80 md:col-span-2 md:max-w-[62ch]"
+              className="reveal font-sans text-[0.95rem] font-light leading-[1.85] text-timber-bark/80 md:col-span-2 md:max-w-[62ch]"
               style={{ animationDelay: '0.15s' }}
             >
               В рамките на своята дейност МИХАЛ ЕООД работи основно със строителни фирми,
@@ -63,7 +63,7 @@ export default function About() {
           </div>
 
           {/* Мисията затваря разказа, затова е изнесена на отделна карта. */}
-          <div className="card fade-up mt-10 rounded-3xl p-6 md:mt-14 md:p-10" style={{ animationDelay: '0.2s' }}>
+          <div className="card reveal mt-10 rounded-3xl p-6 md:mt-14 md:p-10" style={{ animationDelay: '0.2s' }}>
             <span aria-hidden="true" className="block h-px w-12 bg-timber-gold" />
             <p className="mt-5 font-serif text-[1.05rem] leading-[1.7] text-timber-bark/85 md:text-[1.2rem] md:leading-[1.75]">
               <strong className="font-display text-base font-bold uppercase tracking-[0.06em] text-timber-bark md:text-lg">
@@ -80,7 +80,7 @@ export default function About() {
 
       <section aria-labelledby="numbers-heading" className="bg-timber-ground/70 py-12 md:py-20">
         <div className="mx-auto max-w-[1200px] px-5 md:px-8">
-          <h2 id="numbers-heading" className="eyebrow fade-up">
+          <h2 id="numbers-heading" className="eyebrow reveal">
             Михал ЕООД в числа
           </h2>
           <div className="mt-8 md:mt-10">
@@ -92,7 +92,7 @@ export default function About() {
       {/* Складовата база */}
       <section aria-labelledby="base-heading" className="py-14 md:py-20">
         <div className="mx-auto grid max-w-[1200px] gap-8 px-5 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-12">
-          <div className="fade-up overflow-hidden rounded-3xl ring-1 ring-timber-bark/10">
+          <div className="reveal overflow-hidden rounded-3xl ring-1 ring-timber-bark/10">
             <img
               src={thumbFor(BASE_PHOTO)}
               srcSet={`${thumbFor(BASE_PHOTO)} 640w, ${BASE_PHOTO} 1000w`}
@@ -106,7 +106,7 @@ export default function About() {
             />
           </div>
 
-          <div className="fade-up" style={{ animationDelay: '0.06s' }}>
+          <div className="reveal" style={{ animationDelay: '0.06s' }}>
             <p className="eyebrow">Складовата база</p>
             <h2
               id="base-heading"

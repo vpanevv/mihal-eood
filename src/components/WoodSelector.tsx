@@ -60,7 +60,7 @@ export default function WoodSelector() {
               aria-expanded={isOpen}
               aria-controls={`wood-${id}`}
               style={{ animationDelay: `${0.04 + i * 0.06}s` }}
-              className={`fade-up group flex w-full flex-col rounded-2xl p-5 text-left transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground md:p-7 ${
+              className={`reveal group flex w-full flex-col rounded-2xl p-5 text-left transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground md:p-7 ${
                 isOpen
                   ? 'bg-timber-brown text-white shadow-[0_18px_40px_-24px_rgba(42,32,17,0.8)] md:col-span-2'
                   : 'card'

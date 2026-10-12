@@ -58,6 +58,24 @@
     animation: fadeDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
+  /* Scroll reveal (see utils/reveal.ts). Hidden only while html.reveal-ready is
+     set, so without the script — or under reduced motion — nothing is hidden.
+     `backwards` rather than `both`: once it has played, the element returns to
+     its plain styles and keeps no leftover transform to trap fixed children. */
+  .reveal-ready .reveal:not([data-in]) {
+    opacity: 0;
+  }
+
+  .reveal-ready .reveal[data-in] {
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  @media print {
+    .reveal-ready .reveal:not([data-in]) {
+      opacity: 1;
+    }
+  }
+
   /* Dialogs and the photo viewer: they answer a tap, so they arrive at once. */
   .pop-in {
     animation: popIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;

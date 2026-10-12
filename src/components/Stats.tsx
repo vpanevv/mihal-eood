@@ -11,7 +11,7 @@ export default function Stats({ stats = COMPANY_STATS }: { stats?: Stat[] }) {
   return (
     <dl className="grid grid-cols-2 gap-y-8 sm:gap-x-6 md:grid-cols-4">
       {stats.map(({ value, label }, i) => (
-        <div key={label} className="fade-up" style={{ animationDelay: `${0.04 + i * 0.06}s` }}>
+        <div key={label} className="reveal" style={{ animationDelay: `${0.04 + i * 0.06}s` }}>
           <dt className="sr-only">{label}</dt>
           <dd>
             <span className="block font-display text-[clamp(2rem,7vw,3.25rem)] font-bold leading-none text-timber-brown">
