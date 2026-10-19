@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react'
+import type { Field } from '../utils/cubic'
 import { BeamIcon, FloorIcon, GlulamIcon, LathsIcon, PanelIcon, PlanksIcon } from '../components/Icons'
 
 export type Spec = {
@@ -158,3 +159,22 @@ export const PRODUCT_FILTERS: { id: Filter | 'all'; label: string }[] = [
 
 export const inquiryHref = (productId?: string) =>
   productId ? `/contacts?material=${productId}#inquiry` : '/contacts#inquiry'
+
+const SIZE_FIELDS: Record<string, { field: Field; unit: string }> = {
+  дебелина: { field: 'thickness', unit: 'см' },
+  ширина: { field: 'width', unit: 'см' },
+  дължина: { field: 'length', unit: 'м' },
+}
+
+/**
+ * Which calculator box a size chip fills — or null when it is not a single
+ * number ("8 – 23", "от 4", "свободна" are ranges and wishes, not sizes).
+ */
+export function sizeField(spec: Spec, value: string): Field | null {
+  const meta = SIZE_FIELDS[spec.label]
+  if (!meta || spec.unit !== meta.unit || !/^\d+(?:,\d+)?$/.test(value)) return null
+  return meta.field
+}
+
+/** "Иглолистна дървесина — бор и смърч" → "бор и смърч". */
+export const variantOf = (group: Group): string | undefined => group.title?.split(' — ').pop()

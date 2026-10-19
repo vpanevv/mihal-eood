@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CalculatorIcon, ChevronDownIcon, PlusIcon, TrashIcon } from './Icons'
 import {
   evaluate,
+  FIELD_META,
   formatM3,
   MAX_ROWS,
   newRow,
@@ -18,13 +19,6 @@ type Props = {
   /** Set when the form was submitted with a half-filled row. */
   error?: string
 }
-
-const COLUMNS: { field: Field; label: string; unit: string; placeholder: string; numeric?: boolean }[] = [
-  { field: 'thickness', label: 'Дебелина', unit: 'см', placeholder: '5' },
-  { field: 'width', label: 'Ширина', unit: 'см', placeholder: '15' },
-  { field: 'length', label: 'Дължина', unit: 'м', placeholder: '4' },
-  { field: 'count', label: 'Брой', unit: 'бр.', placeholder: '20', numeric: true },
-]
 
 export default function CubicCalculator({ rows, onChange, open, onOpenChange, error }: Props) {
   const [addedId, setAddedId] = useState<number | null>(null)
@@ -92,8 +86,12 @@ export default function CubicCalculator({ rows, onChange, open, onOpenChange, er
                     key={row.id}
                     className="border-b border-timber-bark/10 pb-4 last:border-0 last:pb-0"
                   >
+                    {/* Set when the line was added from a product's size list. */}
+                    {row.label && (
+                      <p className="mb-3 font-sans text-[0.78rem] font-medium text-timber-ember">{row.label}</p>
+                    )}
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                      {COLUMNS.map(({ field, label, unit, placeholder, numeric }) => (
+                      {FIELD_META.map(({ field, label, unit, placeholder, numeric }) => (
                         <div key={field}>
                           <label htmlFor={`cubic-${row.id}-${field}`} className="field-label">
                             {label}

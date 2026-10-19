@@ -6,16 +6,33 @@
 
 export type Field = 'thickness' | 'width' | 'length' | 'count'
 
-export type CubicRow = { id: number } & Record<Field, string>
+/**
+ * A line of the inquiry. `productId`/`label` are set when it was added from a
+ * product's size list, so the yard knows which product the size is for.
+ */
+export type CubicRow = { id: number; productId?: string; label?: string } & Record<Field, string>
 
 export const FIELDS: Field[] = ['thickness', 'width', 'length', 'count']
 export const MAX_ROWS = 12
+
+/** How each box is named and labelled — shared by the calculator and the product dialog. */
+export const FIELD_META: { field: Field; label: string; unit: string; placeholder: string; numeric?: boolean }[] = [
+  { field: 'thickness', label: 'Дебелина', unit: 'см', placeholder: '5' },
+  { field: 'width', label: 'Ширина', unit: 'см', placeholder: '15' },
+  { field: 'length', label: 'Дължина', unit: 'м', placeholder: '4' },
+  { field: 'count', label: 'Брой', unit: 'бр.', placeholder: '20', numeric: true },
+]
 
 /** Anything beyond these is a slipped decimal point, not a real order. */
 const LIMITS: Record<Field, number> = { thickness: 50, width: 100, length: 15, count: 99999 }
 
 let counter = 0
 export const newRow = (): CubicRow => ({ id: ++counter, thickness: '', width: '', length: '', count: '' })
+
+/** Rows restored from storage keep their ids, so new ones must not reuse them. */
+export const reserveIds = (rows: CubicRow[]) => {
+  for (const r of rows) if (r.id > counter) counter = r.id
+}
 
 /** null when blank, NaN when there is something in the box that is not a usable number. */
 function parse(raw: string): number | null {
@@ -88,8 +105,9 @@ export function formatCalculation(rows: CubicRow[]): string {
     const r = evaluate(row)
     if (r.status !== 'ok' || !r.values) continue
     const { thickness, width, length, count } = r.values
+    const what = row.label ? `${row.label}: ` : ''
     lines.push(
-      `${lines.length + 1}) ${num(thickness)} × ${num(width)} см × ${num(length)} м × ${count} бр. = ${formatM3(r.volume)}`,
+      `${lines.length + 1}) ${what}${num(thickness)} × ${num(width)} см × ${num(length)} м × ${count} бр. = ${formatM3(r.volume)}`,
     )
   }
   if (lines.length === 0) return ''
