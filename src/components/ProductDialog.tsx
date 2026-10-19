@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { ArrowIcon, CloseIcon } from './Icons'
 import { useFocusTrap } from '../utils/useFocusTrap'
@@ -39,7 +40,9 @@ export default function ProductDialog({ product, onClose }: Props) {
 
   if (!product) return null
 
-  return (
+  // Portalled to <body>: the page's <main> is its own stacking context, so a
+  // dialog rendered inside it can never rise above the fixed nav.
+  return createPortal(
     <div
       ref={dialogRef}
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
@@ -147,6 +150,7 @@ export default function ProductDialog({ product, onClose }: Props) {
           </Link>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

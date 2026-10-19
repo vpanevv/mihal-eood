@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { CloseIcon } from './Icons'
 import { useFocusTrap } from '../utils/useFocusTrap'
 import type { GalleryImage } from '../data/gallery'
@@ -100,7 +101,8 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
     go(dx < 0 ? 1 : -1)
   }
 
-  return (
+  // Portalled to <body> so it sits above the fixed nav (see ProductDialog).
+  return createPortal(
     <div
       ref={dialogRef}
       className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-10"
@@ -159,6 +161,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
       >
         <CloseIcon className="h-5 w-5" />
       </button>
-    </div>
+    </div>,
+    document.body,
   )
 }

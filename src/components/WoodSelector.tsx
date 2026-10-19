@@ -49,7 +49,7 @@ export default function WoodSelector() {
 
   return (
     <div>
-      <div className="grid gap-3 md:grid-cols-2 md:gap-5">
+      <div className="grid gap-4 md:grid-cols-2 md:gap-6">
         {shown.map(({ id, name, woods, Icon }, i) => {
           const isOpen = open === id
           return (
@@ -60,38 +60,44 @@ export default function WoodSelector() {
               aria-expanded={isOpen}
               aria-controls={`wood-${id}`}
               style={{ animationDelay: `${0.04 + i * 0.06}s` }}
-              className={`reveal group flex w-full flex-col rounded-2xl p-5 text-left transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground md:p-7 ${
+              className={`reveal group flex w-full flex-col rounded-3xl p-6 text-left transition-[color,background-color,box-shadow] duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground md:p-9 ${
                 isOpen
-                  ? 'bg-timber-brown text-white shadow-[0_18px_40px_-24px_rgba(42,32,17,0.8)] md:col-span-2'
-                  : 'card'
+                  ? 'bg-timber-brown text-white shadow-[0_22px_48px_-26px_rgba(42,32,17,0.85)] md:col-span-2'
+                  : 'card shadow-[inset_0_0_0_1px_rgba(42,32,17,0.14),0_24px_46px_-28px_rgba(42,32,17,0.6)] hover:shadow-[inset_0_0_0_1.5px_rgba(180,136,62,0.85),0_28px_52px_-28px_rgba(42,32,17,0.65)]'
               }`}
             >
-              <span className="flex items-center gap-4 md:gap-5">
-                <Icon
-                  className={`h-9 w-9 shrink-0 transition-colors duration-300 md:h-10 md:w-10 ${
-                    isOpen ? 'text-white' : 'text-timber-gold'
+              <span className="flex items-center gap-5 md:gap-6">
+                {/* The icon sits on a tinted badge: bare gold lines on white only
+                    reach 3:1, the deeper gold on its own tint is easy to see. */}
+                <span
+                  aria-hidden="true"
+                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl transition-colors duration-300 md:h-[4.5rem] md:w-[4.5rem] ${
+                    isOpen ? 'bg-white/15 text-white' : 'bg-timber-gold/18 text-timber-ember'
                   }`}
-                />
-                <span className="font-display text-lg font-bold uppercase leading-tight tracking-[0.02em] md:text-2xl">
-                  {name}
+                >
+                  <Icon className="h-8 w-8 md:h-10 md:w-10" />
+                </span>
+                <span className="font-display font-bold uppercase leading-tight tracking-[0.02em]">
+                  <span className="block text-xl md:text-[1.75rem]">{name}</span>
                   <span
-                    className={`transition-colors duration-300 ${
+                    className={`mt-1 block text-lg transition-colors duration-300 md:text-2xl ${
                       // A lighter gold than timber-sap: on the brown card the sap
                       // only reaches 3.3:1 against it.
                       isOpen ? 'text-[#e6cb9c]' : 'text-timber-ember'
                     }`}
                   >
-                    {' — '}
+                    <span className="sr-only"> — </span>
                     {woods}
                   </span>
                 </span>
               </span>
 
+              {/* The whole card is the button; this label is what says so. */}
               <span
-                className={`mt-5 flex items-center justify-center gap-2 border-t pt-4 font-sans text-[0.68rem] font-medium uppercase tracking-[0.16em] transition-colors duration-300 ${
+                className={`mt-6 flex min-h-[52px] items-center justify-center gap-2.5 rounded-full px-6 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 md:mt-8 ${
                   isOpen
-                    ? 'border-white/20 text-white'
-                    : 'border-timber-bark/10 text-timber-bark/70 group-hover:text-timber-bark'
+                    ? 'bg-white text-timber-bark group-hover:bg-timber-paper'
+                    : 'bg-timber-brown text-white group-hover:bg-timber-bark'
                 }`}
               >
                 {isOpen ? 'Скрий изделията' : 'Виж изделията'}
@@ -118,7 +124,7 @@ export default function WoodSelector() {
       ))}
 
       {open === null && (
-        <p className="mt-5 font-sans text-[0.85rem] font-light text-timber-bark/70">
+        <p className="mt-6 font-sans text-base text-timber-bark/80">
           Изберете вид дървесина, за да видите изделията от нея.
         </p>
       )}
