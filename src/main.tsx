@@ -6,6 +6,8 @@ import Nav from './sections/Nav.tsx'
 import Footer from './sections/Footer.tsx'
 import MobileActionBar from './components/MobileActionBar.tsx'
 import ScrollToTop from './components/ScrollToTop.tsx'
+import InquiryPill from './components/InquiryPill.tsx'
+import { InquiryListProvider } from './utils/inquiryList.tsx'
 import './index.css'
 import { startReveal } from './utils/reveal.ts'
 
@@ -48,7 +50,7 @@ function RouteFallback() {
  */
 function Layout() {
   return (
-    <>
+    <InquiryListProvider>
       <ScrollToTop />
       {/* First stop in the tab order: lets a keyboard user skip the bar. */}
       <a
@@ -64,8 +66,9 @@ function Layout() {
       <Footer />
       {/* Clears the fixed phone bar, so it never covers the end of the footer. */}
       <div aria-hidden="true" className="h-[84px] lg:hidden" />
+      <InquiryPill />
       <MobileActionBar />
-    </>
+    </InquiryListProvider>
   )
 }
 

@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { useSearchParams } from 'react-router-dom'
 import CubicCalculator from './CubicCalculator'
 import { CheckIcon, PaperclipIcon } from './Icons'
 import { EMAIL, PHONE_DISPLAY } from '../data/company'
 import { PRODUCTS } from '../data/products'
-import { formatCalculation, newRow, summarize, type CubicRow } from '../utils/cubic'
+import { evaluate, formatCalculation, summarize, type CubicRow } from '../utils/cubic'
+import { useInquiryList } from '../utils/inquiryList'
 
 /**
  * Netlify Forms. Netlify registers a form by reading static HTML at deploy
@@ -48,7 +49,12 @@ function validate(values: Fields, rows: CubicRow[]): Errors {
 
 export default function InquiryForm() {
   const [params] = useSearchParams()
-  const preselected = PRODUCTS.some((p) => p.id === params.get('material')) ? params.get('material')! : ''
+  const { rows, setRows, clear, summary: listSummary } = useInquiryList()
+  // A link names a material; failing that, sizes already on the list do — when
+  // they all belong to one product.
+  const listed = [...new Set(rows.filter((r) => evaluate(r).status === 'ok').map((r) => r.productId))]
+  const fromList = listed.length === 1 && listed[0] ? listed[0] : ''
+  const preselected = PRODUCTS.some((p) => p.id === params.get('material')) ? params.get('material')! : fromList
 
   const [values, setValues] = useState<Fields>({ ...EMPTY, material: preselected })
   const [errors, setErrors] = useState<Errors>({})
@@ -57,11 +63,20 @@ export default function InquiryForm() {
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
   const [fileName, setFileName] = useState<string | null>(null)
-  const [rows, setRows] = useState<CubicRow[]>(() => [newRow()])
-  const [calcOpen, setCalcOpen] = useState(false)
+  // Open straight away when sizes are already waiting on the list.
+  const [calcOpen, setCalcOpen] = useState(() => rows.some((r) => evaluate(r).status !== 'empty'))
   const fileRef = useRef<HTMLInputElement>(null)
   // Bots fill every field they find; people never see this one.
   const honeypot = useRef<HTMLInputElement>(null)
+
+  // A size added from a product dialog while this form is on screen (the home
+  // page has both) should not land in a collapsed panel.
+  const finished = listSummary.used
+  const previousFinished = useRef(finished)
+  useEffect(() => {
+    if (finished > previousFinished.current) setCalcOpen(true)
+    previousFinished.current = finished
+  }, [finished])
 
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => {
     const next = { ...values, [key]: value }
@@ -138,7 +153,7 @@ export default function InquiryForm() {
       if (!res.ok) throw new Error(String(res.status))
       setSent(true)
       setValues(EMPTY)
-      setRows([newRow()])
+      clear()
       setCalcOpen(false)
       setErrors({})
       setFileName(null)
