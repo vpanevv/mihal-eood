@@ -58,12 +58,14 @@ export const SERVICES: Service[] = [
       { src: '/images/services/boyadisvane-3.jpg', focus: '50% 60%' },
     ],
   },
-  // Still on icons until photographs of these two arrive.
   {
     title: 'Импрегниране',
     text: 'Професионално импрегниране за по-добра защита на дървесината от влага, атмосферни влияния, плесени и вредители. Удължаваме живота на материала и запазваме неговите качества.',
     Icon: ImpregnationIcon,
+    photo: '/images/services/impregrirane.jpg',
+    photoFocus: '50% 55%',
   },
+  // Still on an icon until a photograph of this one arrives.
   {
     title: 'Клинозъбене',
     text: 'Прецизно клинозъбно съединяване за получаване на здрави и стабилни дървени елементи с по-голяма дължина. Подходящо за конструкции и изделия, при които се изисква висока устойчивост.',

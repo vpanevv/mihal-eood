@@ -89,13 +89,6 @@ export default function Hero() {
           <span className="block sm:inline">Качество, което остава.</span>
         </p>
 
-        <p
-          className="fade-up mt-4 max-w-[46ch] text-center font-sans text-[0.9rem] font-light leading-[1.7] text-white/80 [text-shadow:0_1px_14px_rgba(18,12,4,0.7)] md:text-[1.05rem]"
-          style={{ animationDelay: '0.8s' }}
-        >
-          Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди
-        </p>
-
         <div
           // max-w-md only for the stacked phone layout. Left on at sm it capped
           // the row at 448px while the two buttons are wider, so they spilled
