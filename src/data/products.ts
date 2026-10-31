@@ -16,6 +16,13 @@ export type Group = {
 
 export type Filter = 'dry' | 'floor' | 'panel' | 'beams' | 'boards' | 'custom'
 
+/** A product photograph and the point of it that must stay in frame when it is cropped. */
+export type Photo = {
+  src: string
+  /** CSS object-position — these are portrait shots shown in a wider frame. */
+  focus?: string
+}
+
 export type Product = {
   id: string
   name: string
@@ -27,6 +34,10 @@ export type Product = {
   drawing?: string
   /** Photograph of the real product; leads both the card and its dialog. */
   photo?: string
+  /** Where to centre `photo` when the card crops it. */
+  photoFocus?: string
+  /** More photographs, swiped through in the dialog; the first is `photo`. */
+  photos?: Photo[]
   note?: string
   groups: Group[]
 }
@@ -88,6 +99,13 @@ export const PRODUCTS: Product[] = [
     Icon: PanelIcon,
     filters: ['panel'],
     drawing: '/images/drawing-1.png',
+    photo: '/images/products/lamperia-3.jpg',
+    photoFocus: '50% 86%',
+    photos: [
+      { src: '/images/products/lamperia-3.jpg', focus: '50% 86%' },
+      { src: '/images/products/lamperia.jpg', focus: '50% 55%' },
+      { src: '/images/products/lamperia-2.jpg', focus: '50% 60%' },
+    ],
     note: 'Произведена от висококачествена иглолистна дървесина. Профилът се избира от клиента.',
     groups: [
       {
@@ -106,6 +124,10 @@ export const PRODUCTS: Product[] = [
     filters: ['beams', 'custom'],
     drawing: '/images/drawing-5.png',
     photo: '/images/products/slepeni-gredi.jpg',
+    photos: [
+      { src: '/images/products/slepeni-gredi.jpg' },
+      { src: '/images/products/slepeni.jpg', focus: '50% 55%' },
+    ],
     note: 'Изработват се по поръчка. Разполагаме с камера за сушене на дървен материал с обем до 50 м³.',
     groups: [{ specs: [{ label: 'дължина', values: ['до 9,5'], unit: 'м' }] }],
   },
@@ -178,3 +200,7 @@ export function sizeField(spec: Spec, value: string): Field | null {
 
 /** "Иглолистна дървесина — бор и смърч" → "бор и смърч". */
 export const variantOf = (group: Group): string | undefined => group.title?.split(' — ').pop()
+
+/** What the dialog shows: the extra photographs if there are any, else the one. */
+export const photosOf = (p: Product): Photo[] =>
+  p.photos ?? (p.photo ? [{ src: p.photo, focus: p.photoFocus }] : [])

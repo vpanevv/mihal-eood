@@ -6,8 +6,7 @@ import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 
 const LINKS = [
   { label: 'Начало', href: '/' },
-  // Продукти is deliberately absent: the six categories live on the landing
-  // page, and /products is reached from there rather than from the bar.
+  { label: 'Продукти', href: '/products' },
   { label: 'Услуги', href: '/delivery' },
   { label: 'Галерия', href: '/gallery' },
   { label: 'За нас', href: '/about-us' },

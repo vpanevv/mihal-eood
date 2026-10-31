@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react'
+import type { Photo } from './products'
 import {
   DryingIcon,
   FingerJointIcon,
@@ -15,7 +16,15 @@ export type Service = {
   Icon: ComponentType<{ className?: string }>
   /** Photograph of the work; leads the card where there is one, as on the product cards. */
   photo?: string
+  /** Where to centre `photo` when the card crops it. */
+  photoFocus?: string
+  /** More photographs, swiped through in the dialog; the first is `photo`. */
+  photos?: Photo[]
 }
+
+/** What the dialog shows: the extra photographs if there are any, else the one. */
+export const photosOf = (s: Service): Photo[] =>
+  s.photos ?? (s.photo ? [{ src: s.photo, focus: s.photoFocus }] : [])
 
 /** What the yard does to the timber before it leaves. */
 export const SERVICES: Service[] = [
@@ -42,6 +51,12 @@ export const SERVICES: Service[] = [
     text: 'Мажем с висококачествени масла на ОЛМО.',
     Icon: PaintIcon,
     photo: '/images/services/boyadisvane.jpg',
+    photoFocus: '50% 48%',
+    photos: [
+      { src: '/images/services/boyadisvane.jpg', focus: '50% 48%' },
+      { src: '/images/services/boyadisvane-2.jpg', focus: '50% 62%' },
+      { src: '/images/services/boyadisvane-3.jpg', focus: '50% 60%' },
+    ],
   },
   // Still on icons until photographs of these two arrive.
   {

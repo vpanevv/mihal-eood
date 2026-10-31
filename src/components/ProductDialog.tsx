@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowIcon, CloseIcon } from './Icons'
-import { useFocusTrap } from '../utils/useFocusTrap'
+import { ArrowIcon } from './Icons'
+import DialogShell from './DialogShell'
 import SizeComposer, { EMPTY_DRAFT, type Draft } from './SizeComposer'
-import { inquiryHref, sizeField, variantOf, type Product } from '../data/products'
+import PhotoCarousel from './PhotoCarousel'
+import { inquiryHref, photosOf, sizeField, variantOf, type Product } from '../data/products'
 
 type Props = {
   product: Product | null
@@ -12,9 +12,6 @@ type Props = {
 }
 
 export default function ProductDialog({ product, onClose }: Props) {
-  const closeRef = useRef<HTMLButtonElement>(null)
-  const dialogRef = useRef<HTMLDivElement>(null)
-  const lastFocused = useRef<Element | null>(null)
   // The size being put together in the composer below the specs; the chips in
   // the specs fill it. Starts fresh for every product.
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT)
@@ -25,31 +22,9 @@ export default function ProductDialog({ product, onClose }: Props) {
     setVariant(undefined)
   }, [product])
 
-  useEffect(() => {
-    if (!product) return
-
-    lastFocused.current = document.activeElement
-    closeRef.current?.focus()
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', onKey)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', onKey)
-      // Send focus back to whatever opened the dialog.
-      ;(lastFocused.current as HTMLElement | null)?.focus?.()
-    }
-  }, [product, onClose])
-
-  useFocusTrap(dialogRef, product !== null)
-
   if (!product) return null
 
+  const photos = photosOf(product)
   const tappable = product.groups.some((g) => g.specs.some((sp) => sp.values.some((v) => sizeField(sp, v))))
 
   const pick = (field: keyof Draft, value: string, group: Product['groups'][number]) => {
@@ -59,43 +34,12 @@ export default function ProductDialog({ product, onClose }: Props) {
     if (v) setVariant(v)
   }
 
-  // Portalled to <body>: the page's <main> is its own stacking context, so a
-  // dialog rendered inside it can never rise above the fixed nav.
-  return createPortal(
-    <div
-      ref={dialogRef}
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="product-dialog-title"
-    >
-      {/* Click-away layer */}
-      <button
-        type="button"
-        aria-label="Затвори"
-        tabIndex={-1}
-        onClick={onClose}
-        className="absolute inset-0 cursor-default bg-timber-bark/70"
-      />
-
-      {/* Opaque white rather than blurred glass: a full-screen backdrop blur
-          re-renders the page behind on every frame and stutters on phones. */}
-      <div className="card pop-in relative max-h-full w-full max-w-lg overflow-y-auto rounded-3xl">
+  return (
+    <DialogShell open onClose={onClose} titleId="product-dialog-title">
         {/* A photograph of the product leads, where there is one; otherwise the
             milled profile does. */}
-        {product.photo ? (
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-3xl bg-timber-bark/5">
-            <img
-              src={product.photo}
-              srcSet={`${product.photo.replace(/\.jpg$/, '-800.jpg')} 800w, ${product.photo} 1200w`}
-              sizes="(min-width: 640px) 512px, 92vw"
-              alt={product.name}
-              width={1200}
-              height={1600}
-              decoding="async"
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
+        {photos.length > 0 ? (
+          <PhotoCarousel key={product.id} photos={photos} alt={product.name} />
         ) : (
           product.drawing && (
             <div className="profile-band relative aspect-[19/9] w-full overflow-hidden rounded-t-3xl">
@@ -109,16 +53,6 @@ export default function ProductDialog({ product, onClose }: Props) {
         )}
 
         <div className="p-7 md:p-9">
-          <button
-            ref={closeRef}
-            type="button"
-            onClick={onClose}
-            aria-label="Затвори"
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-timber-bark/15 bg-white text-timber-bark transition-colors hover:border-timber-bark hover:bg-timber-bark hover:text-white"
-          >
-            <CloseIcon className="h-4 w-4" />
-          </button>
-
           <h2
             id="product-dialog-title"
             className="pr-12 font-display text-2xl font-bold uppercase tracking-[0.02em] text-timber-bark md:text-3xl"
@@ -201,8 +135,6 @@ export default function ProductDialog({ product, onClose }: Props) {
             <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>
-      </div>
-    </div>,
-    document.body,
+    </DialogShell>
   )
 }

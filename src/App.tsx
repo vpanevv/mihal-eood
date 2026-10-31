@@ -34,7 +34,7 @@ export default function App() {
           <WoodSelector />
           <div className="mt-10">
             <Link to="/products" className="btn btn-outline border-timber-bark/45 bg-white">
-              Виж всички размери
+              Виж всички размери продукти
               <ArrowIcon className="h-4 w-4" />
             </Link>
           </div>

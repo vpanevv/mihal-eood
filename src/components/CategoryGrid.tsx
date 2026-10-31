@@ -38,6 +38,7 @@ export default function CategoryGrid({ products = PRODUCTS, onOpen }: Props) {
                   loading="lazy"
                   decoding="async"
                   {...{ fetchpriority: 'low' }}
+                  style={product.photoFocus ? { objectPosition: product.photoFocus } : undefined}
                   className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                 />
               </span>
