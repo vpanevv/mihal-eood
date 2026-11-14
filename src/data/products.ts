@@ -51,6 +51,17 @@ export const PRODUCTS: Product[] = [
     Icon: PlanksIcon,
     filters: ['dry'],
     drawing: '/images/drawing-2.png',
+    photo: '/images/products/suh-7.jpg',
+    photoFocus: '50% 64%',
+    photos: [
+      { src: '/images/products/suh-7.jpg', focus: '50% 64%' },
+      { src: '/images/products/suh-1.jpg', focus: '50% 72%' },
+      { src: '/images/products/suh-2.jpg' },
+      { src: '/images/products/suh-3.jpg', focus: '50% 80%' },
+      { src: '/images/products/suh-4.jpg', focus: '50% 70%' },
+      { src: '/images/products/suh-5.jpg', focus: '50% 95%' },
+      { src: '/images/products/suh-6.jpg', focus: '50% 90%' },
+    ],
     note: 'От собствена сушилня. Материалът отлежава един месец след сушенето, преди да влезе в продажба.',
     groups: [
       {
@@ -82,6 +93,13 @@ export const PRODUCTS: Product[] = [
     Icon: FloorIcon,
     filters: ['floor'],
     drawing: '/images/drawing-3.png',
+    photo: '/images/products/dusheme-1.jpg',
+    photoFocus: '50% 68%',
+    photos: [
+      { src: '/images/products/dusheme-1.jpg', focus: '50% 68%' },
+      { src: '/images/products/dusheme-2.jpg', focus: '50% 80%' },
+      { src: '/images/products/dusheme-3.jpg', focus: '50% 60%' },
+    ],
     note: 'Дюшеме за вътрешна настилка и декинг за тераси — в едни и същи дебелини и ширини.',
     groups: [
       {

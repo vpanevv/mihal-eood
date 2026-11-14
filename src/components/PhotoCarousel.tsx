@@ -23,19 +23,28 @@ const control =
 export default function PhotoCarousel({ photos, alt }: Props) {
   const track = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
+  // How far in the photographs have been asked for. A long set would otherwise
+  // all download the moment the dialog opens; this keeps one ahead of the
+  // visitor, so the next swipe is already there.
+  const [reach, setReach] = useState(1)
+  const see = (i: number) => setReach((r) => Math.max(r, i + 1))
   const count = photos.length
 
   const goTo = (i: number) => {
     const el = track.current
     if (!el) return
     const next = Math.max(0, Math.min(count - 1, i))
+    see(next)
     const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     el.scrollTo({ left: next * el.clientWidth, behavior: calm ? 'auto' : 'smooth' })
   }
 
   const onScroll = () => {
     const el = track.current
-    if (el) setIndex(Math.round(el.scrollLeft / el.clientWidth))
+    if (!el) return
+    const i = Math.round(el.scrollLeft / el.clientWidth)
+    setIndex(i)
+    see(i)
   }
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -67,21 +76,21 @@ export default function PhotoCarousel({ photos, alt }: Props) {
             aria-label={many ? `${i + 1} от ${count}` : undefined}
             className="relative aspect-square max-h-[68svh] w-full shrink-0 snap-center snap-always"
           >
-            <img
-              src={src}
-              srcSet={`${mdFor(src)} 800w, ${src} 1200w`}
-              sizes="(min-width: 640px) 512px, 92vw"
-              alt={many ? `${alt} — снимка ${i + 1}` : alt}
-              width={1200}
-              height={1600}
-              decoding="async"
-              // The rest are small and one swipe away: fetch them now, behind the
-              // first, so a swipe never lands on an empty frame.
-              {...(i === 0 ? {} : { fetchpriority: 'low' })}
-              draggable={false}
-              style={{ objectPosition: focus ?? '50% 50%' }}
-              className="h-full w-full select-none object-cover"
-            />
+            {i <= reach && (
+              <img
+                src={src}
+                srcSet={`${mdFor(src)} 800w, ${src} 1200w`}
+                sizes="(min-width: 640px) 512px, 92vw"
+                alt={many ? `${alt} — снимка ${i + 1}` : alt}
+                width={1200}
+                height={1600}
+                decoding="async"
+                {...(i === 0 ? {} : { fetchpriority: 'low' })}
+                draggable={false}
+                style={{ objectPosition: focus ?? '50% 50%' }}
+                className="h-full w-full select-none object-cover"
+              />
+            )}
           </div>
         ))}
       </div>
