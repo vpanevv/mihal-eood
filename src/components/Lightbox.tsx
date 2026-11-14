@@ -11,6 +11,8 @@ type Props = {
   onClose: () => void
   /** Relative move, so rapid clicks compose instead of collapsing into one. */
   onStep: (step: number) => void
+  /** A strip of small thumbnails along the bottom, for jumping straight to a photo. */
+  thumbs?: boolean
 }
 
 function Chevron({ dir }: { dir: 'left' | 'right' }) {
@@ -27,9 +29,10 @@ const control =
 /** Horizontal travel that counts as a swipe rather than a tap. */
 const SWIPE_PX = 50
 
-export default function Lightbox({ images, index, onClose, onStep }: Props) {
+export default function Lightbox({ images, index, onClose, onStep, thumbs = false }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
+  const stripRef = useRef<HTMLDivElement>(null)
   const lastFocused = useRef<Element | null>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const open = index !== null
@@ -81,8 +84,21 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
     }
   }, [index, count, images])
 
+  // Keep the current thumbnail in the middle of the strip as the photo changes.
+  useEffect(() => {
+    const strip = stripRef.current
+    const current = strip?.querySelector<HTMLElement>('[aria-current="true"]')
+    if (!strip || !current) return
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    strip.scrollTo({
+      left: current.offsetLeft - (strip.clientWidth - current.clientWidth) / 2,
+      behavior: calm ? 'auto' : 'smooth',
+    })
+  }, [index])
+
   if (index === null) return null
   const image = images[index]
+  const strip = thumbs && count > 1
 
   // Swiping is how a phone expects to move between photos.
   const onTouchStart = (e: React.TouchEvent) => {
@@ -105,7 +121,7 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
   return createPortal(
     <div
       ref={dialogRef}
-      className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-10"
+      className={`fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-10 ${strip ? 'pb-24 md:pb-28' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label={image.alt}
@@ -129,7 +145,10 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
           width={image.width}
           height={image.height}
           decoding="async"
-          className="max-h-[78svh] max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)]"
+          // h-auto/w-auto let the box shrink with the photo when a limit bites;
+          // otherwise an upright photo keeps its full width attribute and the
+          // corners and shadow are drawn around empty space beside it.
+          className={`h-auto w-auto max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)] ${strip ? 'max-h-[66svh]' : 'max-h-[78svh]'}`}
         />
         <figcaption className="text-center font-sans text-[0.72rem] uppercase tracking-[0.2em] text-white/80">
           {image.alt}
@@ -150,6 +169,43 @@ export default function Lightbox({ images, index, onClose, onStep }: Props) {
             <Chevron dir="right" />
           </button>
         </>
+      )}
+
+      {strip && (
+        // Its own touch handlers stop here: dragging the strip sideways must
+        // scroll the strip, not count as a swipe to the next photo.
+        <div
+          ref={stripRef}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
+          className="no-scrollbar absolute inset-x-0 bottom-0 flex gap-2 overflow-x-auto px-4 pt-2"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          {/* The arrow keys already step through the photos, so the thumbnails
+              stay out of the Tab order rather than adding dozens of stops. */}
+          {images.map((img, i) => (
+            <button
+              key={img.srcUrl}
+              type="button"
+              tabIndex={-1}
+              onClick={() => onStep(i - index)}
+              aria-label={`Снимка ${i + 1}: ${img.alt}`}
+              aria-current={i === index ? 'true' : undefined}
+              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg transition-opacity duration-300 first:ml-auto last:mr-auto md:h-16 md:w-16 ${
+                i === index ? 'opacity-100 ring-2 ring-timber-gold' : 'opacity-55 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={img.smUrl}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+                className="h-full w-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
       )}
 
       <button

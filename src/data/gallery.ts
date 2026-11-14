@@ -20,11 +20,26 @@ export const thumbFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '
 /** ...and a 400px copy under /images/thumbs-sm. */
 export const smFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs-sm/$1.jpg')
 
-export const GALLERY_TOPICS: { id: GalleryTopic | 'all'; label: string }[] = [
-  { id: 'all', label: 'Всички' },
-  { id: 'yard', label: 'Склад' },
-  { id: 'material', label: 'Материал' },
-  { id: 'delivery', label: 'Доставки' },
+/** The gallery page reads as three chapters, in this order. */
+export const GALLERY_CHAPTERS: { id: GalleryTopic; anchor: string; title: string; intro: string }[] = [
+  {
+    id: 'yard',
+    anchor: 'sklad',
+    title: 'Складът',
+    intro: 'Собствена складова база в Разлог — материалът е подреден на пакети, под навес и на открито.',
+  },
+  {
+    id: 'material',
+    anchor: 'material',
+    title: 'Материалът',
+    intro: 'Сух дървен материал отблизо — дъски, талпи и греди, подредени по сечения.',
+  },
+  {
+    id: 'delivery',
+    anchor: 'dostavki',
+    title: 'Доставките',
+    intro: 'Товарим на място и доставяме със собствен транспорт в цялата страна.',
+  },
 ]
 
 const g = (file: string) => `/images/gallery/${file}`
@@ -32,7 +47,7 @@ const LANDSCAPE = { width: 1000, height: 667 }
 const PORTRAIT = { width: 667, height: 1000 }
 const PHONE = { width: 1200, height: 1600 }
 
-/** Yard, stock and delivery photography, tagged for the gallery filters. */
+/** Yard, stock and delivery photography, tagged with the chapter each belongs to. */
 const ENTRIES: Omit<GalleryEntry, 'thumbUrl' | 'smUrl'>[] = [
   { srcUrl: g('mihal-razlog-2-min.jpeg'), alt: 'Складовата база в Разлог', topic: 'yard', ...LANDSCAPE },
   { srcUrl: g('mihal-razlog-3-min.jpeg'), alt: 'Подреден материал под навеса', topic: 'yard', ...LANDSCAPE, height: 666 },
@@ -58,6 +73,12 @@ const ENTRIES: Omit<GalleryEntry, 'thumbUrl' | 'smUrl'>[] = [
   { srcUrl: g('viber_image_2026-08-14_13-18-18-999.jpg'), alt: 'Материал на площадката', topic: 'yard', ...PHONE },
   { srcUrl: g('viber_image_2026-08-14_13-18-19-284.jpg'), alt: 'Пакети, готови за товарене', topic: 'yard', ...PHONE },
   { srcUrl: g('viber_image_2026-08-14_13-18-19-506.jpg'), alt: 'Площадка за товарене', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-53-774.jpg'), alt: 'Пакети дъски под открито небе', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-53-951.jpg'), alt: 'Алея между пакетите на склада', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-54-103.jpg'), alt: 'Пакети на бетонната площадка', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-54-274.jpg'), alt: 'Редица пакети край площадката', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-54-472.jpg'), alt: 'Бетонната площадка на склада', topic: 'yard', ...PHONE },
+  { srcUrl: g('viber_image_2026-11-13_20-23-54-642.jpg'), alt: 'Дълга редица пакети на площадката', topic: 'yard', ...PHONE },
   { srcUrl: '/images/new-4.jpg', alt: 'Закритият склад', topic: 'yard', ...PHONE },
   { srcUrl: '/images/new-5.jpg', alt: 'Натоварен камион с дървен материал', topic: 'delivery', width: 900, height: 1600 },
   { srcUrl: '/images/new-6.jpg', alt: 'Подготвена доставка', topic: 'delivery', ...PHONE },

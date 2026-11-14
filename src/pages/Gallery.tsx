@@ -1,102 +1,205 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { usePageMeta } from '../utils/usePageMeta'
 import PageBanner from '../components/PageBanner'
 import { BANNERS } from '../data/banners'
 import Lightbox from '../components/Lightbox'
+import ChapterNav from '../components/ChapterNav'
 import { ExpandIcon } from '../components/Icons'
-import { GALLERY_IMAGES, GALLERY_TOPICS, type GalleryTopic } from '../data/gallery'
+import { GALLERY_CHAPTERS, GALLERY_IMAGES, type GalleryEntry } from '../data/gallery'
+import { pack, S, type Placement, type Span } from '../utils/bento'
+
+const isLandscape = (img: GalleryEntry) => img.width >= img.height
+
+/** Spread the upright photos among the wide ones, so neither kind clumps. */
+function interleave<T>(a: T[], b: T[]): T[] {
+  const out: T[] = []
+  let i = 0
+  let j = 0
+  while (i < a.length || j < b.length) {
+    if (j >= b.length || (i < a.length && i / a.length <= j / b.length)) out.push(a[i++])
+    else out.push(b[j++])
+  }
+  return out
+}
+
+/** Every fifth photo of the kind a layout can show large becomes a feature tile. */
+const FEATURE_EVERY = 5
+
+type Tile = { img: GalleryEntry; desktop: Placement; phone: Placement }
+
+/**
+ * A chapter's photographs in display order with a footprint for each layout.
+ * Four landscape-leaning columns on a desktop: a wide photo fills one cell or,
+ * as a feature, four; an upright one stands two cells tall. Two portrait-
+ * leaning columns on a phone: a wide photo runs the full width, an upright one
+ * takes a cell or, as a feature, four.
+ */
+function layOut(images: GalleryEntry[]): Tile[] {
+  // A wide photo leads when there is one — it is what the big desktop tile suits.
+  const ordered = interleave(images.filter(isLandscape), images.filter((img) => !isLandscape(img)))
+
+  let wide = 0
+  let upright = 0
+  const desktop: Span[][] = []
+  const phone: Span[][] = []
+  for (const img of ordered) {
+    if (isLandscape(img)) {
+      const feature = wide++ % FEATURE_EVERY === 0
+      desktop.push(feature ? [S.big, S.one, S.wide] : [S.one, S.wide, S.big])
+      phone.push([S.wide, S.one])
+    } else {
+      const feature = upright++ % FEATURE_EVERY === 0
+      desktop.push([S.tall, S.one, S.big])
+      phone.push(feature ? [S.big, S.one, S.tall] : [S.one, S.big, S.tall])
+    }
+  }
+
+  const d = pack(desktop, 4)
+  const p = pack(phone, 2)
+  return ordered.map((img, i) => ({ img, desktop: d[i], phone: p[i] }))
+}
+
+const line = ({ col, row, c, r }: Placement) => ({ column: `${col} / span ${c}`, row: `${row} / span ${r}` })
 
 export default function Gallery() {
   const [zoomed, setZoomed] = useState<number | null>(null)
-  const [topic, setTopic] = useState<GalleryTopic | 'all'>('all')
+  const [active, setActive] = useState(GALLERY_CHAPTERS[0].anchor)
 
   usePageMeta(
     'Галерия — МИХАЛ ЕООД',
     'Снимки от складовата база в Разлог: подреден сух дървен материал, пакети дъски, товарене и доставки.',
   )
 
-  // The viewer steps through what is on screen, so it must see the same list.
-  const shown = useMemo(
-    () => (topic === 'all' ? GALLERY_IMAGES : GALLERY_IMAGES.filter((img) => img.topic === topic)),
-    [topic],
-  )
+  const chapters = useMemo(() => {
+    let start = 0
+    return GALLERY_CHAPTERS.map((chapter) => {
+      const tiles = layOut(GALLERY_IMAGES.filter((img) => img.topic === chapter.id))
+      const out = { ...chapter, tiles, start }
+      start += tiles.length
+      return out
+    })
+  }, [])
 
-  const pick = (next: GalleryTopic | 'all') => {
-    setZoomed(null)
-    setTopic(next)
+  // The viewer steps through every photo in the order the page shows them,
+  // straight across the chapter breaks.
+  const all = useMemo(() => chapters.flatMap((chapter) => chapter.tiles.map((t) => t.img)), [chapters])
+
+  // The menu marks the chapter that is crossing the middle of the screen.
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id)
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    for (const { anchor } of GALLERY_CHAPTERS) {
+      const el = document.getElementById(anchor)
+      if (el) io.observe(el)
+    }
+    return () => io.disconnect()
+  }, [])
+
+  const jump = (anchor: string) => {
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.getElementById(anchor)?.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' })
   }
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">
       <PageBanner crumb="Галерия" title="От" accent="базата" image={BANNERS['/gallery']} />
 
-      <section className="py-10 md:py-16">
+      <section className="py-8 md:py-14">
         <div className="mx-auto max-w-[1400px] px-4 md:px-8">
-          <div
-            role="group"
-            aria-label="Филтри по тема"
-            className="no-scrollbar reveal -mx-4 flex gap-2.5 overflow-x-auto px-4 md:mx-0 md:px-0"
-          >
-            {GALLERY_TOPICS.map(({ id, label }) => (
-              <button key={id} type="button" className="chip" aria-pressed={topic === id} onClick={() => pick(id)}>
-                {label}
-              </button>
-            ))}
-          </div>
-
-          <p className="reveal mt-6 font-sans text-[0.8rem] uppercase tracking-[0.2em] text-timber-bark/70">
-            Натиснете снимка, за да я видите в по-голям размер
+          <p className="reveal mb-5 flex items-center gap-3 font-sans text-[0.78rem] uppercase tracking-[0.18em] text-timber-bark/70">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-timber-gold/18 text-timber-ember">
+              <ExpandIcon className="h-4 w-4" />
+            </span>
+            Натиснете снимка, за да я видите в цял размер
           </p>
 
-          {/* Multi-column masonry: the set mixes landscape and portrait, so a
-              uniform square grid would crop half of them badly. Columns keep
-              every photo at its own proportions. */}
-          <div className="mt-6 columns-2 gap-3 sm:columns-3 md:mt-8 md:gap-4 lg:columns-4">
-            {shown.map((img, i) => (
-              <button
-                key={img.srcUrl}
-                type="button"
-                onClick={() => setZoomed(i)}
-                aria-label={`Отвори ${img.alt}`}
-                className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold md:mb-4"
-              >
-                {/* A tile is a quarter to a half of the screen wide: a phone
-                    takes the 400px copy, a desktop the 640px one. Never the
-                    full photo — that is the lightbox's job. */}
-                <img
-                  src={img.thumbUrl}
-                  srcSet={`${img.smUrl} 400w, ${img.thumbUrl} 640w`}
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  loading={i < 4 ? 'eager' : 'lazy'}
-                  decoding="async"
-                  {...(i < 4 ? {} : { fetchpriority: 'low' })}
-                  className="block w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
-                />
+          {/* Stays under the site bar while the chapters scroll past. */}
+          <ChapterNav label="Раздели на галерията" items={chapters} active={active} onJump={jump} />
 
-                {/* Warm veil, caption and expand mark, so a pointer gets a clear affordance */}
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-timber-bark/80 via-timber-bark/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <span className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-2 pr-11 text-left font-sans text-[0.72rem] uppercase tracking-[0.14em] text-white opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                  {img.alt}
-                </span>
-                <span className="pointer-events-none absolute bottom-3 right-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-white/90 text-timber-bark opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                  <ExpandIcon className="h-4 w-4" />
-                </span>
-              </button>
-            ))}
-          </div>
+          {chapters.map(({ anchor, title, intro, tiles, start }, n) => (
+            <section
+              key={anchor}
+              id={anchor}
+              aria-labelledby={`${anchor}-title`}
+              className={`scroll-mt-40 md:scroll-mt-48 ${n === 0 ? 'pt-7 md:pt-9' : 'pt-14 md:pt-24'}`}
+            >
+              <header className="reveal mb-5 flex flex-wrap items-end justify-between gap-x-10 gap-y-3 md:mb-8">
+                <div>
+                  <span aria-hidden="true" className="block h-[3px] w-12 rounded-full bg-timber-gold" />
+                  <h2
+                    id={`${anchor}-title`}
+                    className="mt-4 font-display text-[clamp(2rem,7vw,3.5rem)] font-bold uppercase leading-[1.05] text-timber-bark"
+                  >
+                    {title}
+                  </h2>
+                </div>
+                <p className="max-w-[44ch] font-serif text-[1rem] leading-[1.6] text-timber-bark/80 md:text-right md:text-[1.1rem]">
+                  {intro}
+                </p>
+              </header>
+
+              <div className="bento">
+                {tiles.map(({ img, desktop, phone }, i) => {
+                  const d = line(desktop)
+                  const p = line(phone)
+                  // The big desktop tiles are the only ones wide enough to need
+                  // the full photograph; everything else is served a small copy.
+                  const feature = desktop.c === 2
+                  // A phone tile that spans the screen is under-reported on
+                  // purpose: stated truthfully, a 3× screen would skip the 640px
+                  // copy for the full file, a megabyte or more over the page.
+                  const sizes = `(min-width: 1400px) ${desktop.c * 340}px, (min-width: 768px) ${desktop.c * 25}vw, ${phone.c === 2 ? 54 : 50}vw`
+                  const first = n === 0 && i < 2
+                  return (
+                    <button
+                      key={img.srcUrl}
+                      type="button"
+                      onClick={() => setZoomed(start + i)}
+                      aria-label={`Отвори ${img.alt}`}
+                      style={{ '--c': d.column, '--r': d.row, '--cm': p.column, '--rm': p.row } as CSSProperties}
+                      className="group relative overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold md:rounded-2xl"
+                    >
+                      <img
+                        src={img.thumbUrl}
+                        srcSet={`${img.smUrl} 400w, ${img.thumbUrl} 640w${feature ? `, ${img.srcUrl} ${img.width}w` : ''}`}
+                        sizes={sizes}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        loading={first ? 'eager' : 'lazy'}
+                        decoding="async"
+                        {...(first ? {} : { fetchpriority: 'low' })}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                      />
+
+                      {/* Warm veil, caption and expand mark, so a pointer gets a clear affordance */}
+                      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-timber-bark/80 via-timber-bark/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100" />
+                      <span className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-2 pr-11 text-left font-sans text-[0.72rem] uppercase tracking-[0.14em] text-white opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                        {img.alt}
+                      </span>
+                      <span className="pointer-events-none absolute bottom-3 right-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-white/90 text-timber-bark opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                        <ExpandIcon className="h-4 w-4" />
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </section>
 
       <Lightbox
-        images={shown}
+        images={all}
         index={zoomed}
+        thumbs
         onClose={() => setZoomed(null)}
-        onStep={(step) =>
-          setZoomed((i) => (i === null ? i : (i + step + shown.length) % shown.length))
-        }
+        onStep={(step) => setZoomed((i) => (i === null ? i : (i + step + all.length) % all.length))}
       />
     </main>
   )

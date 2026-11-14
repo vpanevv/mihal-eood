@@ -203,6 +203,36 @@
     filter: saturate(0.6) brightness(0.92);
   }
 
+  /* The gallery's bento grid. Two columns of portrait-leaning cells on a
+     phone, four of landscape-leaning ones from a tablet up; the row height is
+     tied to the column width so a cell keeps its shape at any screen size.
+     Each tile is told where to sit (see utils/bento.ts) — one set of
+     coordinates per layout. */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    grid-auto-rows: calc((100vw - 2rem - 0.75rem) / 2 * 1.25);
+  }
+
+  .bento > * {
+    grid-column: var(--cm);
+    grid-row: var(--rm);
+  }
+
+  @media (min-width: 768px) {
+    .bento {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      grid-auto-rows: calc((min(100vw, 1400px) - 4rem - 3rem) / 4 * 0.78);
+    }
+
+    .bento > * {
+      grid-column: var(--c);
+      grid-row: var(--r);
+    }
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
