@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import { BANNERS } from '../data/banners'
 import ChapterNav from '../components/ChapterNav'
-import ProductFeature from '../components/ProductFeature'
+import ProductShowcase from '../components/ProductShowcase'
 import ProductDialog from '../components/ProductDialog'
 import { ArrowIcon, DownloadIcon, PhoneIcon, PlanksIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
@@ -61,7 +61,7 @@ export default function Products() {
 
           <div className="mt-6 md:mt-8">
             {chosen ? (
-              <ProductFeature key={chosen.id} product={chosen} onOpen={() => setOpen(chosen)} />
+              <ProductShowcase key={chosen.id} product={chosen} onSizes={() => setOpen(chosen)} />
             ) : (
               // Nothing is shown until a product is picked; this says so.
               <div className="flex min-h-[260px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-timber-bark/15 bg-white/40 px-6 py-12 text-center md:min-h-[340px]">
@@ -72,7 +72,7 @@ export default function Products() {
                   Изберете продукт
                 </p>
                 <p className="mt-2 max-w-[38ch] font-sans text-[0.95rem] font-light leading-[1.7] text-timber-bark/70">
-                  Натиснете бутон отгоре, за да видите снимки, описание и размери.
+                  Натиснете бутон отгоре, за да видите снимките и размерите му.
                 </p>
               </div>
             )}
@@ -187,7 +187,7 @@ export default function Products() {
         </div>
       </section>
 
-      <ProductDialog product={open} onClose={() => setOpen(null)} />
+      <ProductDialog product={open} onClose={() => setOpen(null)} photos={false} />
     </main>
   )
 }

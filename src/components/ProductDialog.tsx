@@ -9,9 +9,11 @@ import { inquiryHref, photosOf, sizeField, variantOf, type Product } from '../da
 type Props = {
   product: Product | null
   onClose: () => void
+  /** Off where the page already shows the photographs, so the popup is only about sizes. */
+  photos?: boolean
 }
 
-export default function ProductDialog({ product, onClose }: Props) {
+export default function ProductDialog({ product, onClose, photos: withPhotos = true }: Props) {
   // The size being put together in the composer below the specs; the chips in
   // the specs fill it. Starts fresh for every product.
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT)
@@ -38,7 +40,7 @@ export default function ProductDialog({ product, onClose }: Props) {
     <DialogShell open onClose={onClose} titleId="product-dialog-title">
         {/* A photograph of the product leads, where there is one; otherwise the
             milled profile does. */}
-        {photos.length > 0 ? (
+        {!withPhotos ? null : photos.length > 0 ? (
           <PhotoCarousel key={product.id} photos={photos} alt={product.name} />
         ) : (
           product.drawing && (

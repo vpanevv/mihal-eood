@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { CloseIcon } from './Icons'
 import { useFocusTrap } from '../utils/useFocusTrap'
@@ -13,6 +13,8 @@ type Props = {
   onStep: (step: number) => void
   /** A strip of small thumbnails along the bottom, for jumping straight to a photo. */
   thumbs?: boolean
+  /** Buttons under the caption — what to do about the photo on screen. */
+  actions?: ReactNode
 }
 
 function Chevron({ dir }: { dir: 'left' | 'right' }) {
@@ -29,7 +31,7 @@ const control =
 /** Horizontal travel that counts as a swipe rather than a tap. */
 const SWIPE_PX = 50
 
-export default function Lightbox({ images, index, onClose, onStep, thumbs = false }: Props) {
+export default function Lightbox({ images, index, onClose, onStep, thumbs = false, actions }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
   const stripRef = useRef<HTMLDivElement>(null)
@@ -148,7 +150,7 @@ export default function Lightbox({ images, index, onClose, onStep, thumbs = fals
           // h-auto/w-auto let the box shrink with the photo when a limit bites;
           // otherwise an upright photo keeps its full width attribute and the
           // corners and shadow are drawn around empty space beside it.
-          className={`h-auto w-auto max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)] ${strip ? 'max-h-[66svh]' : 'max-h-[78svh]'}`}
+          className={`h-auto w-auto max-w-full rounded-xl object-contain shadow-[0_30px_90px_rgba(0,0,0,0.7)] ${strip || actions ? 'max-h-[64svh]' : 'max-h-[78svh]'}`}
         />
         <figcaption className="text-center font-sans text-[0.72rem] uppercase tracking-[0.2em] text-white/80">
           {image.alt}
@@ -158,6 +160,7 @@ export default function Lightbox({ images, index, onClose, onStep, thumbs = fals
             </span>
           )}
         </figcaption>
+        {actions && <div className="flex flex-wrap items-center justify-center gap-3">{actions}</div>}
       </figure>
 
       {count > 1 && (
