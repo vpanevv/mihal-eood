@@ -207,6 +207,17 @@ export const PlanksIcon = (p: IconProps) => (
   </Svg>
 )
 
+/** A log lying on its side: the sawn end with its growth rings, a cut-off branch on top, grain along the length. */
+export const LogIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7 7h6.2l.7-3.3c.1-.5.6-.8 1.1-.7l.9.2c.5.1.8.6.7 1.1L16 7h3.5a3 6.5 0 0 1 0 13H7" />
+    <ellipse cx="7" cy="13.5" rx="3.8" ry="6.5" />
+    <ellipse cx="7" cy="13.5" rx="2.1" ry="3.6" />
+    <ellipse cx="7" cy="13.5" rx="0.6" ry="1" />
+    <path d="M11.5 10.2h3.5M13 16.8h5M18.2 13.5h1.8" />
+  </Svg>
+)
+
 export const FloorIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M3 6h13l2 2.5-2 2.5H3z" />

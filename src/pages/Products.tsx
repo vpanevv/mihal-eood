@@ -6,7 +6,7 @@ import { BANNERS } from '../data/banners'
 import ChapterNav from '../components/ChapterNav'
 import ProductShowcase from '../components/ProductShowcase'
 import ProductDialog from '../components/ProductDialog'
-import { ArrowIcon, DownloadIcon, PhoneIcon, PlanksIcon } from '../components/Icons'
+import { ArrowIcon, DownloadIcon, LogIcon, PhoneIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
 import { PRODUCTS, type Product } from '../data/products'
@@ -65,9 +65,7 @@ export default function Products() {
             ) : (
               // Nothing is shown until a product is picked; this says so.
               <div className="flex min-h-[260px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-timber-bark/15 bg-white/40 px-6 py-12 text-center md:min-h-[340px]">
-                <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-timber-gold/18 text-timber-ember">
-                  <PlanksIcon className="h-8 w-8" />
-                </span>
+                <LogIcon className="h-16 w-16 text-timber-ember" />
                 <p className="mt-5 font-display text-[clamp(1.3rem,3.5vw,1.75rem)] font-bold uppercase leading-[1.15] text-timber-bark">
                   Изберете продукт
                 </p>
