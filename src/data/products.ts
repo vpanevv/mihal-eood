@@ -14,8 +14,6 @@ export type Group = {
   specs: Spec[]
 }
 
-export type Filter = 'dry' | 'floor' | 'panel' | 'beams' | 'boards' | 'custom'
-
 /** A product photograph and the point of it that must stay in frame when it is cropped. */
 export type Photo = {
   src: string
@@ -26,10 +24,11 @@ export type Photo = {
 export type Product = {
   id: string
   name: string
+  /** The product's label on the Products page selector, where space is tight. */
+  short: string
   /** One line under the name on cards. */
   summary: string
   Icon: ComponentType<{ className?: string }>
-  filters: Filter[]
   /** Milled profile cross-section, shown in the detail dialog. */
   drawing?: string
   /** Photograph of the real product; leads both the card and its dialog. */
@@ -47,9 +46,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'suh-material',
     name: 'Сух дървен материал',
+    short: 'Сух материал',
     summary: 'Бор, смърч, дъб, бук и липа · дебелини 1,8 – 12 см · ширини 8 – 23 см',
     Icon: PlanksIcon,
-    filters: ['dry'],
     drawing: '/images/drawing-2.png',
     photo: '/images/products/suh-7.jpg',
     photoFocus: '50% 64%',
@@ -89,9 +88,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'dyusheme',
     name: 'Дюшеме и декинг',
+    short: 'Дюшеме',
     summary: 'Дебелина 2,5 – 4 см · ширина 8 – 22 см',
     Icon: FloorIcon,
-    filters: ['floor'],
     drawing: '/images/drawing-3.png',
     photo: '/images/products/dusheme-1.jpg',
     photoFocus: '50% 68%',
@@ -113,9 +112,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'lamperia',
     name: 'Ламперия /сачак/',
+    short: 'Ламперия',
     summary: 'Дебелина 1,5 – 2,5 см · ширина 8 – 23 см · модел по избор',
     Icon: PanelIcon,
-    filters: ['panel'],
     drawing: '/images/drawing-1.png',
     photo: '/images/products/lamperia-3.jpg',
     photoFocus: '50% 86%',
@@ -137,9 +136,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'slepeni-gredi',
     name: 'Слепени греди',
+    short: 'Слепени греди',
     summary: 'Изработка по поръчка · дължини до 9,5 м',
     Icon: GlulamIcon,
-    filters: ['beams', 'custom'],
     drawing: '/images/drawing-5.png',
     photo: '/images/products/slepeni-gredi.jpg',
     photos: [
@@ -152,9 +151,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'gredi-talpi',
     name: 'Греди и талпи',
+    short: 'Греди и талпи',
     summary: 'Сухи греди във всякакъв размер · дължини 4 – 6 м',
     Icon: BeamIcon,
-    filters: ['beams', 'custom'],
     note: 'Строителна дървесина за покриви и конструкции. Сеченията се режат по ваша спецификация.',
     groups: [
       {
@@ -168,9 +167,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'chelni-daski',
     name: 'Челни дъски',
+    short: 'Челни дъски',
     summary: 'Ширина 15 – 23 см',
     Icon: PlanksIcon,
-    filters: ['boards'],
     photo: '/images/products/chelni-daski.jpg',
     note: 'Челни дъски за стрехи и покривни детайли.',
     groups: [{ specs: [{ label: 'ширина', values: ['15 – 23'], unit: 'см' }] }],
@@ -178,23 +177,13 @@ export const PRODUCTS: Product[] = [
   {
     id: 'letvi-daski',
     name: 'Летви и дъски',
+    short: 'Летви и дъски',
     summary: 'Дървена обшивка — тясна и широка · летви по размер',
     Icon: LathsIcon,
-    filters: ['boards'],
     photo: '/images/products/letvi-daski.jpg',
     note: 'Дървена обшивка — тясна и широка. Наличните размери се уточняват при запитване.',
     groups: [],
   },
-]
-
-export const PRODUCT_FILTERS: { id: Filter | 'all'; label: string }[] = [
-  { id: 'all', label: 'Всички' },
-  { id: 'dry', label: 'Сух материал' },
-  { id: 'floor', label: 'Дюшеме' },
-  { id: 'panel', label: 'Ламперия' },
-  { id: 'beams', label: 'Греди' },
-  { id: 'boards', label: 'Летви и дъски' },
-  { id: 'custom', label: 'По поръчка' },
 ]
 
 export const inquiryHref = (productId?: string) =>

@@ -1,7 +1,12 @@
 import { useRef, useState } from 'react'
 import type { Photo } from '../data/products'
 
-type Props = { photos: Photo[]; alt: string }
+type Props = {
+  photos: Photo[]
+  alt: string
+  /** Which corners round off; a popup rounds the top, a side panel its outer edge. */
+  rounded?: string
+}
 
 const mdFor = (src: string) => src.replace(/\.jpg$/, '-800.jpg')
 
@@ -20,7 +25,7 @@ const control =
  * phone and works with a trackpad — plus arrows and dots for a mouse, and the
  * arrow keys. One photograph renders without any controls.
  */
-export default function PhotoCarousel({ photos, alt }: Props) {
+export default function PhotoCarousel({ photos, alt, rounded = 'rounded-t-3xl' }: Props) {
   const track = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
   // How far in the photographs have been asked for. A long set would otherwise
@@ -57,7 +62,7 @@ export default function PhotoCarousel({ photos, alt }: Props) {
   const many = count > 1
 
   return (
-    <div className="relative overflow-hidden rounded-t-3xl bg-timber-bark/5">
+    <div className={`relative overflow-hidden bg-timber-bark/5 ${rounded}`}>
       <div
         ref={track}
         onScroll={many ? onScroll : undefined}

@@ -1,28 +1,32 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { usePageMeta } from '../utils/usePageMeta'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import { BANNERS } from '../data/banners'
-import CategoryGrid from '../components/CategoryGrid'
+import ChapterNav from '../components/ChapterNav'
+import ProductFeature from '../components/ProductFeature'
 import ProductDialog from '../components/ProductDialog'
-import { ArrowIcon, DownloadIcon, PhoneIcon } from '../components/Icons'
+import { ArrowIcon, DownloadIcon, PhoneIcon, PlanksIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
 import { PHONE_DISPLAY, PHONE_HREF } from '../data/company'
-import { PRODUCTS, PRODUCT_FILTERS, type Filter, type Product } from '../data/products'
+import { PRODUCTS, type Product } from '../data/products'
 import { SPEC_ROWS, SPEC_SHEET_FILENAME, SPEC_SHEET_PATH } from '../data/specs'
+
+/** The selector's order: the stock first, then the milled products, then the boards. */
+const ORDER = ['suh-material', 'dyusheme', 'lamperia', 'gredi-talpi', 'slepeni-gredi', 'letvi-daski', 'chelni-daski']
+const PICKS = ORDER.map((id) => PRODUCTS.find((p) => p.id === id)).filter((p): p is Product => Boolean(p))
 
 export default function Products() {
   const [open, setOpen] = useState<Product | null>(null)
-  const [filter, setFilter] = useState<Filter | 'all'>('all')
+  // The choice lives in the address, so a link can open the page on one
+  // product and the browser's Back button steps back through the choices.
+  const [params, setParams] = useSearchParams()
+  const chosen = PICKS.find((p) => p.id === params.get('p')) ?? null
+  const choose = (id: string) => setParams({ p: id }, { preventScrollReset: true })
 
   usePageMeta(
     'Продукти — МИХАЛ ЕООД',
     'Размери и категории дървен материал от Разлог: дъски от бор и смърч, дъб, бук и липа, дюшеме, декинг, ламперия, греди и слепени греди.',
-  )
-
-  const shown = useMemo(
-    () => (filter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.filters.includes(filter))),
-    [filter],
   )
 
   return (
@@ -44,27 +48,34 @@ export default function Products() {
             </p>
           </div>
 
-          {/* Filters — client side, so nothing reloads. */}
-          <div
-            role="group"
-            aria-label="Филтри по категория"
-            className="no-scrollbar reveal -mx-5 mt-8 flex gap-2.5 overflow-x-auto px-5 md:mx-0 md:mt-10 md:flex-wrap md:px-0"
-          >
-            {PRODUCT_FILTERS.map(({ id, label }) => (
-              <button
-                key={id}
-                type="button"
-                className="chip"
-                aria-pressed={filter === id}
-                onClick={() => setFilter(id)}
-              >
-                {label}
-              </button>
-            ))}
+          {/* Lifted above the product card: the phone menu opens over it. */}
+          <div className="reveal relative z-20 mt-8 md:mt-10">
+            <ChapterNav
+              kind="select"
+              label="Изберете продукт"
+              items={PICKS.map((p) => ({ anchor: p.id, title: p.short }))}
+              active={chosen?.id ?? null}
+              onJump={choose}
+            />
           </div>
 
-          <div className="mt-8 md:mt-10">
-            <CategoryGrid products={shown} onOpen={setOpen} />
+          <div className="mt-6 md:mt-8">
+            {chosen ? (
+              <ProductFeature key={chosen.id} product={chosen} onOpen={() => setOpen(chosen)} />
+            ) : (
+              // Nothing is shown until a product is picked; this says so.
+              <div className="flex min-h-[260px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-timber-bark/15 bg-white/40 px-6 py-12 text-center md:min-h-[340px]">
+                <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-timber-gold/18 text-timber-ember">
+                  <PlanksIcon className="h-8 w-8" />
+                </span>
+                <p className="mt-5 font-display text-[clamp(1.3rem,3.5vw,1.75rem)] font-bold uppercase leading-[1.15] text-timber-bark">
+                  Изберете продукт
+                </p>
+                <p className="mt-2 max-w-[38ch] font-sans text-[0.95rem] font-light leading-[1.7] text-timber-bark/70">
+                  Натиснете бутон отгоре, за да видите снимки, описание и размери.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
