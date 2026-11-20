@@ -35,7 +35,11 @@ export default function ServicesSection({ withLink = false }: Props) {
             <button
               key={title}
               type="button"
-              onClick={() => setOpen(service)}
+              onClick={(e) => {
+                // Safari does not focus a button on click; the dialog hands focus back here.
+                e.currentTarget.focus()
+                setOpen(service)
+              }}
               className="group card reveal flex flex-col overflow-hidden rounded-2xl text-left transition-shadow duration-300 hover:shadow-[0_18px_40px_-26px_rgba(42,32,17,0.7)] focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground"
               style={{ animationDelay: `${0.05 + i * 0.06}s` }}
             >
@@ -43,8 +47,10 @@ export default function ServicesSection({ withLink = false }: Props) {
                 <span className="block aspect-[4/3] w-full overflow-hidden bg-timber-bark/5">
                   <img
                     src={thumbFor(photo)}
-                    srcSet={`${thumbFor(photo)} 640w, ${photo} 1200w`}
-                    sizes="(min-width: 768px) 33vw, 46vw"
+                    // One column on a phone, two from 640px, three from 768px —
+                    // and never wider than a third of the 1200px container.
+                    srcSet={`${thumbFor(photo)} 640w, ${photo.replace(/\.jpg$/, '-800.jpg')} 800w, ${photo} 1200w`}
+                    sizes="(min-width: 1200px) 370px, (min-width: 768px) 31vw, (min-width: 640px) 47vw, 92vw"
                     alt={title}
                     loading="lazy"
                     decoding="async"

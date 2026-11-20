@@ -33,7 +33,9 @@ export default function PageBanner({ title, accent, image, crumb }: Props) {
 
       <div className="relative mx-auto w-full max-w-[1200px] px-5 pb-8 md:px-8 md:pb-12">
         <p className="fade-up font-sans text-[0.66rem] uppercase tracking-[0.24em] text-white/70">
-          <Link to="/" className="transition-colors hover:text-timber-sap">
+          {/* The words are small; the padding gives a thumb a proper target
+              without moving them. */}
+          <Link to="/" className="-mx-2 -my-3 inline-block px-2 py-3 transition-colors hover:text-timber-sap">
             Начало
           </Link>
           <span aria-hidden="true"> · </span>

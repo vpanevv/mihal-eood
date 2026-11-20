@@ -79,7 +79,10 @@ export default function Showcase() {
                 {/* Photo on a light mat; the whole mat is the tap target */}
                 <button
                   type="button"
-                  onClick={() => setZoomed(i)}
+                  onClick={(e) => {
+                    e.currentTarget.focus()
+                    setZoomed(i)
+                  }}
                   aria-label={`Отвори снимката: ${alt}`}
                   className={`group block rounded-lg bg-white p-1 text-left shadow-[0_10px_30px_-18px_rgba(42,32,17,0.5)] transition-transform duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-paper active:scale-[0.98] sm:p-2 md:rounded-xl md:p-3 ${flipped ? 'order-2' : ''}`}
                 >

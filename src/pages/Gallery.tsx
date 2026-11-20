@@ -159,7 +159,10 @@ export default function Gallery() {
                     <button
                       key={img.srcUrl}
                       type="button"
-                      onClick={() => setZoomed(start + i)}
+                      onClick={(e) => {
+                        e.currentTarget.focus()
+                        setZoomed(start + i)
+                      }}
                       aria-label={`Отвори ${img.alt}`}
                       style={{ '--c': d.column, '--r': d.row, '--cm': p.column, '--rm': p.row } as CSSProperties}
                       className="group relative overflow-hidden rounded-xl bg-timber-bark/5 ring-1 ring-timber-bark/10 transition-shadow duration-500 hover:ring-timber-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold md:rounded-2xl"

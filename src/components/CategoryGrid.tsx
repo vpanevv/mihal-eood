@@ -75,7 +75,10 @@ export default function CategoryGrid({ products = PRODUCTS, onOpen }: Props) {
           <button
             key={id}
             type="button"
-            onClick={() => onOpen(product)}
+            onClick={(e) => {
+              e.currentTarget.focus()
+              onOpen(product)
+            }}
             style={style}
             className={`group ${shared} transition-shadow duration-300 hover:shadow-[0_18px_40px_-26px_rgba(42,32,17,0.7)] focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold focus-visible:ring-offset-2 focus-visible:ring-offset-timber-ground`}
           >

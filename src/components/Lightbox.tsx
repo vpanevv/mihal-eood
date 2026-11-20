@@ -199,7 +199,7 @@ export default function Lightbox({ images, index, onClose, onStep, thumbs = fals
               }`}
             >
               <img
-                src={img.smUrl}
+                src={img.xsUrl ?? img.smUrl}
                 alt=""
                 loading="lazy"
                 decoding="async"

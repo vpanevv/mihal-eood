@@ -17,7 +17,10 @@ export default function GalleryStrip() {
           <button
             key={thumbUrl}
             type="button"
-            onClick={() => setZoomed(i)}
+            onClick={(e) => {
+              e.currentTarget.focus()
+              setZoomed(i)
+            }}
             aria-label={`Отвори снимката: ${alt}`}
             className="group relative aspect-[4/3] w-[72vw] shrink-0 snap-center overflow-hidden rounded-2xl bg-timber-bark/5 ring-1 ring-timber-bark/10 transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-timber-gold sm:w-[46vw] md:w-[30vw] lg:w-[23vw]"
           >

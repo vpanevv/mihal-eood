@@ -6,6 +6,8 @@ export type GalleryImage = {
   thumbUrl: string
   /** 400px-wide copy for phone-sized tiles. */
   smUrl: string
+  /** 160px square copy for the viewer's thumbnail strip, where it is shown at 56–64px. */
+  xsUrl?: string
   alt: string
   /** Intrinsic size, so the masonry grid reserves each tile before the
       image loads instead of reflowing on the way down. */
@@ -19,6 +21,8 @@ export type GalleryEntry = GalleryImage & { topic: GalleryTopic }
 export const thumbFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs/$1.jpg')
 /** ...and a 400px copy under /images/thumbs-sm. */
 export const smFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs-sm/$1.jpg')
+/** ...and a 160px square under /images/thumbs-xs. */
+export const xsFor = (src: string) => src.replace(/^.*\/([^/]+)\.[a-z]+$/i, '/images/thumbs-xs/$1.jpg')
 
 /** The gallery page reads as three chapters, in this order. */
 export const GALLERY_CHAPTERS: { id: GalleryTopic; anchor: string; title: string; intro: string }[] = [
@@ -90,4 +94,5 @@ export const GALLERY_IMAGES: GalleryEntry[] = ENTRIES.map((entry) => ({
   ...entry,
   thumbUrl: thumbFor(entry.srcUrl),
   smUrl: smFor(entry.srcUrl),
+  xsUrl: xsFor(entry.srcUrl),
 }))
