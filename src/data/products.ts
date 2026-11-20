@@ -60,6 +60,9 @@ export const PRODUCTS: Product[] = [
       { src: '/images/products/suh-material/suh-4.jpg', focus: '50% 70%' },
       { src: '/images/products/suh-material/suh-5.jpg', focus: '50% 95%' },
       { src: '/images/products/suh-material/suh-6.jpg', focus: '50% 90%' },
+      { src: '/images/products/suh-material/suh-8.jpg', focus: '50% 60%' },
+      { src: '/images/products/suh-material/suh-9.jpg', focus: '50% 65%' },
+      { src: '/images/products/suh-material/suh-10.jpg', focus: '50% 60%' },
     ],
     note: 'От собствена сушилня. Материалът отлежава един месец след сушенето, преди да влезе в продажба.',
     groups: [
@@ -122,6 +125,10 @@ export const PRODUCTS: Product[] = [
       { src: '/images/products/lamperia/lamperia-3.jpg', focus: '50% 86%' },
       { src: '/images/products/lamperia/lamperia.jpg', focus: '50% 55%' },
       { src: '/images/products/lamperia/lamperia-2.jpg', focus: '50% 60%' },
+      { src: '/images/products/lamperia/lamperia-4.jpg', focus: '50% 55%' },
+      { src: '/images/products/lamperia/lamperia-5.jpg', focus: '50% 65%' },
+      { src: '/images/products/lamperia/lamperia-6.jpg', focus: '50% 60%' },
+      { src: '/images/products/lamperia/lamperia-7.jpg' },
     ],
     note: 'Произведена от висококачествена иглолистна дървесина. Профилът се избира от клиента.',
     groups: [
