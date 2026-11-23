@@ -21,7 +21,7 @@ export default function App() {
     <main id="main" tabIndex={-1}>
       <Hero />
 
-      {/* The four photo blocks stay as they are, now with a line of copy each. */}
+      {/* Пътят на дървото: the wood's way from the yard to the site, a photo and a line of copy per step. */}
       <Showcase />
 
       <section aria-labelledby="materials-heading" className="bg-timber-ground/70 py-14 md:py-24">

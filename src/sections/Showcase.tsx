@@ -12,40 +12,41 @@ type Feature = Omit<GalleryImage, 'thumbUrl' | 'smUrl'> & {
   text: string
 }
 
-// Four rows in a checkerboard, each photo with its own headline. Tapping a
-// photo opens it full size, and the lightbox steps through all four.
+// "Пътят на дървото": the wood's way from the yard to the site, one step a
+// row, in a checkerboard. Tapping a photo opens it full size, and the
+// lightbox steps through the whole story.
 const FEATURES: (Feature & { thumbUrl: string; smUrl: string })[] = ([
   {
-    srcUrl: '/images/new-5.jpg',
-    alt: 'МИХАЛ ЕООД — натоварен камион с дървен материал',
-    width: 900,
-    height: 1600,
-    headline: [{ text: 'Вашият проект.' }, { text: 'Нашият материал.', accent: true }],
-    text: 'Сух дървен материал за покриви, подове и обшивки — подбран за конкретния обект.',
-  },
-  {
-    srcUrl: '/images/new-6.jpg',
-    alt: 'МИХАЛ ЕООД — подготвена доставка дървен материал',
+    srcUrl: '/images/new-4.jpg',
+    alt: 'МИХАЛ ЕООД — закритият склад с пакети дървен материал',
     width: 1200,
     height: 1600,
-    headline: [{ text: 'Качеството започва от' }, { text: 'дървения материал.', accent: true }],
-    text: 'Сушим в собствена камера и оставяме материала да отлежи месец, преди да влезе в продажба.',
+    headline: [{ text: 'Голям склад,' }, { text: 'голям избор.', accent: true }],
+    text: 'Собствена складова база в Разлог — пакети сух материал под навес, готови за товарене.',
+  },
+  {
+    srcUrl: '/images/services/sushene.jpg',
+    alt: 'МИХАЛ ЕООД — камерата за сушене, пълна с дървен материал',
+    width: 1200,
+    height: 1600,
+    headline: [{ text: 'Сушене' }],
+    text: 'Контролирано сушене на дървения материал до оптимална влажност.',
+  },
+  {
+    srcUrl: '/images/services/rendosvane.jpg',
+    alt: 'МИХАЛ ЕООД — пакет рендосана ламперия с готов профил',
+    width: 1200,
+    height: 1600,
+    headline: [{ text: 'Рендосване' }],
+    text: 'Прецизно рендосване за равна, гладка повърхност и точни размери.',
   },
   {
     srcUrl: '/images/new-1.jpg',
-    alt: 'МИХАЛ ЕООД — камион с дървен материал за доставка',
+    alt: 'МИХАЛ ЕООД — камион, натоварен с дървен материал за доставка',
     width: 1200,
     height: 1600,
-    headline: [{ text: 'Собствен транспорт.' }, { text: 'Доставка в цялата страна.', accent: true }],
-    text: 'Товарим с подемна техника в базата и доставяме със собствени камиони до обекта.',
-  },
-  {
-    srcUrl: '/images/new-2.jpg',
-    alt: 'МИХАЛ ЕООД — товарене на греди',
-    width: 1200,
-    height: 1600,
-    headline: [{ text: 'Големи обеми.' }, { text: 'Точни размери.', accent: true }],
-    text: 'Постоянни количества на склад за строителни фирми, мебелни цехове и частни клиенти.',
+    headline: [{ text: 'Доставка' }],
+    text: 'Товарим с подемна техника в базата и доставяме в цялата страна.',
   },
 ] satisfies Feature[]).map((feature) => ({
   ...feature,
@@ -63,16 +64,29 @@ export default function Showcase() {
 
   return (
     <>
-      <section aria-label="Нашата работа" className="relative isolate overflow-hidden px-3 py-12 sm:px-4 md:px-8 md:py-20">
+      <section aria-labelledby="story-heading" className="relative isolate overflow-hidden px-3 py-12 sm:px-4 md:px-8 md:py-20">
         <div aria-hidden="true" className="showcase-glow pointer-events-none absolute inset-0 -z-10" />
         <div className="mx-auto max-w-[1200px]">
+          {/* The story's title, centred over the rows like the copy beside each photo. */}
+          <header className="reveal mb-8 text-center sm:mb-12 md:mb-16">
+            <span aria-hidden="true" className="mx-auto block h-[3px] w-12 rounded-full bg-timber-gold" />
+            <h2
+              id="story-heading"
+              className="mt-4 font-display text-[clamp(1.75rem,7vw,3.5rem)] font-bold uppercase leading-[1] tracking-[0.005em] text-timber-bark"
+            >
+              Пътят на <span className="text-timber-ember">дървото</span>
+            </h2>
+          </header>
+
           {/* Checkerboard: photo left / headline right, then swapped. Two columns
               at every size — on phones too — so the rhythm survives the narrow
-              screen instead of collapsing into a stack. */}
+              screen instead of collapsing into a stack. An ordered list: the
+              story is told in steps, and a screen reader counts them too. */}
+          <ol className="list-none">
           {FEATURES.map(({ srcUrl, thumbUrl, smUrl, alt, width, height, headline, text }, i) => {
             const flipped = i % 2 === 1
             return (
-              <div
+              <li
                 key={srcUrl}
                 className={`reveal grid grid-cols-2 items-center gap-2.5 sm:gap-5 md:gap-8 ${i === 0 ? '' : 'mt-5 sm:mt-10 md:mt-14'}`}
               >
@@ -112,7 +126,14 @@ export default function Showcase() {
                 <div
                   className={`flex flex-col justify-center px-0.5 py-2 text-center sm:px-3 md:px-6 ${flipped ? 'order-1' : ''}`}
                 >
-                  <h2 className="font-display text-[clamp(1.2rem,6.6vw,2.25rem)] font-bold uppercase leading-[1.05] tracking-[0.005em] text-timber-bark sm:text-4xl md:text-5xl lg:text-6xl">
+                  {/* The step number: the list already counts for a screen reader. */}
+                  <span
+                    aria-hidden="true"
+                    className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-timber-bark font-display text-base font-bold leading-none text-timber-sap shadow-[0_8px_20px_-10px_rgba(42,32,17,0.8)] ring-4 ring-timber-gold/25 sm:h-11 sm:w-11 sm:text-lg md:mb-5 md:h-14 md:w-14 md:text-2xl"
+                  >
+                    {i + 1}
+                  </span>
+                  <h3 className="font-display text-[clamp(1.2rem,6.6vw,2.25rem)] font-bold uppercase leading-[1.05] tracking-[0.005em] text-timber-bark sm:text-4xl md:text-5xl lg:text-6xl">
                     {headline.map(({ text: line, accent }, index) => (
                       // The deepened gold: at phone sizes the type is no longer
                       // "large", and the bright gold drops under AA on paper.
@@ -121,14 +142,15 @@ export default function Showcase() {
                         {line}
                       </span>
                     ))}
-                  </h2>
+                  </h3>
                   <p className="mx-auto mt-3 max-w-[34ch] font-sans text-[0.78rem] font-light leading-[1.6] text-timber-bark/70 sm:text-[0.9rem] sm:leading-[1.7] md:mt-5 md:text-[0.98rem]">
                     {text}
                   </p>
                 </div>
-              </div>
+              </li>
             )
           })}
+          </ol>
         </div>
       </section>
 
