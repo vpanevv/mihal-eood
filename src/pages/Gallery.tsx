@@ -65,10 +65,7 @@ export default function Gallery() {
   const [zoomed, setZoomed] = useState<number | null>(null)
   const [active, setActive] = useState(GALLERY_CHAPTERS[0].anchor)
 
-  usePageMeta(
-    'Галерия — МИХАЛ ЕООД',
-    'Снимки от складовата база в Разлог: подреден сух дървен материал, пакети дъски, товарене и доставки.',
-  )
+  usePageMeta('/gallery')
 
   const chapters = useMemo(() => {
     let start = 0

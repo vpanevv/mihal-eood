@@ -16,10 +16,7 @@ import { thumbFor } from '../data/gallery'
 const BASE_PHOTO = '/images/gallery/mihal-razlog-2-min.jpeg'
 
 export default function About() {
-  usePageMeta(
-    'За нас — МИХАЛ ЕООД',
-    'МИХАЛ ЕООД е регистрирано през 2008 г. в гр. Разлог — търговия и обработка на сух дървен материал, със собствена складова база и транспорт.',
-  )
+  usePageMeta('/about-us')
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">

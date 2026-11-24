@@ -16,10 +16,7 @@ const TERMS = [
 ]
 
 export default function Delivery() {
-  usePageMeta(
-    'Услуги и доставка — МИХАЛ ЕООД',
-    'Услуги на МИХАЛ ЕООД: сушене, рендосване, шлайфане, боядисване, импрегниране и клинозъбене. Доставка със собствен транспорт в цялата страна.',
-  )
+  usePageMeta('/delivery')
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">

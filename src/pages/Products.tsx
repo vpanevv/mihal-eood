@@ -24,9 +24,16 @@ export default function Products() {
   const chosen = PICKS.find((p) => p.id === params.get('p')) ?? null
   const choose = (id: string) => setParams({ p: id }, { preventScrollReset: true })
 
+  // A chosen product names itself in the tab and in a shared link's preview;
+  // the canonical stays /products, so search engines see one page, not seven.
   usePageMeta(
-    'Продукти — МИХАЛ ЕООД',
-    'Размери и категории дървен материал от Разлог: дъски от бор и смърч, дъб, бук и липа, дюшеме, декинг, ламперия, греди и слепени греди.',
+    '/products',
+    chosen
+      ? {
+          title: `${chosen.name} — размери и снимки | МИХАЛ ЕООД`,
+          description: `${chosen.name} от склада в Разлог: ${chosen.summary.charAt(0).toLowerCase()}${chosen.summary.slice(1)}. Изберете размер и изпратете запитване.`,
+        }
+      : {},
   )
 
   return (

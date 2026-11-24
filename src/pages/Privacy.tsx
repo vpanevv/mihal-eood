@@ -27,10 +27,7 @@ const SECTIONS: { title: string; body: string }[] = [
 ]
 
 export default function Privacy() {
-  usePageMeta(
-    'Политика за поверителност — МИХАЛ ЕООД',
-    'Политика за поверителност на МИХАЛ ЕООД — какви данни събираме през формата за запитване и как ги използваме.',
-  )
+  usePageMeta('/privacy')
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">

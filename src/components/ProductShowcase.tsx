@@ -130,7 +130,9 @@ export default function ProductShowcase({ product, onSizes }: Props) {
                   src={mdFor(src)}
                   srcSet={`${mdFor(src)} 800w, ${src} 1200w`}
                   sizes={wide ? '(min-width: 768px) 50vw, 100vw' : '(min-width: 768px) 25vw, 50vw'}
-                  alt=""
+                  // The button carries the action's name; the photo still says
+                  // what it shows, for image search.
+                  alt={`${product.name} — МИХАЛ ЕООД, Разлог — снимка ${i + 1}`}
                   width={1200}
                   height={1600}
                   loading={i < 2 ? 'eager' : 'lazy'}

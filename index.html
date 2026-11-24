@@ -10,26 +10,38 @@
       name="description"
       content="Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди. Складова база, собствена сушилня, рязане по размер и доставка в цялата страна."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <!-- Little weight with Google, read by some other engines; the phrases that
+         matter live in each page's title, description and headings. -->
+    <meta
+      name="keywords"
+      content="сух дървен материал, дървен материал Разлог, дървен материал Банско, склад за дървен материал, дъски, летви, греди, талпи, слепени греди, дюшеме, декинг, ламперия, сачак, челни дъски, сушене на дървен материал, рендосване, импрегниране, доставка на дървен материал"
+    />
+    <meta name="author" content="МИХАЛ ЕООД" />
+    <meta name="geo.region" content="BG-01" />
+    <meta name="geo.placename" content="Разлог" />
+    <meta name="geo.position" content="41.886306;23.481056" />
+    <meta name="ICBM" content="41.886306, 23.481056" />
     <meta name="theme-color" content="#f7f1e8" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href="https://mihal-eood.netlify.app/" />
+    <link rel="canonical" href="https://mihal-eood.com/" />
 
     <!-- Link previews (Facebook, Messenger, Viber, LinkedIn).
          og:image must be an absolute URL — a relative path is not resolved by
-         the scrapers. Update SITE_URL here if a custom domain replaces the
-         netlify.app address. -->
+         the scrapers. The site's address is set here and in src/data/seo.ts
+         (SITE_URL); change both together. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="МИХАЛ ЕООД" />
     <meta property="og:locale" content="bg_BG" />
-    <meta property="og:url" content="https://mihal-eood.netlify.app/" />
+    <meta property="og:url" content="https://mihal-eood.com/" />
     <meta property="og:title" content="МИХАЛ ЕООД — Качествен сух дървен материал" />
     <meta
       property="og:description"
       content="Сух дървен материал, дюшеме, ламперия и слепени греди от Разлог. Складова база, собствен транспорт и подемна техника."
     />
-    <meta property="og:image" content="https://mihal-eood.netlify.app/og-image.jpg?v=2" />
+    <meta property="og:image" content="https://mihal-eood.com/og-image.jpg?v=2" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -41,7 +53,7 @@
       name="twitter:description"
       content="Сух дървен материал, дюшеме, ламперия и слепени греди от Разлог."
     />
-    <meta name="twitter:image" content="https://mihal-eood.netlify.app/og-image.jpg?v=2" />
+    <meta name="twitter:image" content="https://mihal-eood.com/og-image.jpg?v=2" />
     <link
       rel="preload"
       as="font"
@@ -60,27 +72,210 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "МИХАЛ ЕООД",
-        "description": "Търговия и обработка на сух дървен материал — дюшеме, ламперия, греди и слепени греди.",
-        "url": "https://mihal-eood.netlify.app/",
-        "image": "https://mihal-eood.netlify.app/og-image.jpg?v=2",
-        "telephone": "+359888726194",
-        "email": "mihaleood@gmail.com",
-        "foundingDate": "2008",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "ул. Христо Ботев",
-          "addressLocality": "Разлог",
-          "addressCountry": "BG"
-        },
-        "geo": { "@type": "GeoCoordinates", "latitude": 41.886306, "longitude": 23.481056 },
-        "openingHoursSpecification": [
+        "@graph": [
           {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "08:00",
-            "closes": "17:00"
+            "@type": "HomeAndConstructionBusiness",
+            "@id": "https://mihal-eood.com/#business",
+            "name": "МИХАЛ ЕООД",
+            "alternateName": "Михал ЕООД",
+            "description": "Склад, сушилня и обработка на сух дървен материал в Разлог — дъски, летви, греди и талпи, слепени греди, дюшеме, декинг, ламперия и челни дъски, с доставка в цялата страна.",
+            "url": "https://mihal-eood.com/",
+            "logo": "https://mihal-eood.com/apple-touch-icon.png",
+            "image": "https://mihal-eood.com/og-image.jpg?v=2",
+            "telephone": "+359888726194",
+            "email": "mihaleood@gmail.com",
+            "foundingDate": "2008",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "ул. „Христо Ботев“",
+              "addressLocality": "Разлог",
+              "postalCode": "2760",
+              "addressRegion": "Благоевград",
+              "addressCountry": "BG"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 41.886306,
+              "longitude": 23.481056
+            },
+            "hasMap": "https://www.google.com/maps/search/?api=1&query=41.886306,23.481056",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "08:00",
+                "closes": "17:00"
+              }
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+359888726194",
+              "email": "mihaleood@gmail.com",
+              "contactType": "sales",
+              "areaServed": "BG",
+              "availableLanguage": [
+                "bg"
+              ]
+            },
+            "areaServed": [
+              {
+                "@type": "Country",
+                "name": "България"
+              },
+              {
+                "@type": "City",
+                "name": "Разлог"
+              },
+              {
+                "@type": "City",
+                "name": "Банско"
+              },
+              {
+                "@type": "City",
+                "name": "Благоевград"
+              },
+              {
+                "@type": "City",
+                "name": "Якоруда"
+              },
+              {
+                "@type": "City",
+                "name": "Белица"
+              },
+              {
+                "@type": "City",
+                "name": "Гоце Делчев"
+              }
+            ],
+            "knowsAbout": [
+              "сух дървен материал",
+              "дъски",
+              "летви",
+              "греди",
+              "талпи",
+              "слепени греди",
+              "дюшеме",
+              "декинг",
+              "ламперия",
+              "челни дъски",
+              "сушене на дървен материал",
+              "рендосване",
+              "шлайфане",
+              "боядисване",
+              "импрегниране",
+              "клинозъбене"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Дървен материал и услуги",
+              "itemListElement": [
+                {
+                  "@type": "OfferCatalog",
+                  "name": "Дървен материал",
+                  "itemListElement": [
+                    {
+                      "@type": "Offer",
+                      "name": "Сух дървен материал"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Дюшеме и декинг"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Ламперия /сачак/"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Греди и талпи"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Слепени греди"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Летви и дъски"
+                    },
+                    {
+                      "@type": "Offer",
+                      "name": "Челни дъски"
+                    }
+                  ]
+                },
+                {
+                  "@type": "OfferCatalog",
+                  "name": "Услуги",
+                  "itemListElement": [
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Сушене"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Рендосване"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Шлайфане"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Боядисване"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Импрегниране"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Клинозъбене"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Доставка в цялата страна"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mihal-eood.com/#website",
+            "url": "https://mihal-eood.com/",
+            "name": "МИХАЛ ЕООД",
+            "inLanguage": "bg",
+            "publisher": {
+              "@id": "https://mihal-eood.com/#business"
+            }
           }
         ]
       }

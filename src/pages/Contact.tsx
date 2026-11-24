@@ -27,10 +27,7 @@ const valueClass = 'mt-2 font-display text-lg font-bold uppercase tracking-[0.02
 const noteClass = 'mt-1 font-sans text-[0.85rem] font-light leading-[1.6] text-timber-bark/70'
 
 export default function Contact() {
-  usePageMeta(
-    'Контакти — МИХАЛ ЕООД',
-    'Свържете се с МИХАЛ ЕООД: телефон 0888 726 194, е-мейл, адрес в Разлог, работно време и форма за запитване с калкулатор за кубатура.',
-  )
+  usePageMeta('/contacts')
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">

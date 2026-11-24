@@ -62,7 +62,9 @@ export default function Hero() {
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 pb-20 pt-24">
         {/* Wraps to two lines on phones, so it can be sized far larger there than the one-line desktop setting */}
         <h1 className="text-center font-display text-[clamp(3rem,15vw,5.75rem)] font-bold uppercase leading-[0.86] tracking-[0.005em] text-white [text-shadow:0_2px_40px_rgba(18,12,4,0.55)] md:text-[min(10vw,11rem)]">
-          <span className="sr-only">{HEADLINE}</span>
+          {/* The name alone says nothing of the trade; the spoken and indexed
+              heading adds it, while the screen shows only the name. */}
+          <span className="sr-only">{HEADLINE} — сух дървен материал от Разлог</span>
           {WORDS.map(({ word, glyphs }) => (
             <span key={word} aria-hidden="true" className="mx-[0.14em] inline-block whitespace-nowrap">
               {glyphs.map(({ glyph, delay }, i) => (

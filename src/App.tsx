@@ -12,10 +12,7 @@ import { ArrowIcon } from './components/Icons'
 
 export default function App() {
   // Each route owns the title, otherwise it keeps whatever the last page set.
-  usePageMeta(
-    'МИХАЛ ЕООД — Качествен сух дървен материал',
-    'Сух дървен материал от Разлог — дюшеме, ламперия, греди и слепени греди. Складова база, собствена сушилня, рязане по размер и доставка в цялата страна.',
-  )
+  usePageMeta('/')
 
   return (
     <main id="main" tabIndex={-1}>
