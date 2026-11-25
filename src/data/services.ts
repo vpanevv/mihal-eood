@@ -48,7 +48,7 @@ export const SERVICES: Service[] = [
   },
   {
     title: 'Боядисване',
-    text: 'Мажем с висококачествени масла на ОЛМО.',
+    text: 'Мажем с висококачествени масла на ОСМО.',
     Icon: PaintIcon,
     photo: '/images/services/boyadisvane.jpg',
     photoFocus: '50% 48%',

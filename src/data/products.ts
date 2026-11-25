@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 import type { Field } from '../utils/cubic'
-import { BeamIcon, FloorIcon, GlulamIcon, LathsIcon, PanelIcon, PlanksIcon } from '../components/Icons'
+import { BeamIcon, FloorIcon, GlulamIcon, PanelIcon, PlanksIcon } from '../components/Icons'
 
 export type Spec = {
   label: string
@@ -192,16 +192,6 @@ export const PRODUCTS: Product[] = [
     photo: '/images/products/chelni-daski/chelni-daski.jpg',
     note: 'Челни дъски за стрехи и покривни детайли.',
     groups: [{ specs: [{ label: 'ширина', values: ['15 – 23'], unit: 'см' }] }],
-  },
-  {
-    id: 'letvi-daski',
-    name: 'Летви и дъски',
-    short: 'Летви и дъски',
-    summary: 'Дървена обшивка — тясна и широка · летви по размер',
-    Icon: LathsIcon,
-    photo: '/images/products/letvi-daski/letvi-daski.jpg',
-    note: 'Дървена обшивка — тясна и широка. Наличните размери се уточняват при запитване.',
-    groups: [],
   },
 ]
 

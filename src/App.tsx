@@ -4,7 +4,6 @@ import Hero from './sections/Hero'
 import Showcase from './sections/Showcase'
 import SectionHeading from './components/SectionHeading'
 import ServicesSection from './components/ServicesSection'
-import WoodSelector from './components/WoodSelector'
 import GalleryStrip from './components/GalleryStrip'
 import InquiryForm from './components/InquiryForm'
 import Faq from './components/Faq'
@@ -21,28 +20,11 @@ export default function App() {
       {/* Пътят на дървото: the wood's way from the yard to the site, a photo and a line of copy per step. */}
       <Showcase />
 
-      <section aria-labelledby="materials-heading" className="bg-timber-ground/70 py-14 md:py-24">
-        <div className="mx-auto max-w-[1200px] px-5 md:px-8">
-          {/* The cards speak for themselves; the heading stays for screen
-              readers and for the section landmark. */}
-          <h2 id="materials-heading" className="sr-only">
-            Нашите материали
-          </h2>
-          <WoodSelector />
-          <div className="mt-10">
-            <Link to="/products" className="btn btn-outline border-timber-bark/45 bg-white">
-              Виж всички размери продукти
-              <ArrowIcon className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section aria-labelledby="services-heading" className="border-t border-timber-bark/8 bg-timber-paper py-14 md:py-24">
         <h2 id="services-heading" className="sr-only">
           Услуги
         </h2>
-        <ServicesSection withLink />
+        <ServicesSection />
         <div className="mx-auto mt-10 max-w-[1200px] px-5 md:mt-14 md:px-8">
           <Link to="/delivery" className="btn btn-outline">
             Услуги и доставка

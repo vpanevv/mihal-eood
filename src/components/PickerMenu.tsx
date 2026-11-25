@@ -9,7 +9,7 @@ type Props = {
 
 /**
  * The phone form of the Products picker: one bar that names the current
- * choice, with a menu button that opens the full list. Seven labels in a bar
+ * choice, with a menu button that opens the full list. Six labels in a bar
  * that scrolls sideways hide most of the choices off-screen; this shows all of
  * them at once, one tap away.
  */

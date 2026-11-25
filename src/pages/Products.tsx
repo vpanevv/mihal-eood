@@ -13,7 +13,7 @@ import { PRODUCTS, type Product } from '../data/products'
 import { SPEC_ROWS, SPEC_SHEET_FILENAME, SPEC_SHEET_PATH } from '../data/specs'
 
 /** The selector's order: the stock first, then the milled products, then the boards. */
-const ORDER = ['suh-material', 'dyusheme', 'lamperia', 'gredi-talpi', 'slepeni-gredi', 'letvi-daski', 'chelni-daski']
+const ORDER = ['suh-material', 'dyusheme', 'lamperia', 'gredi-talpi', 'slepeni-gredi', 'chelni-daski']
 const PICKS = ORDER.map((id) => PRODUCTS.find((p) => p.id === id)).filter((p): p is Product => Boolean(p))
 
 export default function Products() {
@@ -25,7 +25,7 @@ export default function Products() {
   const choose = (id: string) => setParams({ p: id }, { preventScrollReset: true })
 
   // A chosen product names itself in the tab and in a shared link's preview;
-  // the canonical stays /products, so search engines see one page, not seven.
+  // the canonical stays /products, so search engines see one page, not six.
   usePageMeta(
     '/products',
     chosen

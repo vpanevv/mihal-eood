@@ -5,12 +5,7 @@ import { ArrowIcon } from './Icons'
 import { thumbFor } from '../data/gallery'
 import { PROCESS, SERVICES, type Service } from '../data/services'
 
-type Props = {
-  /** The home page links on to the full services page; that page does not. */
-  withLink?: boolean
-}
-
-export default function ServicesSection({ withLink = false }: Props) {
+export default function ServicesSection() {
   const [open, setOpen] = useState<Service | null>(null)
 
   return (
@@ -19,11 +14,6 @@ export default function ServicesSection({ withLink = false }: Props) {
         eyebrow="Какво правим"
         title="Не само продаваме"
         accent="материал"
-        aside={
-          withLink
-            ? 'Сушим в собствена камера до 50 м³, рендосваме, шлайфаме, боядисваме, импрегнираме и клинозъбим — и доставяме готовия материал до обекта.'
-            : undefined
-        }
       />
 
       {/* Same shell as the product cards: a photograph leads where there is
