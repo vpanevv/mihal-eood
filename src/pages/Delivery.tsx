@@ -1,12 +1,14 @@
 import { usePageMeta } from '../utils/usePageMeta'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import PageBanner from '../components/PageBanner'
 import { BANNERS } from '../data/banners'
-import ServicesSection from '../components/ServicesSection'
-import { ArrowIcon, CheckIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
+import ChapterNav from '../components/ChapterNav'
+import ServiceShowcase from '../components/ServiceShowcase'
+import ProcessSteps from '../components/ProcessSteps'
+import { ArrowIcon, CheckIcon, LogIcon, NavigationIcon, PhoneIcon } from '../components/Icons'
 import ViberButton from '../components/ViberButton'
 import { DIRECTIONS_LINK, MAP_EMBED, PHONE_DISPLAY, PHONE_HREF } from '../data/company'
-import { DELIVERY_TOWNS } from '../data/services'
+import { DELIVERY_TOWNS, SERVICES } from '../data/services'
 
 const TERMS = [
   'Оферта след запитване по телефона или през формата, с цена според размерите и количеството.',
@@ -16,14 +18,77 @@ const TERMS = [
 ]
 
 export default function Delivery() {
-  usePageMeta('/delivery')
+  // As on the Products page, the choice lives in the address: a link can open
+  // the page on one service, and Back steps back through the choices.
+  const [params, setParams] = useSearchParams()
+  const chosen = SERVICES.find((s) => s.id === params.get('s')) ?? null
+  const choose = (id: string) => setParams({ s: id }, { preventScrollReset: true })
+
+  usePageMeta(
+    '/delivery',
+    chosen
+      ? {
+          title: `${chosen.title} на дървен материал в Разлог | МИХАЛ ЕООД`,
+          description: `${chosen.text} Услуга на МИХАЛ ЕООД, Разлог — изпратете запитване.`,
+        }
+      : {},
+  )
 
   return (
     <main id="main" tabIndex={-1} className="relative z-10">
       <PageBanner crumb="Услуги" title="Услуги и" accent="доставка" image={BANNERS['/delivery']} />
 
-      <section className="py-12 md:py-20">
-        <ServicesSection />
+      {/* Laid out like the Products page: pick a service from the bar, and
+          its description, actions and photographs appear below it. */}
+      <section className="py-12 md:py-16">
+        <div className="mx-auto max-w-[1200px] px-5 md:px-8">
+          <div className="reveal gap-8 md:flex md:items-start md:justify-between">
+            <p className="max-w-[46ch] font-sans text-[0.95rem] font-light leading-[1.8] text-timber-bark/80">
+              Обработката става в собствената ни база в Разлог — от сушенето до омасляването.
+            </p>
+            <p className="mt-4 max-w-[34ch] font-sans text-[0.95rem] font-light leading-[1.8] text-timber-bark/70 md:mt-0">
+              Имате въпрос?{' '}
+              <a href={PHONE_HREF} className="font-medium text-timber-ember underline-offset-4 hover:underline">
+                Обадете се
+              </a>{' '}
+              — ще ви помогнем с избора.
+            </p>
+          </div>
+
+          {/* Lifted above the showcase: the phone menu opens over it. */}
+          <div className="reveal relative z-20 mt-8 md:mt-10">
+            <ChapterNav
+              kind="select"
+              label="Изберете услуга"
+              noun="Услуга"
+              listName="списъка с услуги"
+              items={SERVICES.map((s) => ({ anchor: s.id, title: s.title }))}
+              active={chosen?.id ?? null}
+              onJump={choose}
+            />
+          </div>
+
+          <div className="mt-6 md:mt-8">
+            {chosen ? (
+              <ServiceShowcase key={chosen.id} service={chosen} />
+            ) : (
+              // Nothing is shown until a service is picked; this says so.
+              <div className="flex min-h-[260px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-timber-bark/15 bg-white/40 px-6 py-12 text-center md:min-h-[340px]">
+                <LogIcon className="h-16 w-16 text-timber-ember" />
+                <p className="mt-5 font-display text-[clamp(1.3rem,3.5vw,1.75rem)] font-bold uppercase leading-[1.15] text-timber-bark">
+                  Изберете услуга
+                </p>
+                <p className="mt-2 max-w-[38ch] font-sans text-[0.95rem] font-light leading-[1.7] text-timber-bark/70">
+                  Натиснете бутон отгоре, за да видите снимките и какво включва услугата.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-14 md:mt-20">
+            <ProcessSteps />
+          </div>
+        </div>
       </section>
 
       {/* Зона на доставка */}

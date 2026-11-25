@@ -2,6 +2,10 @@ import { useEffect, useId, useRef, useState } from 'react'
 
 type Props = {
   label: string
+  /** What is being chosen, shown over the current choice: „Продукт“, „Услуга“. */
+  noun?: string
+  /** The list, as a screen reader names it: „списъка с продукти“. */
+  listName?: string
   items: { anchor: string; title: string }[]
   active: string | null
   onPick: (anchor: string) => void
@@ -13,7 +17,7 @@ type Props = {
  * that scrolls sideways hide most of the choices off-screen; this shows all of
  * them at once, one tap away.
  */
-export default function PickerMenu({ label, items, active, onPick }: Props) {
+export default function PickerMenu({ label, noun = 'Продукт', listName = 'списъка с продукти', items, active, onPick }: Props) {
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
   const toggle = useRef<HTMLButtonElement>(null)
@@ -60,10 +64,10 @@ export default function PickerMenu({ label, items, active, onPick }: Props) {
       >
         <span className="min-w-0 grow">
           <span className="block font-sans text-[0.62rem] font-medium uppercase tracking-[0.22em] text-timber-sap">
-            {current ? 'Продукт' : 'Изберете'}
+            {current ? noun : 'Изберете'}
           </span>
           <span className="block truncate font-display text-[1.05rem] font-medium uppercase tracking-[0.1em] text-white">
-            {current ? current.title : 'Продукт'}
+            {current ? current.title : noun}
           </span>
         </span>
         {/* The three lines fold into a cross while the list is open. */}
@@ -75,7 +79,7 @@ export default function PickerMenu({ label, items, active, onPick }: Props) {
           <span className={`absolute h-[2px] w-[18px] rounded-full bg-current transition-opacity duration-200 ${open ? 'opacity-0' : ''}`} />
           <span className={`absolute h-[2px] w-[18px] rounded-full bg-current transition-transform duration-300 ${open ? '-rotate-45' : 'translate-y-[6px]'}`} />
         </span>
-        <span className="sr-only">{open ? 'Затвори списъка' : 'Отвори списъка с продукти'}</span>
+        <span className="sr-only">{open ? 'Затвори списъка' : `Отвори ${listName}`}</span>
       </button>
 
       <div

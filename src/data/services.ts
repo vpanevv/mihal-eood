@@ -10,6 +10,8 @@ import {
 } from '../components/Icons'
 
 export type Service = {
+  /** In the address of the Услуги page (?s=…), so a link can open on one service. */
+  id: string
   title: string
   /** Set in the serif, so the description reads as a different voice from the labels. */
   text: string
@@ -29,18 +31,21 @@ export const photosOf = (s: Service): Photo[] =>
 /** What the yard does to the timber before it leaves. */
 export const SERVICES: Service[] = [
   {
+    id: 'sushene',
     title: 'Сушене',
     text: 'Контролирано сушене на дървения материал до оптимална влажност. Така намаляваме риска от измятане, напукване и деформации при последваща обработка.',
     Icon: DryingIcon,
     photo: '/images/services/sushene.jpg',
   },
   {
+    id: 'rendosvane',
     title: 'Рендосване',
     text: 'Прецизно рендосване за равна, гладка повърхност и точни размери. Материалът е готов за директна употреба или последваща обработка.',
     Icon: PlaneIcon,
     photo: '/images/services/rendosvane.jpg',
   },
   {
+    id: 'shlayfane',
     title: 'Шлайфане',
     text: 'Фино шлайфане за гладка и равномерна повърхност без груби участъци. Подготвяме дървесината отлично за боядисване, омасляване или монтаж.',
     Icon: SandingIcon,
@@ -54,6 +59,7 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    id: 'boyadisvane',
     title: 'Боядисване',
     text: 'Мажем с висококачествени масла на ОСМО.',
     Icon: PaintIcon,
@@ -66,6 +72,7 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    id: 'impregnirane',
     title: 'Импрегниране',
     text: 'Професионално импрегниране за по-добра защита на дървесината от влага, атмосферни влияния, плесени и вредители. Удължаваме живота на материала и запазваме неговите качества.',
     Icon: ImpregnationIcon,
@@ -74,6 +81,7 @@ export const SERVICES: Service[] = [
   },
   // Still on an icon until a photograph of this one arrives.
   {
+    id: 'klinozabene',
     title: 'Клинозъбене',
     text: 'Прецизно клинозъбно съединяване за получаване на здрави и стабилни дървени елементи с по-голяма дължина. Подходящо за конструкции и изделия, при които се изисква висока устойчивост.',
     Icon: FingerJointIcon,

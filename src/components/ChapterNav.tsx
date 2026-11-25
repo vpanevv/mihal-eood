@@ -13,6 +13,10 @@ type Props = {
    * report pressed rather than current, and the bar stays where it is.
    */
   kind?: 'nav' | 'select'
+  /** For 'select': what is being chosen, named on the phone menu. */
+  noun?: string
+  /** For 'select': the list as a screen reader names it on the phone menu. */
+  listName?: string
 }
 
 /**
@@ -20,7 +24,7 @@ type Props = {
  * is a single element moved with a transform, so a change reads as travel from
  * one item to the next rather than one button going out as another lights up.
  */
-export default function ChapterNav({ label, items, active, onJump, kind = 'nav' }: Props) {
+export default function ChapterNav({ label, items, active, onJump, kind = 'nav', noun, listName }: Props) {
   const bar = useRef<HTMLDivElement>(null)
   const buttons = useRef(new Map<string, HTMLButtonElement>())
   const [marker, setMarker] = useState<{ left: number; width: number } | null>(null)
@@ -62,7 +66,7 @@ export default function ChapterNav({ label, items, active, onJump, kind = 'nav' 
       {/* A picker on a phone becomes a menu: one bar naming the choice, the list behind it. */}
       {select && (
         <div className="md:hidden">
-          <PickerMenu label={label} items={items} active={active} onPick={onJump} />
+          <PickerMenu label={label} noun={noun} listName={listName} items={items} active={active} onPick={onJump} />
         </div>
       )}
     <Wrapper
