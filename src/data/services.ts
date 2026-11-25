@@ -44,7 +44,14 @@ export const SERVICES: Service[] = [
     title: 'Шлайфане',
     text: 'Фино шлайфане за гладка и равномерна повърхност без груби участъци. Подготвяме дървесината отлично за боядисване, омасляване или монтаж.',
     Icon: SandingIcon,
-    photo: '/images/services/shlayfane.jpg',
+    // The sanding machine leads: its panel and the boards feeding in sit in
+    // frame on the 4:3 card and in the square popup alike.
+    photo: '/images/services/shlayfane-2.jpg',
+    photoFocus: '50% 46%',
+    photos: [
+      { src: '/images/services/shlayfane-2.jpg', focus: '50% 46%' },
+      { src: '/images/services/shlayfane.jpg' },
+    ],
   },
   {
     title: 'Боядисване',

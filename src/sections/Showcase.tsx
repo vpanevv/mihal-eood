@@ -10,6 +10,8 @@ type Feature = Omit<GalleryImage, 'thumbUrl' | 'smUrl'> & {
   headline: Line[]
   /** Two lines of supporting copy under the headline. */
   text: string
+  /** Where the photo is anchored when its frame crops it; centred if left out. */
+  focus?: string
 }
 
 // "Пътят на дървото": the wood's way from the yard to the site, one step a
@@ -33,18 +35,22 @@ const FEATURES: (Feature & { thumbUrl: string; smUrl: string })[] = ([
     text: 'Контролирано сушене на дървения материал до оптимална влажност.',
   },
   {
-    srcUrl: '/images/services/rendosvane.jpg',
-    alt: 'МИХАЛ ЕООД — пакет рендосана ламперия с готов профил',
+    srcUrl: '/images/products/lamperia/lamperia-3.jpg',
+    alt: 'МИХАЛ ЕООД — пакет рендосана ламперия в цеха',
     width: 1200,
     height: 1600,
+    // The stack fills the lower half: keep it whole, from the top board to the beam.
+    focus: '40% 72%',
     headline: [{ text: 'Рендосване' }],
     text: 'Прецизно рендосване за равна, гладка повърхност и точни размери.',
   },
   {
-    srcUrl: '/images/new-1.jpg',
+    srcUrl: '/images/new-5.jpg',
     alt: 'МИХАЛ ЕООД — камион, натоварен с дървен материал за доставка',
-    width: 1200,
+    width: 900,
     height: 1600,
+    // A tall photo: keep the whole strapped load, with the trailer under it.
+    focus: '50% 45%',
     headline: [{ text: 'Доставка' }],
     text: 'Товарим с подемна техника в базата и доставяме в цялата страна.',
   },
@@ -83,7 +89,7 @@ export default function Showcase() {
               screen instead of collapsing into a stack. An ordered list: the
               story is told in steps, and a screen reader counts them too. */}
           <ol className="list-none">
-          {FEATURES.map(({ srcUrl, thumbUrl, smUrl, alt, width, height, headline, text }, i) => {
+          {FEATURES.map(({ srcUrl, thumbUrl, smUrl, alt, width, height, headline, text, focus }, i) => {
             const flipped = i % 2 === 1
             return (
               <li
@@ -113,6 +119,7 @@ export default function Showcase() {
                       {...{ fetchpriority: 'low' }}
                       width={width}
                       height={height}
+                      style={focus ? { objectPosition: focus } : undefined}
                       className="h-full w-full object-cover object-center transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                     />
                     <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-timber-bark/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
